@@ -1,0 +1,174 @@
+# ========================================================
+# 1. Variables de entorno y secretos sensibles
+# ========================================================
+.env
+.env.*
+!.env.example
+*.env
+*.env.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+credentials.json
+client_secret*.json
+service-account*.json
+token.json
+tokens.json
+auth.json
+*.token
+
+# ========================================================
+# 2. Posibles entornos virtuales locales
+# ========================================================
+.venv/
+venv/
+env/
+ENV/
+virtualenv/
+
+# ========================================================
+# 3. Archivos de caché compilados
+# ========================================================
+__pycache__/
+*.py[cod]
+*$py.class
+.vite/
+.parcel-cache/
+
+# ========================================================
+# 4. Caché de pruebas automáticas
+# ========================================================
+.vitest/
+.vitest-cache/
+.pytest_cache/
+.mypy_cache/
+
+# ========================================================
+# 5. Bases de datos
+# ========================================================
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# ========================================================
+# 6. Scripts auxiliares y de mantenimiento local
+# ========================================================
+descargar_ipa.ps1
+/scripts/
+/tools/
+
+# ========================================================
+# 7. Módulos y dependencias descargadas
+# ========================================================
+node_modules/
+
+# ========================================================
+# 8. Compilación y caché temporales
+# ========================================================
+dist/
+dist-ssr/
+build/
+.output/
+
+# ========================================================
+# 9. Trazas y reportes de pruebas
+# ========================================================
+coverage/
+.nyc_output/
+*.lcov
+test-results/
+playwright-report/
+
+# ========================================================
+# 10. Metadatos y diagnósticos de TypeScript
+# ========================================================
+*.tsbuildinfo
+tsconfig.app.tsbuildinfo
+tsconfig.node.tsbuildinfo
+
+# ========================================================
+# 11. Logs de depuración
+# ========================================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+vite.log*
+
+# ========================================================
+# 12. Certificados SSL, TLS y claves criptográficas
+# ========================================================
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
+*.keystore
+*.jks
+*.mobileprovision
+id_rsa*
+id_ed25519*
+
+# ========================================================
+# 13. Archivos del sistema operativo e IDEs
+# ========================================================
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.orig
+*.rej
+
+# ========================================================
+# 14. Plataformas de despliegue y herramientas de empaquetado o caché de gestor de paquetes
+# ========================================================
+.vercel
+.npm/
+.yarn/cache/
+.pnpm-store/
+.npmrc
+.yarnrc
+ipatool.exe
+*.exe
+*.jar
+*.apk
+*.ipa
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# ========================================================
+# 15. Datos pesados y documentación interna del proyecto
+# ========================================================
+/data/
+/data/**
+/docs/
+/docs/**
+deep-investigator-message.md
+
+# ========================================================
+# 16. Excepciones obligatorias para la ejecución y PWA
+# ========================================================
+# Catálogo de cartas y tableros publicado necesario para Vite y modo offline
+!public/data/
+!public/data/**

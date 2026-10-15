@@ -1,0 +1,93 @@
+{
+  "timestamp": "2026-10-14T21:41:23.169Z",
+  "verdict": "APPROVE",
+  "suite": "Milestone 3 Adversarial Challenge: CatalogLoader & IDB Caching",
+  "testCounts": {
+    "total": 23,
+    "passed": 23,
+    "failed": 0
+  },
+  "dimensions": {
+    "idbCaching": {
+      "status": "VERIFIED",
+      "keysChecked": [
+        "previalo_catalog_manifest",
+        "cat_yo_nunca",
+        "preset_modo_caliente",
+        "board_guatoca_clasica",
+        "board_guatoca_hot"
+      ],
+      "cacheHitNetworkBypassVerified": true,
+      "quotaExceededFallbackVerified": true
+    },
+    "offlineResilience": {
+      "status": "VERIFIED",
+      "coldOfflineErrorDescriptive": true,
+      "warmIdbOfflineRecovery": true,
+      "browserRestartRecovery": true,
+      "forceRefreshFallback": true,
+      "intermittentNetworkHandled": true
+    },
+    "catalogScale": {
+      "status": "VERIFIED",
+      "totalCategories": 9,
+      "totalCards": 6937,
+      "totalPresets": 2,
+      "presetCards": {
+        "modo_caliente": 1661,
+        "modo_parejas": 395
+      },
+      "categoryCardCounts": {
+        "yo_nunca": 1355,
+        "que_prefieres": 289,
+        "retos_y_virus": 2310,
+        "quien_es_mas_probable": 199,
+        "verdad_o_reto": 857,
+        "el_tablero": 721,
+        "mesa_y_minijuegos": 136,
+        "guerra_equipos": 863,
+        "confesiones": 207
+      },
+      "uniqueCardIds": 6937,
+      "duplicateCollisions": 0,
+      "tablero5PoolNormalization": {
+        "drink_events": 353,
+        "board_events": 132,
+        "hot_events": 236,
+        "total": 721
+      }
+    },
+    "boardExtraction": {
+      "status": "VERIFIED",
+      "guatoca_clasica": {
+        "tiles": 45,
+        "sequential": true,
+        "startTile": {
+          "number": 1,
+          "type": "start",
+          "title": "Salida"
+        },
+        "finishTile": {
+          "number": 45,
+          "type": "finish",
+          "title": "¡La Discoteca! (Meta)"
+        }
+      },
+      "guatoca_hot": {
+        "tiles": 40,
+        "sequential": true,
+        "startTile": {
+          "number": 1,
+          "type": "start",
+          "title": "Salida Picante"
+        },
+        "finishTile": {
+          "number": 40,
+          "type": "finish",
+          "title": "¡Címax de la Previa! (Meta)"
+        }
+      },
+      "conformsToTileTypeUnion": true
+    }
+  }
+}

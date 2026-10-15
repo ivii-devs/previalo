@@ -1,0 +1,3458 @@
+{
+  "category_id": "quien_es_mas_probable",
+  "name": "🎯 ¿Quién es Más Probable?",
+  "description": "Votaciones por mayoría sobre situaciones extremas, salseo, secretos íntimos y trapos sucios.",
+  "min_intensity": 2,
+  "total_cards": 199,
+  "packs": [
+    {
+      "id": "qemp_fiesta",
+      "name": "⚡ Modo Fiesta y Salseo",
+      "intensity": 2,
+      "count": 131
+    },
+    {
+      "id": "qemp_parejas",
+      "name": "💘 Parejas y Exs",
+      "intensity": 2,
+      "count": 18
+    },
+    {
+      "id": "qemp_picante",
+      "name": "🔥 Picante (+18)",
+      "intensity": 3,
+      "count": 50
+    }
+  ],
+  "cards": [
+    {
+      "id": "qemp_0001",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el amigo más fiestero?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0002",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es la persona que va más borracha?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0003",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es la persona con el vaso más vacío?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0005",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el más guapo/a del grupo?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0006",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que mate a alguien accidentalmente?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0007",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se haga famoso?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0009",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que sea detenido?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0010",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se meta en una pelea?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0015",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se convierta en monja?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0016",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se ría en un momento inadecuado?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0017",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que tenga un reality show?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0019",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que sea pobre?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0029",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se quede calvo?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0032",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que aún duerma con peluche?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0035",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que conduzca peor?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0036",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se le escape un secreto?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0041",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que trabaje en una granja?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0043",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se vaya hoy primero?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0046",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más tacaño?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0051",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que sobreviva a El juego del calamar?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0052",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que se olvide del cumpleaños de los demás?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0054",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién moriría primero en un apocalipsis zombie?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0058",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que aún viva con sus padres a los 40?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0059",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que incendie la casa cocinando?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0061",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que sea adoptado?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0062",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que consiga trabajo en un circo?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0065",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién fuma más porros?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0070",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién liga más?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0075",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más orgulloso?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0076",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el más tierno?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0077",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más coqueto?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0078",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién se ríe más fácil?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0079",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más llorón?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0080",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más hipocondríaco?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0081",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más fitness?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0082",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más alcohólico?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0083",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más adicto a series?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0084",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más inteligente?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0085",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más miedoso?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0086",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más terco?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0087",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más impaciente?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0088",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién come más?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0089",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién tiene más amigos del otro género?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0091",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que gane Los Juegos del Hambre?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0092",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más postu en redes sociales?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0093",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que vaya a una discoteca y no baile?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0094",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que diga “hoy no bebo” y termine borracho?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0095",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que le dé pereza salir de fiesta y luego no quiera volver a casa?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0096",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que proponga salir de fiesta y luego le dé pereza?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0097",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que desaparezca en una noche de fiesta?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0098",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que termine vomitando esta noche?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0099",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que no deje hablar en una conversación?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0100",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que pierda el móvil?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0101",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que haga una pregunta estúpida?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0102",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que esté obsesionado con los likes en redes sociales?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0103",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que no conteste a los mensajes?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0104",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que no se acuerde de nada después de una noche de fiesta?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0105",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que cuente un chiste y nadie se ría?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0106",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que suba una foto a las redes sin importar si el resto de personas salen bien?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0108",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que ponga un nombre de una serie/película/videojuego a su hijo/a?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0109",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que haga preguntas durante la serie/película?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0110",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién se tira más pedos?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0111",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más fácil de secuestrar?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0112",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que gane una medalla olímpica?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0113",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el que se emborracha más rápido?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0114",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que se haga rico en un casino?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0115",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que se haga amigo de desconocidos en una noche de fiesta?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0116",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que tarde 2 semanas en responderte a un mensaje?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0117",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que pierda su pasaporte de vacaciones?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0118",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el más competitivo?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0119",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién lleva el outfit más caro?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0120",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el jugador que más bebe?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0126",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se apunte a cualquier plan?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0127",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que tenga peor gusto para la música?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0128",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién viste peor?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0129",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más adicto al móvil?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0130",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que gane la lotería y pierda el décimo?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0134",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que esté más bueno/a cuando tenga 70 años?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0136",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién era más feo de pequeño?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0138",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿A quién no le dejarías a tu hijo para que lo cuidase?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0139",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién canta mejor?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0140",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que muera haciendo algo estúpido?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0141",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se tatúe el nombre de una persona que ha conocido hace una semana?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0142",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que ya esté bebiendo alcohol por la mañana?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0143",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que lleve una chaquetita \"por si acaso\" estando a 30 grados?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0145",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿A quién le confiarías tu móvil desbloqueado durante 5 minutos?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0146",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿A quién jamás le confiarías tu móvil desbloqueado durante 5 minutos?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0147",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién se convertiría en dictador si pudiera?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0149",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién sería un policía corrupto?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0150",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién está más preocupado por aparentar que tiene más dinero del que tiene?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0152",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién confesaría primero si lo interroga la policía?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0154",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién guarda mejor los secretos?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0155",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Con quién nunca harías negocios?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0156",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién sería mejor fingiendo ser alguien que no es?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0158",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién tiene el historial de búsqueda más raro?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "fiesta",
+        "salseo",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0004",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién lo ha dejado más recientemente con su pareja?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0011",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que nunca se case?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0012",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que sea el primero en tener hijos?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0013",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que le pongan los cuernos?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0014",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que ponga los cuernos?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0024",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que vuelva con su ex?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0026",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que le robe la pareja a un amigo/a?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0042",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que termine con su pareja antes?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0060",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se case primero?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0068",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más celoso?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0069",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién tiene los exs más feos?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0071",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que eche de menos a su pareja?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0072",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que sea mantenido por su pareja?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0073",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que mencione a su ex?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0074",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más romántico?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0090",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se olvide del cumpleaños de su pareja?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0144",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿Quién llevaría peor tener una relación abierta?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0151",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_parejas",
+      "type": "majority_vote",
+      "text": "¿A quién le han puesto más cuernos?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "parejas",
+        "relaciones",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0008",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se convierta en stripper?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0018",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se masturbe más a menudo?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0020",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se le caduquen los condones?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0021",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que folle esta noche?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0022",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que haya comido más pollas en toda su vida?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0023",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que haya comido más coños en toda su vida?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0025",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que la tenga más grande?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0027",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que no lleve ropa interior?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0028",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que muera virgen?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0030",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién está más desesperado por follar?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0031",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién dura menos en la cama?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0033",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién lleva la ropa interior más sexy?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0034",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién lleva la ropa interior más cutre?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0037",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es la persona más ruidosa en la cama?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0038",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que tenga sexo con alguien feo?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0039",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se desnude en público?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0040",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que tenga más vello púbico?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0044",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que tenga un embarazo no deseado?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0045",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que tenga problemas de disfunción?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0047",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién ve más porno?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0048",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que se masturbe en público?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0049",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es el más probable que tenga sexo con un profe para subir nota?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0050",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién ha follado más esta semana?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0053",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién perdió más tarde la virginidad?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0055",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se acueste con la madre/padre de alguno de los aquí presentes?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0056",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más sumiso durante el sexo?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0057",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que tome Viagra?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0063",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que tenga el dildo más grande?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0064",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que sea cliente VIP de un prostíbulo?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0066",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién tiene la boca más sexy?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0067",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que se haga un piercing en los genitales?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0107",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién lleva más tiempo sin tener sexo?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0121",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que bese mejor?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0122",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que folle mejor?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0123",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que haga mejores orales?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0124",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que tenga mejor culo?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0125",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que lleve un condón?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0131",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que reutilice un condón?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0132",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que tenga más relaciones sexuales en un día?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0133",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que queme más calorías teniendo sexo?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0135",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que haga la estrellita de mar durante el sexo?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0137",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más profesional haciendo la cobra?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0148",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién sobreviviría menos tiempo sin tener sexo?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0153",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién será un viejo verde de mayor?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0157",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién es más probable que tenga sugar mommy/daddy?",
+      "intensity": 3,
+      "drinks_penalty": 2,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "guatoca_mlt",
+      "tags": [
+        "picante",
+        "sexual",
+        "quien_es_mas_probable"
+      ]
+    },
+    {
+      "id": "qemp_0159",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Elige a alguien aquí con quien sería genial compartir piso, y a alguien con quien sería un desastre total.",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0160",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es el rey o la reina del coqueteo aquí? ¡Di su nombre!?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0161",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Elige a alguien aquí para defenderte en un tribunal. ¿quién y por qué?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0162",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Adivina quién aquí es más probable que invente un chisme solo para crear drama. explica tu elección.",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0163",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es más probable que se enfade por una razón absurda? ¿por qué?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0164",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es más probable que hable a espaldas de los demás?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0165",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí siempre promete muchas cosas pero nunca hace nada? ¡Justifica tu elección!?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0166",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es incapaz de arreglárselas solo en la vida?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0167",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Adivina, ¿quién aquí tiene el ego más grande pero lo oculta con una sonrisa?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0168",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Adivina, ¿quién es el más hipócrita de este grupo?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0169",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es la persona más rata en esta habitación? ¡Justifica tu elección!?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0170",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Confiesa, ¿quién es el más difícil de entender en este grupo?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0171",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "Adivina quién en esta sala tiene más conquistas íntimas y quién menos.",
+      "intensity": 3,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "picante",
+        "salseo_hot",
+        "+18"
+      ]
+    },
+    {
+      "id": "qemp_0172",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es más propenso/a a hacer una broma que incomode a todos?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0173",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Si {player1} fuera un animal, ¿qué animal sería?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0174",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿A qué estrella compararías a {player1} y por qué?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0175",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Qué profesión crees que corresponde a {player1}?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0176",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es más probable que haga ghosting a alguien después de una primera cita?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0177",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Si estuvieran en una película de terror, ¿quién en esta habitación sería el primero en morir?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0178",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí tiene más probabilidades de cometer un gran error en un evento formal?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0179",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es más propenso/a a terminar en una pelea después de una fiesta?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0180",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es más probable que pierda una enorme cantidad de dinero apostando?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0181",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es más probable que beba tanto que olvide toda la noche?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0182",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Adivina quién es la persona más rica aquí.",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0183",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "Adivina quién aquí pediría menos dinero para prostituirse.",
+      "intensity": 3,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "picante",
+        "salseo_hot",
+        "+18"
+      ]
+    },
+    {
+      "id": "qemp_0184",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es más probable que tenga problemas con la justicia en los próximos 5 años?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0185",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Adivina quién aquí es el más probable de terminar en prisión.",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0186",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es más probable que salga con alguien solo por su dinero?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0187",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Si tuvieras que eliminar a alguien aquí de una competencia para garantizar tu victoria, ¿a quién elegirías y por qué?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0188",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Si tuvieras que elegir a alguien aquí con quien nunca quisieras quedar atrapado en una isla desierta, ¿quién sería y por qué?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0189",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Adivina si {player1} fuera un postre, ¿cuál sería?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0190",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién fue la última persona a la que ghosteaste?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0191",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién es la persona más 'inalcanzable' a la que intentaste enviar un DM?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0192",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es más probable que mienta sobre su vida para impresionar a un crush?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0193",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es más probable que caiga de nuevo en una relación tóxica?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0194",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí parece el/la más inocente… pero no lo es?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0195",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "Si tú y {player1} pasaran una noche solos en el mismo sitio, quién tiraría primero?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0196",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién sería el peor polvo del grupo? di un nombre y una razón.?",
+      "intensity": 3,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "picante",
+        "salseo_hot",
+        "+18"
+      ]
+    },
+    {
+      "id": "qemp_0197",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién aquí sería más capaz de poner los cuernos? y quién perdonaría más fácil?",
+      "intensity": 3,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "picante",
+        "salseo_hot",
+        "+18"
+      ]
+    },
+    {
+      "id": "qemp_0198",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_fiesta",
+      "type": "majority_vote",
+      "text": "¿Quién aquí es el/la más guapo/a según tú?",
+      "intensity": 2,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "fiesta",
+        "salseo"
+      ]
+    },
+    {
+      "id": "qemp_0199",
+      "game_id": "quien_es_mas_probable",
+      "pack_id": "qemp_picante",
+      "type": "majority_vote",
+      "text": "¿Quién aquí piensa más en el sexo?",
+      "intensity": 3,
+      "drinks_penalty": 1,
+      "target": "majority",
+      "language": "es-ES",
+      "source": "verdad_o_verdad",
+      "tags": [
+        "quien_es_mas_probable",
+        "verdad_o_verdad",
+        "picante",
+        "salseo_hot",
+        "+18"
+      ]
+    }
+  ]
+}

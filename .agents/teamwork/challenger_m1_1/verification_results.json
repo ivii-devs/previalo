@@ -1,0 +1,60 @@
+{
+  "verdict": "APPROVE",
+  "results": {
+    "hashes": {
+      "total": 11,
+      "passed": 11,
+      "failed": 0,
+      "details": []
+    },
+    "cardCounts": {
+      "totalCategoriesCards": 6937,
+      "uniqueCardIds": 6937,
+      "duplicates": 0,
+      "duplicateDetails": [],
+      "categoryBreakdown": {
+        "yo_nunca": 1355,
+        "que_prefieres": 289,
+        "retos_y_virus": 2310,
+        "quien_es_mas_probable": 199,
+        "verdad_o_reto": 857,
+        "el_tablero": 721,
+        "mesa_y_minijuegos": 136,
+        "guerra_equipos": 863,
+        "confesiones": 207
+      }
+    },
+    "presets": {
+      "validPresets": 2,
+      "totalPresetCards": 2056,
+      "errors": []
+    },
+    "pwaManifest": {
+      "valid": true,
+      "errors": []
+    },
+    "serviceWorker": {
+      "valid": true,
+      "errors": []
+    },
+    "bundleSize": {
+      "jsGzipKb": 72.78,
+      "cssGzipKb": 5.61,
+      "totalGzipKb": 78.39,
+      "withinLimit": true,
+      "details": [
+        {
+          "file": "index-BGLmGIj4.css",
+          "rawKb": 25.8,
+          "gzipKb": 5.61
+        },
+        {
+          "file": "index-DW5r7Ae9.js",
+          "rawKb": 235.51,
+          "gzipKb": 72.78
+        }
+      ]
+    }
+  },
+  "timestamp": "2026-10-14T20:31:17.838Z"
+}

@@ -1,0 +1,328 @@
+{
+  "manifest_version": "1.0.0",
+  "app_name": "Previalo",
+  "generated_at": "2026-10-14T18:56:20.677846",
+  "license": "Proprietary - Previalo Entertainment",
+  "global_stats": {
+    "total_categories": 9,
+    "total_cards": 6937,
+    "total_unique_card_ids": 6937,
+    "total_presets": 2,
+    "card_counts_by_intensity": {
+      "1": 1522,
+      "2": 3429,
+      "3": 1972,
+      "4": 14
+    },
+    "token_system": [
+      "player1",
+      "player2",
+      "player3",
+      "player4",
+      "team",
+      "drinks"
+    ],
+    "sources_integrated": [
+      "picolo_apk (v1.x)",
+      "guatoca_apk (v2.x)",
+      "partypal_apk (v1.x)",
+      "game_of_shots_repo",
+      "verdad_o_verdad_ipa (v3.0.2)"
+    ]
+  },
+  "categories": [
+    {
+      "category_id": "yo_nunca",
+      "name": "🤫 Yo Nunca",
+      "description": "Afirmaciones de confesión colectiva: fiesta, secretos picantes y vida amorosa.",
+      "file": "by_category/02_yo_nunca.json",
+      "size_bytes": 753383,
+      "sha256": "f0817de6b7751ed2727b0518fc049c43274209496fc741deb82bdc66397c3994",
+      "card_count": 1355,
+      "packs": [
+        {
+          "id": "yn_fiesta",
+          "name": "🍻 Modo Fiesta",
+          "intensity": 2,
+          "count": 442,
+          "actual_count": 442
+        },
+        {
+          "id": "yn_picante",
+          "name": "🌶️ Picante (+18)",
+          "intensity": 3,
+          "count": 768,
+          "actual_count": 768
+        },
+        {
+          "id": "yn_parejas",
+          "name": "💘 Parejas y Amor",
+          "intensity": 2,
+          "count": 145,
+          "actual_count": 145
+        }
+      ]
+    },
+    {
+      "category_id": "que_prefieres",
+      "name": "¿Qué Prefieres?",
+      "description": "",
+      "file": "by_category/03_que_prefieres.json",
+      "size_bytes": 186110,
+      "sha256": "65987c2a1d1ff05e6fa1aff1a9eb200a5e07dd8a99c153f434ab3778037f5951",
+      "card_count": 289,
+      "packs": [
+        {
+          "id": "picolo_default",
+          "count": 155
+        },
+        {
+          "id": "picolo_hot",
+          "count": 36
+        },
+        {
+          "id": "picolo_silly",
+          "count": 69
+        },
+        {
+          "id": "qp_guatoca",
+          "count": 18
+        },
+        {
+          "id": "qp_verdad_o_verdad",
+          "count": 11
+        }
+      ]
+    },
+    {
+      "category_id": "retos_y_virus",
+      "name": "Retos y Virus",
+      "description": "",
+      "file": "by_category/04_retos_y_virus.json",
+      "size_bytes": 1366959,
+      "sha256": "c487bb55f122b67286bd6b0cda411db87317cb7360e3736b79f0a7ae734aebc1",
+      "card_count": 2310,
+      "packs": [
+        {
+          "id": "picolo_default",
+          "count": 1347
+        },
+        {
+          "id": "picolo_hot",
+          "count": 378
+        },
+        {
+          "id": "picolo_silly",
+          "count": 585
+        }
+      ]
+    },
+    {
+      "category_id": "quien_es_mas_probable",
+      "name": "🎯 ¿Quién es Más Probable?",
+      "description": "Votaciones por mayoría sobre situaciones extremas, salseo, secretos íntimos y trapos sucios.",
+      "file": "by_category/05_quien_es_mas_probable.json",
+      "size_bytes": 94040,
+      "sha256": "945c2579fc4beaed5bb462d2188fc166a1d1639e24d58552d3941a392583d8b3",
+      "card_count": 199,
+      "packs": [
+        {
+          "id": "qemp_fiesta",
+          "name": "⚡ Modo Fiesta y Salseo",
+          "intensity": 2,
+          "count": 131,
+          "actual_count": 131
+        },
+        {
+          "id": "qemp_parejas",
+          "name": "💘 Parejas y Exs",
+          "intensity": 2,
+          "count": 18,
+          "actual_count": 18
+        },
+        {
+          "id": "qemp_picante",
+          "name": "🔥 Picante (+18)",
+          "intensity": 3,
+          "count": 50,
+          "actual_count": 50
+        }
+      ]
+    },
+    {
+      "category_id": "verdad_o_reto",
+      "name": "🔥 Verdad o Reto",
+      "description": "El clásico juego de fiesta: confesiones íntimas, retos atrevidos, salseo y pruebas de fuego.",
+      "file": "by_category/06_verdad_o_reto.json",
+      "size_bytes": 496980,
+      "sha256": "a0068fc8df5feafbd7a98902884dca52c2e1b2358d1305c54da9f055b7be9179",
+      "card_count": 857,
+      "packs": [
+        {
+          "id": "vor_fiesta",
+          "name": "⚡ Modo Fiesta",
+          "intensity": 2,
+          "count": 286,
+          "truths": 124,
+          "dares": 162,
+          "actual_count": 286
+        },
+        {
+          "id": "vor_parejas",
+          "name": "💘 Modo Parejas",
+          "intensity": 2,
+          "count": 246,
+          "truths": 192,
+          "dares": 54,
+          "actual_count": 246
+        },
+        {
+          "id": "vor_picante",
+          "name": "🔥 Picante (+18)",
+          "intensity": 3,
+          "count": 325,
+          "truths": 164,
+          "dares": 161,
+          "actual_count": 325
+        }
+      ]
+    },
+    {
+      "category_id": "el_tablero",
+      "name": "🎲 El Tablero (La Guatoca)",
+      "description": "",
+      "file": "by_category/07_el_tablero.json",
+      "size_bytes": 362161,
+      "sha256": "b85d182eccf9ca85c6f062e17d180a2a722ab068379a1cfa42f5c3e104491fd7",
+      "card_count": 721,
+      "boards": [
+        "guatoca_clasica",
+        "guatoca_hot"
+      ],
+      "subcategories": {
+        "drink_events": 353,
+        "board_events": 132,
+        "hot_events_level1": 118,
+        "hot_events_level2": 61,
+        "hot_events_level3": 57
+      }
+    },
+    {
+      "category_id": "mesa_y_minijuegos",
+      "name": "🍾 Mesa y Minijuegos",
+      "description": "Dinámicas grupales de mesa, cartas y botellas: La Copa del Rey, El Autobús de la Previa, Desafíos Extremos y Verdad o Verdad.",
+      "file": "by_category/08_mesa_y_minijuegos.json",
+      "size_bytes": 90847,
+      "sha256": "02aeb33c684569d49e173105147f6f192b1eee42ac8f9075df1ad3463757c91a",
+      "card_count": 136,
+      "packs": [
+        {
+          "id": "pack_ring_of_fire",
+          "name": "👑 La Copa del Rey (Ring of Fire)",
+          "description": "El juego clásico de cartas con cascadas, normas de grupo y la copa central.",
+          "intensity": 2,
+          "count": 26,
+          "actual_count": 26
+        },
+        {
+          "id": "pack_partybus",
+          "name": "🚌 El Autobús de la Previa (PartyBus)",
+          "description": "Ruta de paradas, subida de pasajeros, copilotos y tragos en cadena.",
+          "intensity": 2,
+          "count": 50,
+          "actual_count": 50
+        },
+        {
+          "id": "pack_drink_extreme",
+          "name": "⚡ Desafíos Extremos de Mesa",
+          "description": "Pruebas de alta tensión en mesa, llamadas incómodas y retos sociales.",
+          "intensity": 3,
+          "count": 30,
+          "actual_count": 30
+        },
+        {
+          "id": "pack_verdad_o_verdad",
+          "name": "🤫 Verdad o Verdad (Confesiones)",
+          "description": "Preguntas profundas y salseo sincero para jugar sentados alrededor de la mesa.",
+          "intensity": 2,
+          "count": 30,
+          "actual_count": 30
+        }
+      ]
+    },
+    {
+      "category_id": "guerra_equipos",
+      "name": "⚔️ Guerra de Equipos",
+      "description": "Competición por bandos: preguntas entre rivales, telepatía, duelos y batallas de campeones.",
+      "file": "by_category/09_guerra_equipos.json",
+      "size_bytes": 669945,
+      "sha256": "39bf301d3fac71272bd1a8aca0b97e9d53e358695631247a80a9f4dd51ad4508",
+      "card_count": 863,
+      "packs": [
+        {
+          "id": "picolo_war",
+          "count": 788
+        },
+        {
+          "id": "versus",
+          "count": 75
+        }
+      ]
+    },
+    {
+      "category_id": "confesiones",
+      "name": "Confesiones",
+      "description": "Preguntas íntimas, secretos inconfesables y verdades comprometidas para conocer a fondo a tus amigos. Responde con la verdad o asume tu castigo de tragos.",
+      "file": "by_category/10_confesiones.json",
+      "size_bytes": 140513,
+      "sha256": "6bfa9d071909361c4baa63c0e7186cffc62fe5cbdf2fdcbf4fe792cb3d90d92f",
+      "card_count": 207,
+      "packs": [
+        {
+          "id": "conf_fiesta",
+          "name": "Fiesta, Anécdotas y Salseo",
+          "intensity": 2,
+          "description": "Cagadas del pasado, momentos vergonzosos, citas desastrosas y cotilleos de grupo.",
+          "count": 135,
+          "actual_count": 135
+        },
+        {
+          "id": "conf_picante",
+          "name": "Confesiones Picantes (+18)",
+          "intensity": 3,
+          "description": "Secretos íntimos, fantasías ocultas, bodycount y fetiches inconfesables.",
+          "count": 51,
+          "actual_count": 51
+        },
+        {
+          "id": "conf_deep",
+          "name": "Reflexión y Deep Talk",
+          "intensity": 2,
+          "description": "Dilemas existenciales, lealtad, amor romántico y reflexiones sobre la vida.",
+          "count": 21,
+          "actual_count": 21
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "preset_id": "modo_caliente",
+      "name": "🔥 Modo Caliente / Previa Hot",
+      "description": "Retos desinhibidos, confesiones íntimas, dilemas picantes y virus sensuales.",
+      "file": "curated_presets/02_modo_caliente.json",
+      "size_bytes": 951983,
+      "sha256": "986c8fea23099990af3f1021589482a2c2840dd9a079445a63f2b9c947605c9b",
+      "card_count": 1661
+    },
+    {
+      "preset_id": "modo_parejas",
+      "name": "💘 Modo Parejas / Citas",
+      "description": "Dinámicas, salseo y preguntas para jugar en pareja o citas dobles.",
+      "file": "curated_presets/04_modo_parejas.json",
+      "size_bytes": 213555,
+      "sha256": "1bb84300874ae96c2218213a10d689ed6bbf3403ac30029fa8d6590010135cf4",
+      "card_count": 395
+    }
+  ]
+}

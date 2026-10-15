@@ -1,0 +1,227 @@
+@import "tailwindcss";
+
+:root {
+  /* Default Cyber Neon Theme */
+  --bg-base: #0b0f19;
+  --bg-surface: #131b2e;
+  --bg-elevated: #1e293b;
+  --text-primary: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-primary: #ec4899;
+  --accent-secondary: #06b6d4;
+  --accent-tertiary: #8b5cf6;
+  --accent-warning: #f59e0b;
+  --border-color: rgba(236, 72, 153, 0.3);
+  --glow-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+}
+
+[data-theme="cyber-neon"] {
+  --bg-base: #0b0f19;
+  --bg-surface: #131b2e;
+  --bg-elevated: #1e293b;
+  --text-primary: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-primary: #ec4899;
+  --accent-secondary: #06b6d4;
+  --accent-tertiary: #8b5cf6;
+  --accent-warning: #f59e0b;
+  --border-color: rgba(236, 72, 153, 0.3);
+  --glow-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+}
+
+[data-theme="electric-purple"] {
+  --bg-base: #0d0b1a;
+  --bg-surface: #191533;
+  --bg-elevated: #241e4a;
+  --text-primary: #fdf4ff;
+  --text-muted: #c084fc;
+  --accent-primary: #a855f7;
+  --accent-secondary: #3b82f6;
+  --accent-tertiary: #ec4899;
+  --accent-warning: #fbbf24;
+  --border-color: rgba(168, 85, 247, 0.3);
+  --glow-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+}
+
+[data-theme="acid-lime"] {
+  --bg-base: #08100c;
+  --bg-surface: #0f1f17;
+  --bg-elevated: #173024;
+  --text-primary: #f0fdf4;
+  --text-muted: #86efac;
+  --accent-primary: #84cc16;
+  --accent-secondary: #10b981;
+  --accent-tertiary: #06b6d4;
+  --accent-warning: #eab308;
+  --border-color: rgba(132, 204, 22, 0.3);
+  --glow-shadow: 0 0 15px rgba(132, 204, 22, 0.4);
+}
+
+[data-theme="sunset-hot"] {
+  --bg-base: #160b0e;
+  --bg-surface: #291218;
+  --bg-elevated: #3b1c23;
+  --text-primary: #fff1f2;
+  --text-muted: #fda4af;
+  --accent-primary: #f97316;
+  --accent-secondary: #ef4444;
+  --accent-tertiary: #eab308;
+  --accent-warning: #fb923c;
+  --border-color: rgba(249, 115, 22, 0.3);
+  --glow-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+}
+
+[data-theme="day-mode"],
+[data-color-mode="day"] {
+  --bg-base: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-muted: #475569;
+  --accent-primary: #db2777;
+  --accent-secondary: #7c3aed;
+  --accent-tertiary: #0284c7;
+  --accent-warning: #d97706;
+  --border-color: rgba(15, 23, 42, 0.15);
+  --glow-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+/* Mobile viewport and interaction constraints */
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  overscroll-behavior-y: none;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+#root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--bg-base);
+}
+
+/* Custom Neon helper utilities */
+.theme-bg-base {
+  background-color: var(--bg-base);
+}
+
+.theme-bg-surface {
+  background-color: var(--bg-surface);
+}
+
+.theme-bg-elevated {
+  background-color: var(--bg-elevated);
+}
+
+.theme-text-primary {
+  color: var(--text-primary);
+}
+
+.theme-text-muted {
+  color: var(--text-muted);
+}
+
+.theme-accent-primary {
+  color: var(--accent-primary);
+}
+
+.theme-border {
+  border-color: var(--border-color);
+}
+
+.theme-glow {
+  box-shadow: var(--glow-shadow);
+}
+
+/* Safe Area Insets for iOS WebKit (Notch, Dynamic Island, Home Indicator) */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.pl-safe {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+
+.pr-safe {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Native iOS inertia scrolling and rubber-banding confinement */
+.scroll-container {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y !important;
+}
+
+.scroll-container,
+.scroll-container * {
+  touch-action: pan-y !important;
+}
+
+/* Custom themed scrollbar for desktop & mobile visual clarity */
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: var(--border-color, rgba(236, 72, 153, 0.4));
+  border-radius: 9999px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary, #ec4899);
+}
+
+.scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color, rgba(236, 72, 153, 0.4)) transparent;
+}
+
+/* Mandatory prevention of WebKit auto-zoom on inputs */
+input,
+select,
+textarea {
+  font-size: 16px !important;
+}
+
+/* WebKit control touch resets (remove gray tap highlight & callouts) */
+button,
+[role="button"],
+nav,
+header {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Allow user text selection on copyable content */
+.selectable,
+[data-selectable="true"] {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}

@@ -1,0 +1,30 @@
+/* Previalo Presentation Styles & Theme Tokens */
+
+:root {
+  --perspective-deck: 1000px;
+}
+
+/* 3D Dice Preserves */
+.preserve-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+/* Custom Scrollbar for Neon Look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
