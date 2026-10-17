@@ -309,7 +309,9 @@ export class CatalogLoader {
         throw new Error(`HTTP ${res.status} ${res.statusText}`);
       }
       const data = await res.json();
-      const tiles: BoardTile[] | undefined = data.tiles_by_board?.[boardId];
+      const tiles: BoardTile[] | undefined =
+        data.tiles_by_board?.[boardId] ??
+        (boardId === 'guatoca_todos' ? data.tiles_by_board?.['guatoca_clasica'] : undefined);
       if (!Array.isArray(tiles)) {
         throw new Error(`Board tiles for '${boardId}' not found in '${tableroUrl}'`);
       }

@@ -10,11 +10,12 @@ import { create } from 'zustand';
 import type { Card } from '../domain/types/card';
 import type { Player } from '../domain/types/player';
 import type { ActiveVirus } from '../domain/types/virus';
-import type { BoardTile, BoardId, TileActionResult } from '../domain/types/board';
+import type { BoardTile, BoardId, TileActionResult, HotTier } from '../domain/types/board';
 import type { GameModeId, HistorySnapshot } from '../domain/types/session';
 import { VariableReplacer } from '../domain/engines/VariableReplacer';
 import { VirusManager } from '../domain/engines/VirusManager';
 import { BoardEngine } from '../domain/engines/BoardEngine';
+import { CardEngine } from '../domain/engines/CardEngine';
 import { soundService } from '../infrastructure/soundService';
 import { usePlayerStore } from './usePlayerStore';
 
@@ -25,6 +26,8 @@ export interface BoardRollResult {
   destination?: number;
   tile?: BoardTile;
   actionResult?: TileActionResult;
+  drawnCard?: Card | null;
+  interpolatedPrompt?: string;
   isVictory?: boolean;
   winner?: Player;
   skipped?: boolean;
@@ -39,6 +42,7 @@ export interface GameSessionState {
   mode: GameModeId | 'chaos' | 'category' | 'preset' | 'board' | null;
   modeConfig: any;
   deck: Card[];
+  resolversPool: Card[];
   currentIndex: number;
   currentCard: Card | null;
   interpolatedText: string;
@@ -59,7 +63,8 @@ export interface GameSessionState {
     deck: Card[],
     mode: GameModeId,
     config: any,
-    players: Player[]
+    players: Player[],
+    resolversPool?: Card[] | Map<string, Card[]>
   ) => void;
   nextCard: (players?: Player[]) => void;
   previousCard: () => boolean;
@@ -67,7 +72,9 @@ export interface GameSessionState {
   startBoardSession: (
     boardId: BoardId,
     tiles: BoardTile[],
-    players: Player[]
+    players: Player[],
+    boardCards?: Card[],
+    hotTiers?: HotTier[]
   ) => void;
   rollBoardDice: (forcedRoll?: number) => BoardRollResult | null;
   adjustSips: (playerId: string, delta: number) => void;
@@ -95,6 +102,7 @@ const persistActiveSession = (state: Partial<GameSessionState>, players?: Player
       mode: state.mode,
       modeConfig: state.modeConfig,
       deck: state.deck,
+      resolversPool: state.resolversPool,
       currentIndex: state.currentIndex,
       currentCard: state.currentCard,
       interpolatedText: state.interpolatedText,
@@ -133,6 +141,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
   mode: null,
   modeConfig: null,
   deck: [],
+  resolversPool: [],
   currentIndex: -1,
   currentCard: null,
   interpolatedText: '',
@@ -152,7 +161,8 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
     deck: Card[],
     mode: GameModeId,
     config: any,
-    players: Player[]
+    players: Player[],
+    resolversPool?: Card[] | Map<string, Card[]>
   ) => {
     const activePlayers =
       players && players.length > 0 ? players : usePlayerStore.getState().players;
@@ -162,6 +172,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
         mode,
         modeConfig: config,
         deck: [],
+        resolversPool: [],
         currentIndex: -1,
         currentCard: null,
         interpolatedText: '',
@@ -178,20 +189,61 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       return;
     }
 
-    const firstCard = deck[0];
+    // Normalize resolvers pool from Map/Array or extract from deck if not provided
+    let poolCards: Card[] = [];
+    if (resolversPool) {
+      poolCards =
+        resolversPool instanceof Map
+          ? Array.from(resolversPool.values()).flat()
+          : [...resolversPool];
+    } else {
+      poolCards = deck.filter((c) => CardEngine.isResolverOrCure(c));
+    }
+
+    // Ensure resolvers are excluded from initial active draw sequence
+    let activeDeck = deck.filter((c) => !CardEngine.isResolverOrCure(c));
+    if (activeDeck.length === 0) {
+      activeDeck = [...deck];
+    }
+
+    const firstCard = activeDeck[0];
     const initialViruses: ActiveVirus[] = [];
 
     // Interpolate tokens for first card
+    const cardIntensity = firstCard.intensity ?? config?.intensity ?? 2;
     const { interpolatedText, assignedPlayers, calculatedDrinks } =
       VariableReplacer.replaceTokens(firstCard.text, activePlayers, {
-        intensity: config?.intensity ?? 2,
+        intensity: cardIntensity,
         baseDrinks: firstCard.drinks_penalty,
         currentTurnIndex: 0,
+        fixedAssignedPlayers: firstCard.fixedAssignedPlayers,
       });
+
+    // If first card is a trigger, schedule its resolver in the deck
+    let hasResolver = false;
+    if (firstCard.chain?.role === 'trigger') {
+      const scheduleResult = CardEngine.scheduleResolverInDeck(
+        activeDeck,
+        0,
+        firstCard,
+        poolCards,
+        assignedPlayers
+      );
+      if (scheduleResult.scheduledResolver) {
+        activeDeck = scheduleResult.updatedDeck;
+        hasResolver = true;
+      }
+    }
 
     // Check if first card is a virus
     if (VirusManager.isVirusCard(firstCard)) {
-      const newVirus = VirusManager.createVirus(firstCard, assignedPlayers[0]);
+      const newVirus = VirusManager.createVirus(
+        firstCard,
+        assignedPlayers[0],
+        assignedPlayers,
+        hasResolver,
+        interpolatedText
+      );
       initialViruses.push(newVirus);
       soundService.playVirusAlert();
     }
@@ -221,7 +273,8 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
     const nextState = {
       mode,
       modeConfig: config,
-      deck: [...deck],
+      deck: activeDeck,
+      resolversPool: poolCards,
       currentIndex: 0,
       currentCard: firstCard,
       interpolatedText,
@@ -241,6 +294,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
   nextCard: (players?: Player[]) => {
     const {
       deck,
+      resolversPool,
       currentIndex,
       currentCard,
       interpolatedText,
@@ -308,16 +362,48 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
     const nextCard = deck[nextIndex];
 
     // 4. Token replacement
+    const cardIntensity = nextCard.intensity ?? modeConfig?.intensity ?? 2;
     const replacement = VariableReplacer.replaceTokens(nextCard.text, activePlayers, {
-      intensity: modeConfig?.intensity ?? 2,
+      intensity: cardIntensity,
       baseDrinks: nextCard.drinks_penalty,
       currentTurnIndex: nextIndex,
+      fixedAssignedPlayers: nextCard.fixedAssignedPlayers,
     });
 
-    // 5. Register virus if card is virus
-    const finalViruses = [...updatedViruses];
+    // 5. Chain resolution & Virus lifecycle
+    let workingDeck = [...deck];
+    let finalViruses = [...updatedViruses];
+
+    // If nextCard is a resolver, resolve matching active virus immediately without modal
+    if (nextCard.chain?.role === 'resolver' && nextCard.chain.chain_id) {
+      finalViruses = VirusManager.resolveVirus(finalViruses, nextCard.chain.chain_id);
+    }
+
+    // If nextCard is a trigger, schedule its resolver in the deck
+    let hasResolver = false;
+    if (nextCard.chain?.role === 'trigger') {
+      const scheduleResult = CardEngine.scheduleResolverInDeck(
+        workingDeck,
+        nextIndex,
+        nextCard,
+        resolversPool || [],
+        replacement.assignedPlayers
+      );
+      if (scheduleResult.scheduledResolver) {
+        workingDeck = scheduleResult.updatedDeck;
+        hasResolver = true;
+      }
+    }
+
+    // Register virus if card qualifies as a virus
     if (VirusManager.isVirusCard(nextCard)) {
-      const newVirus = VirusManager.createVirus(nextCard, replacement.assignedPlayers[0]);
+      const newVirus = VirusManager.createVirus(
+        nextCard,
+        replacement.assignedPlayers[0],
+        replacement.assignedPlayers,
+        hasResolver,
+        replacement.interpolatedText
+      );
       finalViruses.push(newVirus);
       soundService.playVirusAlert();
     }
@@ -347,6 +433,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
     soundService.playSwipe();
 
     const updatedState = {
+      deck: workingDeck,
       currentIndex: nextIndex,
       currentCard: nextCard,
       interpolatedText: replacement.interpolatedText,
@@ -407,7 +494,17 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       (v) => !restoredVirusIds.has(v.id)
     );
 
+    // If the card being undone was a trigger that scheduled a resolver, remove that resolver from deck
+    let updatedDeck = snapshot.deck ? [...snapshot.deck] : get().deck;
+    if (currentCard?.chain?.role === 'trigger' && currentCard.chain.chain_id) {
+      const chainId = currentCard.chain.chain_id;
+      updatedDeck = updatedDeck.filter(
+        (c) => !(c.chain?.chain_id === chainId && c.chain?.role === 'resolver')
+      );
+    }
+
     const restoredState = {
+      deck: updatedDeck,
       currentIndex: snapshot.turnIndex,
       currentCard: snapshot.card,
       interpolatedText: snapshot.interpolatedText,
@@ -437,7 +534,9 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
   startBoardSession: (
     boardId: BoardId,
     tiles: BoardTile[],
-    players: Player[]
+    players: Player[],
+    boardCards?: Card[],
+    hotTiers?: HotTier[]
   ) => {
     const activePlayers =
       players && players.length > 0 ? players : usePlayerStore.getState().players;
@@ -450,12 +549,21 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       boardJails[p.id] = 0;
     }
 
+    const activeHotTiers: HotTier[] =
+      hotTiers && hotTiers.length > 0 ? hotTiers : [1, 2, 3];
+    const boardDeck: Card[] =
+      boardCards && boardCards.length > 0
+        ? CardEngine.buildBoardDeck(boardCards, boardId, activeHotTiers)
+        : [];
+
     const nextState = {
       mode: 'board' as const,
       modeConfig: {
         boardId,
-        totalTiles: tiles.length > 0 ? tiles[tiles.length - 1].tile_number : 45,
+        totalTiles: tiles.length > 0 ? tiles[tiles.length - 1].tile_number : 64,
         tiles,
+        hotTiers: activeHotTiers,
+        usedBoardCardIds: [] as string[],
       },
       boardPositions,
       boardJails,
@@ -463,7 +571,8 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       lastDiceRoll: null,
       isGameOver: false,
       winner: null,
-      deck: [],
+      deck: boardDeck,
+      resolversPool: [],
       currentIndex: -1,
       currentCard: null,
       interpolatedText: '',
@@ -481,6 +590,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
   rollBoardDice: (forcedRoll?: number): BoardRollResult | null => {
     const {
       modeConfig,
+      deck: boardDeck,
       boardPositions,
       boardJails,
       currentTurnPlayerIndex,
@@ -535,13 +645,13 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
     const tiles: BoardTile[] = modeConfig?.tiles || [];
     const totalTiles =
       modeConfig?.totalTiles ||
-      (tiles.length > 0 ? tiles[tiles.length - 1].tile_number : 45);
+      (tiles.length > 0 ? tiles[tiles.length - 1].tile_number : 64);
 
     const currentPos = boardPositions[player.id] ?? 1;
     const destination = BoardEngine.calculateDestination(currentPos, roll, totalTiles);
     const destTile = tiles.find((t) => t.tile_number === destination);
 
-    const actionResult = destTile
+    const actionResult: TileActionResult = destTile
       ? BoardEngine.resolveTile(destTile)
       : {
           actionType: 'none' as const,
@@ -550,6 +660,59 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
           turnsLost: 0,
           drinks: 0,
         };
+
+    // Draw and interpolate dynamic card from the 721-card pool if board deck is loaded
+    let drawnCard: Card | null = null;
+    let interpolatedPrompt: string | undefined;
+    let cardAssignedPlayers: Player[] = [];
+    let cardCalculatedDrinks = actionResult.drinks;
+    let updatedModeConfig = modeConfig;
+
+    if (destTile && boardDeck && boardDeck.length > 0) {
+      const usedSet = new Set<string | number>(modeConfig?.usedBoardCardIds || []);
+      const drawOutcome = BoardEngine.drawCardForTile(
+        destTile,
+        boardDeck,
+        usedSet,
+        activePlayers.length,
+        {
+          totalTiles,
+          hotTiers: modeConfig?.hotTiers,
+          boardId: modeConfig?.boardId,
+        }
+      );
+
+      drawnCard = drawOutcome.card;
+
+      if (drawnCard) {
+        const replacement = VariableReplacer.replaceTokens(
+          drawnCard.text,
+          activePlayers,
+          {
+            intensity: drawnCard.intensity ?? 2,
+            baseDrinks: drawnCard.drinks_penalty ?? actionResult.drinks,
+            forcedFirstPlayer: player,
+          }
+        );
+
+        interpolatedPrompt = replacement.interpolatedText;
+        cardAssignedPlayers = replacement.assignedPlayers;
+        cardCalculatedDrinks = replacement.calculatedDrinks;
+
+        actionResult.drawnCard = drawnCard;
+        actionResult.interpolatedPrompt = interpolatedPrompt;
+        actionResult.assignedPlayers = cardAssignedPlayers;
+
+        for (const p of cardAssignedPlayers) {
+          usePlayerStore.getState().incrementTargeted(p.id);
+        }
+
+        updatedModeConfig = {
+          ...modeConfig,
+          usedBoardCardIds: Array.from(drawOutcome.nextUsedIds),
+        };
+      }
+    }
 
     const updatedPositions = { ...boardPositions };
     const updatedJails = { ...boardJails };
@@ -598,10 +761,15 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
     }
 
     const stateUpdate = {
+      modeConfig: updatedModeConfig,
       boardPositions: updatedPositions,
       boardJails: updatedJails,
       currentTurnPlayerIndex: nextPlayerIndex,
       lastDiceRoll: roll,
+      currentCard: drawnCard,
+      interpolatedText: interpolatedPrompt ?? '',
+      assignedPlayers: cardAssignedPlayers,
+      calculatedDrinks: cardCalculatedDrinks,
       isGameOver: victory,
       winner: winnerPlayer,
     };
@@ -614,6 +782,8 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       destination: updatedPositions[player.id],
       tile: destTile,
       actionResult,
+      drawnCard,
+      interpolatedPrompt,
       isVictory: victory,
       winner: winnerPlayer || undefined,
       extraRoll: actionResult.extraRoll,
@@ -632,6 +802,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       mode: null,
       modeConfig: null,
       deck: [],
+      resolversPool: [],
       currentIndex: -1,
       currentCard: null,
       interpolatedText: '',
@@ -687,16 +858,43 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
         usePlayerStore.getState().setPlayers(parsed.savedPlayers);
       }
 
+      let restoredDeck: Card[] = parsed.deck ?? [];
+      const restoredActiveViruses: ActiveVirus[] = parsed.activeViruses ?? [];
+      const restoredCurrentIndex = parsed.currentIndex ?? -1;
+
+      // Ensure remaining deck does not contain resolvers whose triggers are not active
+      if (restoredDeck.length > 0) {
+        const activeChainIds = new Set(
+          restoredActiveViruses.map((v) => v.chainId).filter(Boolean)
+        );
+        const playedCards =
+          restoredCurrentIndex >= 0
+            ? restoredDeck.slice(0, restoredCurrentIndex + 1)
+            : [];
+        const unplayedCards =
+          restoredCurrentIndex >= 0
+            ? restoredDeck.slice(restoredCurrentIndex + 1)
+            : restoredDeck;
+        const remainingCards = unplayedCards.filter((c) => {
+          if (c.chain?.role === 'resolver' || CardEngine.isResolverOrCure(c)) {
+            return c.chain?.chain_id ? activeChainIds.has(c.chain.chain_id) : false;
+          }
+          return true;
+        });
+        restoredDeck = [...playedCards, ...remainingCards];
+      }
+
       set({
         mode: parsed.mode ?? null,
         modeConfig: parsed.modeConfig ?? null,
-        deck: parsed.deck ?? [],
-        currentIndex: parsed.currentIndex ?? -1,
+        deck: restoredDeck,
+        resolversPool: parsed.resolversPool ?? [],
+        currentIndex: restoredCurrentIndex,
         currentCard: parsed.currentCard ?? null,
         interpolatedText: parsed.interpolatedText ?? '',
         assignedPlayers: parsed.assignedPlayers ?? [],
         calculatedDrinks: parsed.calculatedDrinks ?? 0,
-        activeViruses: parsed.activeViruses ?? [],
+        activeViruses: restoredActiveViruses,
         expiredVirusesQueue: parsed.expiredVirusesQueue ?? [],
         boardPositions: parsed.boardPositions ?? {},
         boardJails: parsed.boardJails ?? {},

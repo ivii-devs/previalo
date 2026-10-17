@@ -3,7 +3,12 @@
  * Strictly isolated domain definition for La Guatoca boards and tiles.
  */
 
-export type BoardId = 'guatoca_clasica' | 'guatoca_hot';
+import type { Card } from './card';
+import type { Player } from './player';
+
+export type BoardId = 'guatoca_clasica' | 'guatoca_hot' | 'guatoca_todos';
+
+export type HotTier = 1 | 2 | 3;
 
 export type TileType =
   | 'start'
@@ -43,4 +48,7 @@ export interface TileActionResult {
   turnsLost: number;
   drinks: number;
   modalPrompt?: string;
+  drawnCard?: Card;
+  interpolatedPrompt?: string;
+  assignedPlayers?: Player[];
 }
