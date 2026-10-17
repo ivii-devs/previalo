@@ -141,6 +141,42 @@ export class VariableReplacer {
   }
 
   /**
+   * Normalizes drink phrasing to avoid ungrammatical combinations like
+   * "1 trago tragos", "un trago tragos", "1 tragos", or "tragos tragos".
+   */
+  public static normalizeDrinkPhrasing(text: string): string {
+    return text
+      .replace(/\b(?:1\s+trago|un\s+trago)\s+tragos\b/gi, '1 trago')
+      .replace(/\b1\s+tragos\b/gi, '1 trago')
+      .replace(/\b(\d+)\s+tragos\s+tragos\b/gi, '$1 tragos')
+      .replace(/\btragos\s+tragos\b/gi, 'tragos');
+  }
+
+  /**
+   * Interpolates the {drinks} token and normalizes drink-related unit phrasing.
+   * Resolves duplicate wording (e.g. "{drinks} tragos" becoming "1 trago" or "2 tragos"
+   * instead of "1 trago tragos" or "2 tragos tragos") and handles countable nouns cleanly.
+   */
+  public static interpolateDrinks(text: string, drinks: number): string {
+    const drinksLabel = drinks === 1 ? '1 trago' : `${drinks} tragos`;
+    let result = text;
+
+    // 1. Replace {drinks} explicitly followed by trago/tragos (e.g. "{drinks} tragos" -> "1 trago" / "2 tragos")
+    result = result.replace(/(?:un\s+)?\{drinks\}\s+(?:tragos|trago)\b/gi, drinksLabel);
+
+    // 2. Replace {drinks} before other countable nouns as a pure number (e.g. "{drinks} copas" -> "2 copas")
+    result = result.replace(
+      /(?:un\s+)?\{drinks\}(?=\s+(?:copas|asientos|balas)\b)/gi,
+      String(drinks)
+    );
+
+    // 3. Replace standalone {drinks} (e.g. "Bebe {drinks}" -> "Bebe 1 trago" / "Bebe 2 tragos")
+    result = result.replace(/(?:un\s+)?\{drinks\}/gi, drinksLabel);
+
+    return this.normalizeDrinkPhrasing(result);
+  }
+
+  /**
    * Replaces tokens in raw card text with distinct players, calculated drinks, and team names.
    * Whitelisted tokens: {player1}, {player2}, {player3}, {player4}, {team}, {drinks}.
    */
@@ -208,8 +244,9 @@ export class VariableReplacer {
       ? this.calculateDrinks(context.intensity, context.baseDrinks)
       : 0;
     if (hasDrinksToken) {
-      const drinksLabel = drinks === 1 ? '1 trago' : `${drinks} tragos`;
-      interpolatedText = interpolatedText.replace(/\{drinks\}/g, drinksLabel);
+      interpolatedText = this.interpolateDrinks(interpolatedText, drinks);
+    } else {
+      interpolatedText = this.normalizeDrinkPhrasing(interpolatedText);
     }
 
     // 6. {team}
