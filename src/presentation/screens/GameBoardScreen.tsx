@@ -19,8 +19,14 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
   onVictory,
   onExitHome,
 }) => {
-  const [boardId, setBoardId] = useState<BoardId>('guatoca_clasica');
-  const [tiles, setTiles] = useState<BoardTile[]>([]);
+  const storeModeConfig = useGameSessionStore((state) => state.modeConfig);
+  const modeConfig = storeModeConfig || useGameSessionStore.getState().modeConfig;
+  const boardId: BoardId = modeConfig?.boardId || 'guatoca_clasica';
+  const hotTiers =
+    modeConfig?.hotTiers && modeConfig.hotTiers.length > 0
+      ? modeConfig.hotTiers
+      : [1, 2, 3];
+  const [tiles, setTiles] = useState<BoardTile[]>(modeConfig?.tiles || []);
   const [rolling, setRolling] = useState(false);
   const [activeTileModal, setActiveTileModal] = useState<{
     tile: BoardTile;
@@ -46,19 +52,36 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
   const rollBoardDice = useGameSessionStore((state) => state.rollBoardDice);
   const startBoardSession = useGameSessionStore((state) => state.startBoardSession);
 
-  // Load board tiles on mount or when boardId changes
+  // Load board tiles and dynamic board cards on mount
   useEffect(() => {
-    CatalogLoader.loadBoard(boardId)
-      .then((loadedTiles) => {
+    Promise.all([
+      CatalogLoader.loadBoard(boardId),
+      CatalogLoader.loadCategory('el_tablero').catch(() => []),
+    ])
+      .then(([loadedTiles, loadedCards]) => {
         setTiles(loadedTiles);
-        // If board session is not yet active or was for a different board, initialize
-        const activeMode = useGameSessionStore.getState().mode;
-        const positions = useGameSessionStore.getState().boardPositions;
-        if (activeMode !== 'board' || Object.keys(positions).length === 0) {
-          startBoardSession(boardId, loadedTiles, players.length >= 2 ? players : [
-            { id: 'p_1', name: 'Jugador 1', color: '#ec4899', avatar: '🦁', sips: 0, timesTargeted: 0 },
-            { id: 'p_2', name: 'Jugador 2', color: '#06b6d4', avatar: '🦊', sips: 0, timesTargeted: 0 },
-          ]);
+        const state = useGameSessionStore.getState();
+        const activeMode = state.mode;
+        const positions = state.boardPositions;
+        const currentConfigBoardId = state.modeConfig?.boardId;
+
+        if (
+          activeMode !== 'board' ||
+          Object.keys(positions).length === 0 ||
+          (currentConfigBoardId && currentConfigBoardId !== boardId)
+        ) {
+          startBoardSession(
+            boardId,
+            loadedTiles,
+            players.length >= 2
+              ? players
+              : [
+                  { id: 'p_1', name: 'Jugador 1', color: '#ec4899', avatar: '🦁', sips: 0, timesTargeted: 0 },
+                  { id: 'p_2', name: 'Jugador 2', color: '#06b6d4', avatar: '🦊', sips: 0, timesTargeted: 0 },
+                ],
+            loadedCards,
+            state.modeConfig?.hotTiers || [1, 2, 3]
+          );
         }
       })
       .catch((err) => {
@@ -119,11 +142,19 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
     }, 700);
   };
 
-  const handleChangeBoard = (newBoardId: BoardId) => {
-    if (newBoardId === boardId) return;
-    soundService.playTap();
-    setBoardId(newBoardId);
-  };
+  const badgeStyle =
+    boardId === 'guatoca_hot'
+      ? 'border-rose-500/40 bg-rose-500/15 text-rose-300'
+      : boardId === 'guatoca_todos'
+      ? 'border-amber-500/40 bg-amber-500/15 text-amber-300'
+      : 'border-emerald-500/40 bg-emerald-500/15 text-emerald-300';
+
+  const badgeLabel =
+    boardId === 'guatoca_hot'
+      ? `🌶️ Hot (64) · Niveles ${hotTiers.join(', ')}`
+      : boardId === 'guatoca_todos'
+      ? `🎲 Todos (64) · Niveles ${hotTiers.join(', ')}`
+      : '🍻 Clásica (64)';
 
   return (
     <div
@@ -145,30 +176,12 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
             <Home className="w-4 h-4" />
           </button>
 
-          {/* Board Type Switcher Toggle */}
-          <div className="flex rounded-full border theme-border bg-[var(--bg-elevated)] p-0.5">
-            <button
-              onClick={() => handleChangeBoard('guatoca_clasica')}
-              className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                boardId === 'guatoca_clasica'
-                  ? 'bg-emerald-500 text-slate-950 font-black shadow-xs'
-                  : 'text-[var(--text-muted)]'
-              }`}
-              data-testid="toggle-board-clasica"
-            >
-              Clásica (45)
-            </button>
-            <button
-              onClick={() => handleChangeBoard('guatoca_hot')}
-              className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                boardId === 'guatoca_hot'
-                  ? 'bg-rose-500 text-white font-black shadow-xs'
-                  : 'text-[var(--text-muted)]'
-              }`}
-              data-testid="toggle-board-hot"
-            >
-              Hot (40) 🌶️
-            </button>
+          {/* Read-only Active Board Modality Badge */}
+          <div
+            className={`px-3 py-1 rounded-full border text-xs font-black tracking-wide ${badgeStyle}`}
+            data-testid="active-board-badge"
+          >
+            {badgeLabel}
           </div>
         </div>
 

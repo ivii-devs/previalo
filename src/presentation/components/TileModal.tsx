@@ -1,5 +1,15 @@
 import React from 'react';
-import { Beer, Skull, Lock, ArrowUpRight, Trophy, Sparkles, CheckCircle2 } from 'lucide-react';
+import {
+  Beer,
+  Skull,
+  Lock,
+  ArrowUpRight,
+  Trophy,
+  Sparkles,
+  CheckCircle2,
+  RotateCcw,
+  Flame,
+} from 'lucide-react';
 import type { BoardTile } from '../../domain/types/board';
 import type { Player } from '../../domain/types/player';
 import { soundService } from '../../infrastructure/soundService';
@@ -34,19 +44,29 @@ export const TileModal: React.FC<TileModalProps> = ({
         return <Lock className="w-8 h-8 text-purple-400" />;
       case 'trap_skull':
         return <Skull className="w-8 h-8 text-rose-400" />;
+      case 'trap_back':
+        return <RotateCcw className="w-8 h-8 text-orange-400" />;
       case 'finish':
         return <Trophy className="w-8 h-8 text-yellow-400" />;
       case 'drink':
+      case 'give_drink':
         return <Beer className="w-8 h-8 text-amber-400" />;
       default:
         return <Sparkles className="w-8 h-8 text-[var(--accent-primary)]" />;
     }
   };
 
-  const drinks = actionResult?.drinks ?? tile.drinks_action ?? 0;
+  const drawnCard = actionResult?.drawnCard;
+  const dynamicPrompt: string | undefined =
+    actionResult?.interpolatedPrompt || drawnCard?.text;
+  const hotTier: number | undefined = drawnCard?.tier;
+
+  const drinks =
+    drawnCard?.drinks_penalty ?? actionResult?.drinks ?? tile.drinks_action ?? 0;
   const isJump = tile.tile_type === 'jump' || actionResult?.actionType === 'jump';
   const isJail = tile.tile_type === 'trap_jail' || actionResult?.actionType === 'trap_jail';
   const isSkull = tile.tile_type === 'trap_skull' || actionResult?.actionType === 'trap_skull';
+  const isBack = tile.tile_type === 'trap_back' || actionResult?.actionType === 'trap_back';
   const isFinish = tile.tile_type === 'finish' || actionResult?.actionType === 'finish';
 
   return (
@@ -62,8 +82,19 @@ export const TileModal: React.FC<TileModalProps> = ({
 
         {/* Tile Title & Number */}
         <div className="space-y-1">
-          <div className="text-xs font-black uppercase tracking-wider text-[var(--accent-primary)]">
-            Casilla #{tile.tile_number}
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-xs font-black uppercase tracking-wider text-[var(--accent-primary)]">
+              Casilla #{tile.tile_number}
+            </span>
+            {hotTier && (
+              <span
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-500/20 border border-rose-500/40 text-rose-300"
+                data-testid="tile-hot-tier-badge"
+              >
+                <Flame className="w-3 h-3 text-rose-400" />
+                Nivel {hotTier}
+              </span>
+            )}
           </div>
           <h3 className="text-xl font-black theme-text-primary">
             {tile.title || '¡Evento de Tablero!'}
@@ -78,28 +109,44 @@ export const TileModal: React.FC<TileModalProps> = ({
           </div>
         )}
 
-        {/* Tile Description */}
-        <div className="w-full p-4 rounded-2xl border theme-border bg-[var(--bg-elevated)] space-y-2">
-          <p className="text-sm font-semibold theme-text-primary leading-relaxed">
-            {tile.description}
-          </p>
+        {/* Dynamic Card & Tile Effect Box */}
+        <div className="w-full p-4 rounded-2xl border theme-border bg-[var(--bg-elevated)] space-y-2.5">
+          {dynamicPrompt ? (
+            <p
+              className="text-sm font-bold theme-text-primary leading-relaxed"
+              data-testid="tile-dynamic-card"
+            >
+              {dynamicPrompt}
+            </p>
+          ) : (
+            <p className="text-sm font-semibold theme-text-primary leading-relaxed">
+              {tile.description}
+            </p>
+          )}
 
           {/* Special Action Callouts */}
           {isJump && (
             <div className="text-xs font-black text-cyan-300">
-              ¡De oca a oca! Salta a la casilla {actionResult?.destination ?? tile.action_jump_to} y vuelve a tirar.
+              ¡De bar en bar! Salta a la casilla {actionResult?.destination ?? tile.action_jump_to} y vuelve a tirar.
             </div>
           )}
 
           {isJail && (
             <div className="text-xs font-black text-purple-300">
-              🔒 ¡A la Cárcel! Pierdes {actionResult?.turnsLost ?? tile.turns_lost ?? 1} turnos.
+              🔒 ¡A la Cárcel! Pierdes {actionResult?.turnsLost ?? tile.turns_lost ?? 1}{' '}
+              {(actionResult?.turnsLost ?? tile.turns_lost ?? 1) === 1 ? 'turno' : 'turnos'}.
             </div>
           )}
 
           {isSkull && (
             <div className="text-xs font-black text-rose-300">
               💀 ¡Muerte súbita! Vuelves al inicio (casilla 1).
+            </div>
+          )}
+
+          {isBack && (
+            <div className="text-xs font-black text-orange-300">
+              ↩️ ¡Retroceso! Vuelves a la casilla {actionResult?.destination ?? tile.action_jump_to}.
             </div>
           )}
 

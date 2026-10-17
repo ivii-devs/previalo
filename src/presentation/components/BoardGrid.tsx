@@ -1,5 +1,19 @@
 import React, { useMemo } from 'react';
-import { Skull, Lock, ArrowUpRight, Trophy, Beer, Sparkles, Flag } from 'lucide-react';
+import {
+  Skull,
+  Lock,
+  ArrowUpRight,
+  Trophy,
+  Beer,
+  Sparkles,
+  Flag,
+  RotateCcw,
+  Gift,
+  Eye,
+  Swords,
+  Users,
+  Hand,
+} from 'lucide-react';
 import type { BoardTile } from '../../domain/types/board';
 import type { Player } from '../../domain/types/player';
 
@@ -61,8 +75,18 @@ export const BoardGrid: React.FC<BoardGridProps> = ({
         return 'border-purple-500 bg-purple-950/40 text-purple-300 shadow-[0_0_12px_rgba(168,85,247,0.35)]';
       case 'trap_skull':
         return 'border-rose-500 bg-rose-950/50 text-rose-300 shadow-[0_0_14px_rgba(244,63,94,0.4)]';
+      case 'trap_back':
+        return 'border-orange-500/80 bg-orange-950/40 text-orange-300';
       case 'drink':
+      case 'give_drink':
         return 'border-amber-500/80 bg-amber-950/30 text-amber-300';
+      case 'truth':
+        return 'border-pink-500/80 bg-pink-950/30 text-pink-300';
+      case 'versus':
+        return 'border-sky-500/80 bg-sky-950/30 text-sky-300';
+      case 'group_event':
+      case 'yo_nunca':
+        return 'border-teal-500/80 bg-teal-950/30 text-teal-300';
       case 'challenge':
         return 'border-indigo-500/80 bg-indigo-950/30 text-indigo-300';
       default:
@@ -82,8 +106,20 @@ export const BoardGrid: React.FC<BoardGridProps> = ({
         return <Lock className="w-3.5 h-3.5 text-purple-400" />;
       case 'trap_skull':
         return <Skull className="w-3.5 h-3.5 text-rose-400" />;
+      case 'trap_back':
+        return <RotateCcw className="w-3.5 h-3.5 text-orange-400" />;
       case 'drink':
         return <Beer className="w-3 h-3 text-amber-400" />;
+      case 'give_drink':
+        return <Gift className="w-3 h-3 text-amber-400" />;
+      case 'truth':
+        return <Eye className="w-3 h-3 text-pink-400" />;
+      case 'versus':
+        return <Swords className="w-3 h-3 text-sky-400" />;
+      case 'group_event':
+        return <Users className="w-3 h-3 text-teal-400" />;
+      case 'yo_nunca':
+        return <Hand className="w-3 h-3 text-teal-400" />;
       case 'challenge':
         return <Sparkles className="w-3 h-3 text-indigo-400" />;
       default:
