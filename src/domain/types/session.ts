@@ -25,6 +25,7 @@ export interface HistorySnapshot {
   sipsAwarded?: Map<string, number> | Record<string, number>;
   previousViruses: ActiveVirus[];
   turnIndex: number;
+  deck?: Card[];
   timestamp?: number;
 }
 

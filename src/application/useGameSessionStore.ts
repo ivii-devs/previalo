@@ -221,7 +221,8 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
 
     // If first card is a trigger, schedule its resolver in the deck
     let hasResolver = false;
-    if (firstCard.chain?.role === 'trigger') {
+    let scheduledDelay: number | undefined;
+    if (firstCard.chain?.role === 'trigger' && !CardEngine.isResolverOrCure(firstCard)) {
       const scheduleResult = CardEngine.scheduleResolverInDeck(
         activeDeck,
         0,
@@ -232,6 +233,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       if (scheduleResult.scheduledResolver) {
         activeDeck = scheduleResult.updatedDeck;
         hasResolver = true;
+        scheduledDelay = scheduleResult.scheduledDelay;
       }
     }
 
@@ -242,11 +244,18 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
         assignedPlayers[0],
         assignedPlayers,
         hasResolver,
-        interpolatedText
+        interpolatedText,
+        scheduledDelay
       );
       initialViruses.push(newVirus);
       soundService.playVirusAlert();
     }
+
+    const syncedInitialViruses = VirusManager.syncResolverDistances(
+      initialViruses,
+      activeDeck,
+      0
+    );
 
     // Award initial targeted & drinks to players
     const sipsAwarded: Record<string, number> = {};
@@ -280,7 +289,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       interpolatedText,
       assignedPlayers,
       calculatedDrinks,
-      activeViruses: initialViruses,
+      activeViruses: syncedInitialViruses,
       expiredVirusesQueue: [],
       history: [],
       isGameOver: false,
@@ -375,13 +384,17 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
     let finalViruses = [...updatedViruses];
 
     // If nextCard is a resolver, resolve matching active virus immediately without modal
-    if (nextCard.chain?.role === 'resolver' && nextCard.chain.chain_id) {
+    if (
+      (nextCard.chain?.role === 'resolver' || CardEngine.isResolverOrCure(nextCard)) &&
+      nextCard.chain?.chain_id
+    ) {
       finalViruses = VirusManager.resolveVirus(finalViruses, nextCard.chain.chain_id);
     }
 
     // If nextCard is a trigger, schedule its resolver in the deck
     let hasResolver = false;
-    if (nextCard.chain?.role === 'trigger') {
+    let scheduledDelay: number | undefined;
+    if (nextCard.chain?.role === 'trigger' && !CardEngine.isResolverOrCure(nextCard)) {
       const scheduleResult = CardEngine.scheduleResolverInDeck(
         workingDeck,
         nextIndex,
@@ -392,6 +405,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       if (scheduleResult.scheduledResolver) {
         workingDeck = scheduleResult.updatedDeck;
         hasResolver = true;
+        scheduledDelay = scheduleResult.scheduledDelay;
       }
     }
 
@@ -402,11 +416,15 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
         replacement.assignedPlayers[0],
         replacement.assignedPlayers,
         hasResolver,
-        replacement.interpolatedText
+        replacement.interpolatedText,
+        scheduledDelay
       );
       finalViruses.push(newVirus);
       soundService.playVirusAlert();
     }
+
+    // Synchronize all active resolver-backed viruses with their exact index distance in workingDeck
+    finalViruses = VirusManager.syncResolverDistances(finalViruses, workingDeck, nextIndex);
 
     // 6. Update player store sips & targeted
     for (const p of replacement.assignedPlayers) {
@@ -494,14 +512,22 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       (v) => !restoredVirusIds.has(v.id)
     );
 
-    // If the card being undone was a trigger that scheduled a resolver, remove that resolver from deck
+    // If the card being undone was a trigger that scheduled a resolver, remove that resolver from future deck positions
     let updatedDeck = snapshot.deck ? [...snapshot.deck] : get().deck;
     if (currentCard?.chain?.role === 'trigger' && currentCard.chain.chain_id) {
       const chainId = currentCard.chain.chain_id;
       updatedDeck = updatedDeck.filter(
-        (c) => !(c.chain?.chain_id === chainId && c.chain?.role === 'resolver')
+        (c, idx) =>
+          idx <= snapshot.turnIndex ||
+          !(c.chain?.chain_id === chainId && c.chain?.role === 'resolver')
       );
     }
+
+    const syncedPreviousViruses = VirusManager.syncResolverDistances(
+      snapshot.previousViruses,
+      updatedDeck,
+      snapshot.turnIndex
+    );
 
     const restoredState = {
       deck: updatedDeck,
@@ -510,7 +536,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       interpolatedText: snapshot.interpolatedText,
       assignedPlayers: snapshot.assignedPlayers,
       calculatedDrinks: snapshot.calculatedDrinks,
-      activeViruses: snapshot.previousViruses,
+      activeViruses: syncedPreviousViruses,
       expiredVirusesQueue: prunedExpiredQueue,
       isGameOver: false,
       winner: null,
@@ -862,7 +888,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       const restoredActiveViruses: ActiveVirus[] = parsed.activeViruses ?? [];
       const restoredCurrentIndex = parsed.currentIndex ?? -1;
 
-      // Ensure remaining deck does not contain resolvers whose triggers are not active
+      // Ensure remaining deck does not contain resolvers whose triggers are not active/played
       if (restoredDeck.length > 0) {
         const activeChainIds = new Set(
           restoredActiveViruses.map((v) => v.chainId).filter(Boolean)
@@ -871,18 +897,35 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
           restoredCurrentIndex >= 0
             ? restoredDeck.slice(0, restoredCurrentIndex + 1)
             : [];
+        const playedTriggerChainIds = new Set(
+          playedCards
+            .filter((c) => c.chain?.role === 'trigger' && c.chain?.chain_id)
+            .map((c) => c.chain!.chain_id!)
+        );
         const unplayedCards =
           restoredCurrentIndex >= 0
             ? restoredDeck.slice(restoredCurrentIndex + 1)
             : restoredDeck;
         const remainingCards = unplayedCards.filter((c) => {
           if (c.chain?.role === 'resolver' || CardEngine.isResolverOrCure(c)) {
+            if (
+              c.chain?.chain_type === 'immediate_sequence' ||
+              c.chain?.chain_type === 'champion_battle'
+            ) {
+              return c.chain?.chain_id ? playedTriggerChainIds.has(c.chain.chain_id) : false;
+            }
             return c.chain?.chain_id ? activeChainIds.has(c.chain.chain_id) : false;
           }
           return true;
         });
         restoredDeck = [...playedCards, ...remainingCards];
       }
+
+      const syncedActiveViruses = VirusManager.syncResolverDistances(
+        restoredActiveViruses,
+        restoredDeck,
+        restoredCurrentIndex
+      );
 
       set({
         mode: parsed.mode ?? null,
@@ -894,7 +937,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
         interpolatedText: parsed.interpolatedText ?? '',
         assignedPlayers: parsed.assignedPlayers ?? [],
         calculatedDrinks: parsed.calculatedDrinks ?? 0,
-        activeViruses: restoredActiveViruses,
+        activeViruses: syncedActiveViruses,
         expiredVirusesQueue: parsed.expiredVirusesQueue ?? [],
         boardPositions: parsed.boardPositions ?? {},
         boardJails: parsed.boardJails ?? {},

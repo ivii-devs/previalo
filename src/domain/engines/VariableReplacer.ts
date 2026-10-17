@@ -13,6 +13,8 @@ export interface VariableContext {
   turnHistory?: Map<string, number> | Record<string, number>; // player id -> pick count
   lastPickedTurn?: Map<string, number> | Record<string, number>; // player id -> turn index
   currentTurnIndex?: number;
+  forcedFirstPlayer?: Player;
+  fixedAssignedPlayers?: Player[];
 }
 
 export interface VariableResult {
@@ -151,17 +153,28 @@ export class VariableReplacer {
     const assignedPlayers: Player[] = [];
     const usedIds = new Set<string>();
 
+    const fixed = context.fixedAssignedPlayers;
+
     // 1. {player1}
     if (interpolatedText.includes('{player1}')) {
-      const p1 = this.pickWeightedPlayer(players, context, usedIds);
+      const p1 =
+        fixed && fixed[0]
+          ? fixed[0]
+          : (context.forcedFirstPlayer ?? this.pickWeightedPlayer(players, context, usedIds));
       usedIds.add(p1.id);
       assignedPlayers.push(p1);
       interpolatedText = interpolatedText.replace(/\{player1\}/g, p1.name);
+    } else if (context.forcedFirstPlayer) {
+      usedIds.add(context.forcedFirstPlayer.id);
+      assignedPlayers.push(context.forcedFirstPlayer);
     }
 
     // 2. {player2} - strict distinctness
     if (interpolatedText.includes('{player2}')) {
-      const p2 = this.pickWeightedPlayer(players, context, usedIds);
+      const p2 =
+        fixed && fixed[1]
+          ? fixed[1]
+          : this.pickWeightedPlayer(players, context, usedIds);
       usedIds.add(p2.id);
       assignedPlayers.push(p2);
       interpolatedText = interpolatedText.replace(/\{player2\}/g, p2.name);
@@ -169,7 +182,10 @@ export class VariableReplacer {
 
     // 3. {player3} - strict distinctness
     if (interpolatedText.includes('{player3}')) {
-      const p3 = this.pickWeightedPlayer(players, context, usedIds);
+      const p3 =
+        fixed && fixed[2]
+          ? fixed[2]
+          : this.pickWeightedPlayer(players, context, usedIds);
       usedIds.add(p3.id);
       assignedPlayers.push(p3);
       interpolatedText = interpolatedText.replace(/\{player3\}/g, p3.name);
@@ -177,16 +193,24 @@ export class VariableReplacer {
 
     // 4. {player4} - strict distinctness
     if (interpolatedText.includes('{player4}')) {
-      const p4 = this.pickWeightedPlayer(players, context, usedIds);
+      const p4 =
+        fixed && fixed[3]
+          ? fixed[3]
+          : this.pickWeightedPlayer(players, context, usedIds);
       usedIds.add(p4.id);
       assignedPlayers.push(p4);
       interpolatedText = interpolatedText.replace(/\{player4\}/g, p4.name);
     }
 
     // 5. {drinks}
-    const drinks = this.calculateDrinks(context.intensity, context.baseDrinks);
-    const drinksLabel = drinks === 1 ? '1 trago' : `${drinks} tragos`;
-    interpolatedText = interpolatedText.replace(/\{drinks\}/g, drinksLabel);
+    const hasDrinksToken = interpolatedText.includes('{drinks}');
+    const drinks = hasDrinksToken
+      ? this.calculateDrinks(context.intensity, context.baseDrinks)
+      : 0;
+    if (hasDrinksToken) {
+      const drinksLabel = drinks === 1 ? '1 trago' : `${drinks} tragos`;
+      interpolatedText = interpolatedText.replace(/\{drinks\}/g, drinksLabel);
+    }
 
     // 6. {team}
     if (interpolatedText.includes('{team}')) {
