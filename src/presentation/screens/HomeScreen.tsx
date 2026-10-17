@@ -190,7 +190,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectMode }) => {
                   El Tablero
                 </div>
                 <div className="text-[11px] theme-text-muted">
-                  45 casillas con saltos, cárcel, calavera y meta.
+                  64 casillas con 721 cartas de retos, bares y niveles Hot.
                 </div>
               </div>
             </div>
@@ -210,7 +210,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectMode }) => {
           {categories.map((cat) => (
             <button
               key={cat.category_id}
-              onClick={() => handleHeroClick('category', cat.category_id)}
+              onClick={() =>
+                cat.category_id === 'el_tablero'
+                  ? handleHeroClick('board')
+                  : handleHeroClick('category', cat.category_id)
+              }
               className="min-h-[110px] p-2 rounded-2xl border theme-border bg-[var(--bg-surface)] hover:border-[var(--accent-primary)] hover:scale-[1.03] active:scale-95 transition-all flex flex-col justify-between items-center text-center cursor-pointer shadow-sm group"
               data-testid={`cat-btn-${cat.category_id}`}
             >

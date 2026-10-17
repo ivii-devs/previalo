@@ -81,13 +81,15 @@ export const App: React.FC = () => {
     mode: 'category' | 'preset' | 'chaos' | 'board',
     targetId?: string
   ) => {
+    if (mode === 'board' || (mode === 'category' && targetId === 'el_tablero')) {
+      setSetupMode('board');
+      setSetupTargetId(undefined);
+      setCurrentScreen('setup');
+      return;
+    }
     setSetupMode(mode);
     setSetupTargetId(targetId);
-    if (mode === 'board') {
-      setCurrentScreen('game-board');
-    } else {
-      setCurrentScreen('setup');
-    }
+    setCurrentScreen('setup');
   };
 
   const handleStartGame = (mode: 'cards' | 'board') => {
@@ -163,10 +165,9 @@ export const App: React.FC = () => {
           <PodiumScreen
             onPlayAgain={() => {
               if (activeSessionMode === 'board') {
-                setCurrentScreen('game-board');
-              } else {
-                setCurrentScreen('setup');
+                setSetupMode('board');
               }
+              setCurrentScreen('setup');
             }}
             onExitHome={() => setCurrentScreen('home')}
           />
