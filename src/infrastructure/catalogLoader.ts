@@ -7,6 +7,7 @@
 import { get, set, del, clear } from 'idb-keyval';
 import type { Card } from '../domain/types/card';
 import type { BoardTile, BoardId } from '../domain/types/board';
+import { CardEngine } from '../domain/engines/CardEngine';
 
 export interface CatalogPackMeta {
   id?: string;
@@ -70,13 +71,50 @@ export interface CatalogLoaderOptions {
 export const CATALOG_CACHE_KEYS = {
   manifest: 'previalo_catalog_manifest',
   category: (id: string) => `cat_${id}`,
+  categoryHash: (id: string) => `cat_hash_${id}`,
   preset: (id: string) => `preset_${id}`,
+  presetHash: (id: string) => `preset_hash_${id}`,
   board: (id: string) => `board_${id}`,
 } as const;
+
+const LEGACY_RETOS_SHA256 = new Set([
+  'b1ef1aa283efff1d6ccde0838b5b4547da883583deedb640a7afdda3b245a34d',
+  'ee4ba68d218a9199c62f4277fa870c06c64860484f235ff7c954dc29b03bc177',
+  'c487bb55f122b67286bd6b0cda411db87317cb7360e3736b79f0a7ae734aebc1',
+  '986c8fea23099990af3f1021589482a2c2840dd9a079445a63f2b9c947605c9b',
+]);
 
 export class CatalogLoader {
   public static readonly DEFAULT_BASE_PATH = '/data';
   private static memoryCache = new Map<string, any>();
+
+  private static hasLegacyCatalogHash(manifest?: CatalogManifest): boolean {
+    if (!manifest) return false;
+    const hasLegacyCategory = Boolean(
+      manifest.categories?.some(
+        (c) => c.category_id === 'retos_y_virus' && c.sha256 && LEGACY_RETOS_SHA256.has(c.sha256)
+      )
+    );
+    const hasLegacyPreset = Boolean(
+      manifest.presets?.some(
+        (p) => p.preset_id === 'modo_caliente' && p.sha256 && LEGACY_RETOS_SHA256.has(p.sha256)
+      )
+    );
+    return hasLegacyCategory || hasLegacyPreset;
+  }
+
+  private static hasLegacyCards(cards?: Card[]): boolean {
+    if (!Array.isArray(cards)) return false;
+    return cards.some(
+      (c) =>
+        (c.id === 3266 && c.chain?.role !== 'resolver') ||
+        ((c.id === 3120 || c.id === 3483 || c.id === 3625 || c.id === 6248 || c.id === 6253) &&
+          !c.chain) ||
+        (c.id === 5287 && typeof c.text === 'string' && c.text.includes('más bajos')) ||
+        (c.id === 5288 && typeof c.text === 'string' && c.text.includes('más altos')) ||
+        (CardEngine.isResolverOrCure(c) && c.chain?.role !== 'resolver')
+    );
+  }
 
   /**
    * Internal cache getter: tries idb-keyval first, with fallback to memoryCache.
@@ -135,12 +173,13 @@ export class CatalogLoader {
 
   /**
    * Loads catalog_manifest.json from IndexedDB or /data/catalog_manifest.json, caches in IDB.
+   * Automatically invalidates cached manifests that still carry known legacy retos_y_virus hashes.
    */
   public static async loadManifest(options?: CatalogLoaderOptions): Promise<CatalogManifest> {
     const key = CATALOG_CACHE_KEYS.manifest;
     const cached = await this.getFromCache<CatalogManifest>(key);
 
-    if (cached && !options?.forceRefresh) {
+    if (cached && !options?.forceRefresh && !this.hasLegacyCatalogHash(cached)) {
       return cached;
     }
 
@@ -165,6 +204,7 @@ export class CatalogLoader {
 
   /**
    * Loads category cards from IDB or /data/by_category/<file>,
+   * validates cached SHA-256 against manifest SHA-256 when available,
    * normalizes 07_el_tablero.json (concatenates drink_events, board_events, hot_events_level1..3),
    * and caches in IDB.
    */
@@ -173,10 +213,36 @@ export class CatalogLoader {
     options?: CatalogLoaderOptions
   ): Promise<Card[]> {
     const key = CATALOG_CACHE_KEYS.category(categoryId);
+    const hashKey = CATALOG_CACHE_KEYS.categoryHash(categoryId);
     const cached = await this.getFromCache<Card[]>(key);
+    const cachedHash = await this.getFromCache<string>(hashKey);
 
-    if (cached && !options?.forceRefresh) {
-      return cached;
+    if (
+      cached &&
+      !options?.forceRefresh &&
+      !(cachedHash && LEGACY_RETOS_SHA256.has(cachedHash)) &&
+      !this.hasLegacyCards(cached)
+    ) {
+      const cachedManifest = await this.getFromCache<CatalogManifest>(CATALOG_CACHE_KEYS.manifest);
+      if (!this.hasLegacyCatalogHash(cachedManifest)) {
+        const cachedCatMeta = cachedManifest?.categories?.find(
+          (c) => c.category_id === categoryId
+        );
+
+        if (cachedCatMeta?.sha256) {
+          if (cachedHash === cachedCatMeta.sha256) {
+            return cached;
+          }
+        } else if (!cachedHash && (!cachedManifest || Boolean(cachedCatMeta))) {
+          return cached;
+        } else if (cachedHash) {
+          const manifest = await this.loadManifest(options);
+          const catMeta = manifest.categories.find((c) => c.category_id === categoryId);
+          if (!catMeta?.sha256 || cachedHash === catMeta.sha256) {
+            return cached;
+          }
+        }
+      }
     }
 
     const manifest = await this.loadManifest(options);
@@ -218,6 +284,9 @@ export class CatalogLoader {
       }
 
       await this.setToCache(key, cards);
+      if (catMeta.sha256) {
+        await this.setToCache(hashKey, catMeta.sha256);
+      }
       return cards;
     } catch (err) {
       if (cached) {
@@ -230,17 +299,42 @@ export class CatalogLoader {
   }
 
   /**
-   * Loads preset cards from IDB or /data/curated_presets/<file>, caches in IDB.
+   * Loads preset cards from IDB or /data/curated_presets/<file>,
+   * validates cached SHA-256 against manifest SHA-256 when available, and caches in IDB.
    */
   public static async loadPreset(
     presetId: string,
     options?: CatalogLoaderOptions
   ): Promise<Card[]> {
     const key = CATALOG_CACHE_KEYS.preset(presetId);
+    const hashKey = CATALOG_CACHE_KEYS.presetHash(presetId);
     const cached = await this.getFromCache<Card[]>(key);
+    const cachedHash = await this.getFromCache<string>(hashKey);
 
-    if (cached && !options?.forceRefresh) {
-      return cached;
+    if (
+      cached &&
+      !options?.forceRefresh &&
+      !(cachedHash && LEGACY_RETOS_SHA256.has(cachedHash)) &&
+      !this.hasLegacyCards(cached)
+    ) {
+      const cachedManifest = await this.getFromCache<CatalogManifest>(CATALOG_CACHE_KEYS.manifest);
+      if (!this.hasLegacyCatalogHash(cachedManifest)) {
+        const cachedPreMeta = cachedManifest?.presets?.find((p) => p.preset_id === presetId);
+
+        if (cachedPreMeta?.sha256) {
+          if (cachedHash === cachedPreMeta.sha256) {
+            return cached;
+          }
+        } else if (!cachedHash && (!cachedManifest || Boolean(cachedPreMeta))) {
+          return cached;
+        } else if (cachedHash) {
+          const manifest = await this.loadManifest(options);
+          const preMeta = manifest.presets.find((p) => p.preset_id === presetId);
+          if (!preMeta?.sha256 || cachedHash === preMeta.sha256) {
+            return cached;
+          }
+        }
+      }
     }
 
     const manifest = await this.loadManifest(options);
@@ -265,6 +359,9 @@ export class CatalogLoader {
       }
 
       await this.setToCache(key, data.cards);
+      if (preMeta.sha256) {
+        await this.setToCache(hashKey, preMeta.sha256);
+      }
       return data.cards;
     } catch (err) {
       if (cached) {
