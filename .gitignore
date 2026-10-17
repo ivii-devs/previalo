@@ -75,8 +75,15 @@ build/
 .output/
 
 # ========================================================
-# 9. Trazas y reportes de pruebas
+# 9. Suites de pruebas automáticas, archivos de test y reportes
 # ========================================================
+/tests/
+tests/
+**/__tests__/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
 coverage/
 .nyc_output/
 *.lcov
@@ -137,6 +144,8 @@ $RECYCLE.BIN/
 *.sw?
 *.orig
 *.rej
+*.tmp
+temp_*
 
 # ========================================================
 # 14. Plataformas de despliegue y herramientas de empaquetado o caché de gestor de paquetes
