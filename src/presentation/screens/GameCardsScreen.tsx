@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { RotateCcw, Home, Plus, Minus, ArrowRight, Beer } from 'lucide-react';
 import { useGameSessionStore } from '../../application/useGameSessionStore';
 import { usePlayerStore } from '../../application/usePlayerStore';
@@ -7,6 +7,7 @@ import { CardDeck } from '../components/CardDeck';
 import { VirusHUD } from '../components/VirusHUD';
 import { VirusExpiredModal } from '../components/VirusExpiredModal';
 import { soundService } from '../../infrastructure/soundService';
+import { useDragToScroll } from '../hooks/useDragToScroll';
 
 export interface GameCardsScreenProps {
   onGameOver: () => void;
@@ -75,6 +76,20 @@ export const GameCardsScreen: React.FC<GameCardsScreenProps> = ({
     addSips(playerId, delta);
   };
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useDragToScroll(scrollRef);
+
+  // Reset scroll to top on card advance
+  useEffect(() => {
+    if (scrollRef.current) {
+      if (typeof scrollRef.current.scrollTo === 'function') {
+        scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        scrollRef.current.scrollTop = 0;
+      }
+    }
+  }, [currentIndex]);
+
   const activeTurnPlayer = assignedPlayers[0] || players[0];
   const progressPercent = deck.length > 0 ? Math.min(100, Math.round(((currentIndex + 1) / deck.length) * 100)) : 0;
 
@@ -94,7 +109,8 @@ export const GameCardsScreen: React.FC<GameCardsScreenProps> = ({
 
   return (
     <div
-      className="flex flex-col h-full w-full max-w-md mx-auto justify-between px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] overflow-hidden select-none"
+      ref={scrollRef}
+      className="flex-1 min-h-0 h-full flex flex-col w-full max-w-md mx-auto px-3 pt-3 pb-[calc(2rem+env(safe-area-inset-bottom,20px))] space-y-4 overflow-y-auto select-none scroll-container"
       data-testid="game-cards-screen"
     >
       {/* Top Header Bar */}
@@ -139,7 +155,7 @@ export const GameCardsScreen: React.FC<GameCardsScreenProps> = ({
       </div>
 
       {/* Center Main Card Zone */}
-      <div className="flex-1 flex items-center justify-center my-auto py-2">
+      <div className="py-2 shrink-0 flex items-center justify-center">
         {currentCard && (
           <CardDeck remainingCount={deck.length - currentIndex}>
             <SwipeableCard
@@ -154,7 +170,7 @@ export const GameCardsScreen: React.FC<GameCardsScreenProps> = ({
       </div>
 
       {/* Bottom Controls Zone */}
-      <div className="space-y-2 shrink-0">
+      <div className="space-y-2 shrink-0 pt-1">
         {/* Active Virus HUD */}
         <VirusHUD activeViruses={activeViruses} />
 
