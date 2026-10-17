@@ -99,8 +99,8 @@
       "name": "Retos y Virus",
       "description": "",
       "file": "by_category/04_retos_y_virus.json",
-      "size_bytes": 1316233,
-      "sha256": "b1ef1aa283efff1d6ccde0838b5b4547da883583deedb640a7afdda3b245a34d",
+      "size_bytes": 1320251,
+      "sha256": "5cc41f6e317975f21874264bd485529cf7bf6638e9a7691edc0fe20145e58a92",
       "card_count": 2310,
       "packs": [
         {
@@ -311,8 +311,8 @@
       "name": "🔥 Modo Caliente / Previa Hot",
       "description": "Retos desinhibidos, confesiones íntimas, dilemas picantes y virus sensuales.",
       "file": "curated_presets/02_modo_caliente.json",
-      "size_bytes": 951983,
-      "sha256": "986c8fea23099990af3f1021589482a2c2840dd9a079445a63f2b9c947605c9b",
+      "size_bytes": 952018,
+      "sha256": "e4d01571d74d31f8196f6260cc31c543e8889cf66d3a4869a62a22adf5f63590",
       "card_count": 1661
     },
     {

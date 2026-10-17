@@ -7167,7 +7167,7 @@
       "id": 3119,
       "game_id": "picolo_party",
       "pack_id": "picolo_default",
-      "type": "dare",
+      "type": "sequence",
       "text": "Elegid juntos al jugador más fuerte, que tendrá que beber {drinks} tragos",
       "option_a": null,
       "option_b": null,
@@ -7177,13 +7177,25 @@
       "language": "es-ES",
       "source": "picolo_reference",
       "origin_type": "github_repository",
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_default_seq_3119",
+        "chain_type": "immediate_sequence",
+        "role": "trigger",
+        "delay_cards": 1,
+        "min_delay_cards": 1,
+        "max_delay_cards": 2,
+        "resolver_ids": [
+          "3120",
+          "3121"
+        ]
+      }
     },
     {
       "id": 3120,
       "game_id": "picolo_party",
       "pack_id": "picolo_default",
-      "type": "dare",
+      "type": "sequence",
       "text": "Chuck Norris no lo tolera, el jugador elegido tendrá que beber {drinks} tragos extra",
       "option_a": null,
       "option_b": null,
@@ -7193,13 +7205,19 @@
       "language": "es-ES",
       "source": "picolo_reference",
       "origin_type": "github_repository",
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_default_seq_3119",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "3119"
+      }
     },
     {
       "id": 3121,
       "game_id": "picolo_party",
       "pack_id": "picolo_default",
-      "type": "dare",
+      "type": "sequence",
       "text": "Hulk se venga y reparte {drinks} tragos",
       "option_a": null,
       "option_b": null,
@@ -7209,7 +7227,13 @@
       "language": "es-ES",
       "source": "picolo_reference",
       "origin_type": "github_repository",
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_default_seq_3119",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "3119"
+      }
     },
     {
       "id": 3122,
@@ -9167,7 +9191,7 @@
       "id": 3482,
       "game_id": "picolo_party",
       "pack_id": "picolo_default",
-      "type": "category",
+      "type": "sequence",
       "text": "\"Actrices de cine súper sexies\", ¡el jugador que repita o que no encuentre ninguna tendrá que beber {drinks} tragos! Empieza {player1}",
       "option_a": null,
       "option_b": null,
@@ -9177,13 +9201,26 @@
       "language": "es-ES",
       "source": "picolo_reference",
       "origin_type": "github_repository",
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_default_seq_3482",
+        "chain_type": "immediate_sequence",
+        "role": "trigger",
+        "delay_cards": 1,
+        "min_delay_cards": 1,
+        "max_delay_cards": 2,
+        "resolver_ids": [
+          "3483",
+          "3484",
+          "3485"
+        ]
+      }
     },
     {
       "id": 3483,
       "game_id": "picolo_party",
       "pack_id": "picolo_default",
-      "type": "category",
+      "type": "sequence",
       "text": "Los que hayan dicho Megan Fox reparten 10 tragos",
       "option_a": null,
       "option_b": null,
@@ -9193,13 +9230,19 @@
       "language": "es-ES",
       "source": "picolo_reference",
       "origin_type": "github_repository",
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_default_seq_3482",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "3482"
+      }
     },
     {
       "id": 3484,
       "game_id": "picolo_party",
       "pack_id": "picolo_default",
-      "type": "category",
+      "type": "sequence",
       "text": "Los que hayan dicho Scarlett Johansson, que se beban {drinks} tragos",
       "option_a": null,
       "option_b": null,
@@ -9209,13 +9252,19 @@
       "language": "es-ES",
       "source": "picolo_reference",
       "origin_type": "github_repository",
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_default_seq_3482",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "3482"
+      }
     },
     {
       "id": 3485,
       "game_id": "picolo_party",
       "pack_id": "picolo_default",
-      "type": "category",
+      "type": "sequence",
       "text": "Los que hayan dicho Natalie Portman o Jessica Alba reparten {drinks} tragos",
       "option_a": null,
       "option_b": null,
@@ -9225,7 +9274,13 @@
       "language": "es-ES",
       "source": "picolo_reference",
       "origin_type": "github_repository",
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_default_seq_3482",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "3482"
+      }
     },
     {
       "id": 3486,
@@ -11439,7 +11494,7 @@
       "id": 3624,
       "game_id": "picolo_party",
       "pack_id": "picolo_default",
-      "type": "category",
+      "type": "sequence",
       "text": "¡Elegid juntos a la persona más complicada en el amor, que recibirá {drinks} tragos!",
       "option_a": null,
       "option_b": null,
@@ -11449,13 +11504,26 @@
       "language": "es-ES",
       "source": "picolo_reference",
       "origin_type": "github_repository",
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_default_seq_3624",
+        "chain_type": "immediate_sequence",
+        "role": "trigger",
+        "delay_cards": 1,
+        "min_delay_cards": 1,
+        "max_delay_cards": 2,
+        "resolver_ids": [
+          "3625",
+          "3626",
+          "3627"
+        ]
+      }
     },
     {
       "id": 3625,
       "game_id": "picolo_party",
       "pack_id": "picolo_default",
-      "type": "category",
+      "type": "sequence",
       "text": "El desecho sentimental puede vengarse de la persona menos complicada dándole {drinks} tragos",
       "option_a": null,
       "option_b": null,
@@ -11465,13 +11533,19 @@
       "language": "es-ES",
       "source": "picolo_reference",
       "origin_type": "github_repository",
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_default_seq_3624",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "3624"
+      }
     },
     {
       "id": 3626,
       "game_id": "picolo_party",
       "pack_id": "picolo_default",
-      "type": "category",
+      "type": "sequence",
       "text": "Para consolarte, puedes repartir {drinks} tragos",
       "option_a": null,
       "option_b": null,
@@ -11481,13 +11555,19 @@
       "language": "es-ES",
       "source": "picolo_reference",
       "origin_type": "github_repository",
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_default_seq_3624",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "3624"
+      }
     },
     {
       "id": 3627,
       "game_id": "picolo_party",
       "pack_id": "picolo_default",
-      "type": "category",
+      "type": "sequence",
       "text": "¡Cupido está harto de ti! {drinks} tragos extra",
       "option_a": null,
       "option_b": null,
@@ -11497,7 +11577,13 @@
       "language": "es-ES",
       "source": "picolo_reference",
       "origin_type": "github_repository",
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_default_seq_3624",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "3624"
+      }
     },
     {
       "id": 3628,
@@ -28047,7 +28133,7 @@
       "game_id": "picolo_party",
       "pack_id": "picolo_hot",
       "type": "sequence",
-      "text": "¡Los 3 jugadores más bajos beben {drinks} tragos!",
+      "text": "¡Los 3 jugadores que hayan dicho menos tiempo beben {drinks} tragos!",
       "option_a": null,
       "option_b": null,
       "intensity": 3,
@@ -28073,7 +28159,7 @@
       "game_id": "picolo_party",
       "pack_id": "picolo_hot",
       "type": "sequence",
-      "text": "¡Los 3 jugadores más altos beben {drinks} tragos!",
+      "text": "¡Los 3 jugadores que hayan dicho más tiempo beben {drinks} tragos!",
       "option_a": null,
       "option_b": null,
       "intensity": 3,
@@ -40705,7 +40791,7 @@
       "id": 6247,
       "game_id": "picolo_party",
       "pack_id": "picolo_silly",
-      "type": "minigame",
+      "type": "sequence",
       "text": "Hasta que termine la partida, cada jugador tiene una pistola con 3 balas. Cuando le dispares a un jugador, ¡tendrá que beber 1 trago!",
       "option_a": null,
       "option_b": null,
@@ -40720,13 +40806,25 @@
         "absurdo",
         "humor"
       ],
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_silly_seq_6247",
+        "chain_type": "immediate_sequence",
+        "role": "trigger",
+        "min_delay_cards": 4,
+        "max_delay_cards": 8,
+        "resolver_ids": [
+          "6248",
+          "6249",
+          "6250"
+        ]
+      }
     },
     {
       "id": 6248,
       "game_id": "picolo_party",
       "pack_id": "picolo_silly",
-      "type": "minigame",
+      "type": "sequence",
       "text": "¡{player1} ha recuperado {drinks} balas extra!",
       "option_a": null,
       "option_b": null,
@@ -40741,13 +40839,19 @@
         "absurdo",
         "humor"
       ],
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_silly_seq_6247",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "6247"
+      }
     },
     {
       "id": 6249,
       "game_id": "picolo_party",
       "pack_id": "picolo_silly",
-      "type": "minigame",
+      "type": "sequence",
       "text": "¡{player1} le ha robado las balas a {player2}!",
       "option_a": null,
       "option_b": null,
@@ -40762,13 +40866,19 @@
         "absurdo",
         "humor"
       ],
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_silly_seq_6247",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "6247"
+      }
     },
     {
       "id": 6250,
       "game_id": "picolo_party",
       "pack_id": "picolo_silly",
-      "type": "minigame",
+      "type": "sequence",
       "text": "¡{player1} ha encontrado otra pistola cargada!",
       "option_a": null,
       "option_b": null,
@@ -40783,7 +40893,13 @@
         "absurdo",
         "humor"
       ],
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_silly_seq_6247",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "6247"
+      }
     },
     {
       "id": 6251,
@@ -40810,7 +40926,7 @@
       "id": 6252,
       "game_id": "picolo_party",
       "pack_id": "picolo_silly",
-      "type": "minigame",
+      "type": "sequence",
       "text": "El número de oro: cada jugador dice una cifra del 1 al 10. Ahora viene la continuación... Empieza {player1}",
       "option_a": null,
       "option_b": null,
@@ -40825,13 +40941,26 @@
         "absurdo",
         "humor"
       ],
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_silly_seq_6252",
+        "chain_type": "immediate_sequence",
+        "role": "trigger",
+        "delay_cards": 1,
+        "min_delay_cards": 1,
+        "max_delay_cards": 2,
+        "resolver_ids": [
+          "6253",
+          "6254",
+          "6255"
+        ]
+      }
     },
     {
       "id": 6253,
       "game_id": "picolo_party",
       "pack_id": "picolo_silly",
-      "type": "minigame",
+      "type": "sequence",
       "text": "Los que hayan elegido un número de oro par, beben {drinks} tragos",
       "option_a": null,
       "option_b": null,
@@ -40846,13 +40975,19 @@
         "absurdo",
         "humor"
       ],
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_silly_seq_6252",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "6252"
+      }
     },
     {
       "id": 6254,
       "game_id": "picolo_party",
       "pack_id": "picolo_silly",
-      "type": "minigame",
+      "type": "sequence",
       "text": "Todos los jugadores se tienen que beber su número de oro en tragos",
       "option_a": null,
       "option_b": null,
@@ -40867,13 +41002,19 @@
         "absurdo",
         "humor"
       ],
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_silly_seq_6252",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "6252"
+      }
     },
     {
       "id": 6255,
       "game_id": "picolo_party",
       "pack_id": "picolo_silly",
-      "type": "minigame",
+      "type": "sequence",
       "text": "Cada jugador reparte su número de oro en tragos. Empieza {player1}",
       "option_a": null,
       "option_b": null,
@@ -40888,7 +41029,13 @@
         "absurdo",
         "humor"
       ],
-      "category_id": "retos_y_virus"
+      "category_id": "retos_y_virus",
+      "chain": {
+        "chain_id": "picolo_silly_seq_6252",
+        "chain_type": "immediate_sequence",
+        "role": "resolver",
+        "trigger_id": "6252"
+      }
     },
     {
       "id": 6256,
