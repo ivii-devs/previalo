@@ -3,6 +3,7 @@ import { motion, useMotionValue, useTransform, type PanInfo } from 'framer-motio
 import { Flame, Beer, Users, ShieldAlert } from 'lucide-react';
 import type { Card } from '../../domain/types/card';
 import type { Player } from '../../domain/types/player';
+import { CardEngine } from '../../domain/engines/CardEngine';
 import { soundService } from '../../infrastructure/soundService';
 
 export interface SwipeableCardProps {
@@ -50,8 +51,12 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   };
 
   // Determine card category styling
-  const isVirus = card.type === 'virus' || card.duration_rounds;
-  const isChallenge = card.type === 'challenge';
+  const isResolver = CardEngine.isResolverOrCure(card);
+  const isCure =
+    isResolver && (card.chain?.chain_type === 'timed_virus' || card.type === 'virus');
+  const isContinuation = isResolver && !isCure;
+  const isVirus = (card.type === 'virus' || Boolean(card.duration_rounds)) && !isResolver;
+  const isChallenge = card.type === 'challenge' && !isResolver;
   const intensity = card.intensity ?? 2;
 
   return (
@@ -64,7 +69,11 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
       onClick={handleTap}
       whileTap={{ scale: 0.98 }}
       className={`w-full max-w-sm aspect-[3/4.2] rounded-3xl p-6 border-2 flex flex-col justify-between shadow-2xl relative select-none cursor-grab active:cursor-grabbing backdrop-blur-md transition-shadow ${
-        isVirus
+        isCure
+          ? 'bg-gradient-to-b from-[#0d281e] via-[var(--bg-surface)] to-[var(--bg-surface)] border-emerald-500 shadow-[0_0_25px_rgba(16,185,129,0.3)]'
+          : isContinuation
+          ? 'bg-gradient-to-b from-[#2c2210] via-[var(--bg-surface)] to-[var(--bg-surface)] border-amber-500 shadow-[0_0_25px_rgba(245,158,11,0.3)]'
+          : isVirus
           ? 'bg-gradient-to-b from-[#1f132e] via-[var(--bg-surface)] to-[var(--bg-surface)] border-purple-500 shadow-[0_0_25px_rgba(168,85,247,0.3)]'
           : isChallenge
           ? 'bg-gradient-to-b from-[#2e151a] via-[var(--bg-surface)] to-[var(--bg-surface)] border-rose-500 shadow-[0_0_25px_rgba(244,63,94,0.3)]'
@@ -73,12 +82,32 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
       data-testid="swipeable-card"
     >
       {/* Decorative Corner Glow */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--accent-primary)]/10 rounded-full blur-2xl pointer-events-none" />
+      <div
+        className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl pointer-events-none ${
+          isCure
+            ? 'bg-emerald-500/15'
+            : isContinuation
+            ? 'bg-amber-500/15'
+            : isVirus
+            ? 'bg-purple-500/15'
+            : 'bg-[var(--accent-primary)]/10'
+        }`}
+      />
 
       {/* Top Meta Bar: Category Chip & Intensity Flames */}
       <div className="flex items-center justify-between z-10">
         <div className="flex items-center space-x-1.5">
-          {isVirus ? (
+          {isCure ? (
+            <span className="flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+              <span className="text-xs shrink-0">💊</span>
+              <span>Cura / Fin de Virus</span>
+            </span>
+          ) : isContinuation ? (
+            <span className="flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.3)]">
+              <span className="text-xs shrink-0">⚡</span>
+              <span>Continuación</span>
+            </span>
+          ) : isVirus ? (
             <span className="flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/40">
               <ShieldAlert className="w-3.5 h-3.5 text-purple-400 animate-pulse" />
               <span>Virus</span>

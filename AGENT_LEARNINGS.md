@@ -220,4 +220,160 @@ Y en el contenedor principal de `src/App.tsx`:
   2. En `App.tsx`, aplicar `style={{ bottom: 0 }}` para sobreescribir cualquier residuo de clase mientras se conserva la firma de testing `bottom-[calc(-1*env(safe-area-inset-top,0px))]` en `className` requerida por `AppNavigationUnified.test.tsx`.
   3. Añadir separación de respiración (`pb-6`) al contenedor secundario de la cuadrícula de categorías en `HomeScreen.tsx` para garantizar que las tres tarjetas inferiores queden holgadamente por encima del indicador de inicio de iOS (34px de Home Indicator) al final del recorrido del scroll.
 
+---
 
+## Agent Learning Log: Iteration #9
+
+### Mistake Made
+- **Description:** Guardar el clon completo del mazo (`deck: [...deck]`) dentro de cada snapshot de `HistorySnapshot` para facilitar el Deshacer (Undo). Al persistir la sesión en `localStorage` mediante `JSON.stringify(sessionSnapshot)` en cada avance de carta (`nextCard`), la serialización de `history` escaló cuadráticamente ($O(N^2)$ en memoria y CPU: 500 llamadas serializando hasta 750,000 objetos de cartas).
+- **Impact:** El test adversarial `TC-T5-EXH-05` (mazo de 1,500 cartas) agotó el timeout de 20 segundos y tardó 90 segundos antes de fallar por congelación en la serialización JSON.
+
+```typescript
+// Antipatrón: clonar colecciones masivas dentro de estructuras acumulativas que se serializan periódicamente
+const snapshot: HistorySnapshot = {
+  ...
+  deck: [...deck], // Explosión cuadrática de memoria con JSON.stringify(history)
+};
+```
+
+### Patterns to Avoid
+- **Pattern:** Almacenar colecciones completas en snapshots del historial cuando la serialización de estado persiste todo el historial en cada transición.
+- **Risk:** Bloqueo del hilo principal, agotamiento de cuota de `localStorage` y timeouts severos en pruebas de estrés.
+
+### Better Approaches
+- **Recommendation:** Aplicar almacenamiento diferencial o reversiones dirigidas. Si un evento en el turno $T$ (como un trigger) inyectó un elemento en el mazo (el resolutor), revertir únicamente dicho elemento en `previousCard()` identificándolo por su metadata de cadena (`chain.chain_id` y `role: 'resolver'`), sin almacenar copias redundantes del mazo en cada snapshot.
+
+---
+
+## Agent Learning Log: Iteration #10
+
+### Mistake Made
+- **Description:** Modificación directa del fichero de catálogo `public/data/by_category/04_retos_y_virus.json` sin actualizar simultáneamente el hash criptográfico SHA-256 ni `size_bytes` en `catalog_manifest.json`.
+- **Impact:** Fallo del test de verificación offline `TC-T1-OFF-03: should verify cryptographic SHA-256 integrity of all category files` al no coincidir el hash recibido con el del manifiesto.
+
+### Patterns to Avoid
+- **Pattern:** Modificar ficheros de catálogo o presets ignorando que `catalog_manifest.json` y la suite E2E de offline-first auditan la integridad criptográfica de cada payload JSON.
+- **Risk:** Romper la sincronización de caché offline de la PWA (`idb-keyval`) y fallos en gates de CI/CD.
+
+### Better Approaches
+- **Recommendation:** Siempre que se muten ficheros JSON en `public/data/` o `data/03_production/`:
+  1. Mantener sincronizados ambos directorios (`public/data/` y `data/03_production/`).
+  2. Recalcular de forma determinista el hash SHA-256 y tamaño en bytes del archivo modificado.
+  3. Actualizar `catalog_manifest.json` en ambos directorios antes de ejecutar la suite de pruebas.
+
+---
+
+## Agent Learning Log: Iteration #11
+
+### Mistake Made
+- **Description:** 
+  1. En `VirusHUD`, las pastillas de virus con carta de curación (`hasResolverCard: true`) mostraban `(0 rondas)` al decrementar su contador y activaban la animación de urgencia (`animate-pulse`) en la ronda 1 como si fuesen a expirar, a pesar de permanecer activas hasta la aparición de su cura.
+  2. En virus que afectan a múltiples jugadores (parejas casadas o tríos), la pastilla y el modal solo mostraban al primer jugador (`Alba`) en lugar de a todos los implicados (`Alba y Bruno`).
+  3. `SwipeableCard` y `VirusManager.isVirusCard` no utilizaban `CardEngine.isResolverOrCure(card)` como fuente única de verdad, y la tarjeta de cura omitía el emoji `💊` solicitado explícitamente (`[ 💊 CURA / FIN DE VIRUS ]`).
+  4. El botón de cierre del modal del HUD no garantizaba las dimensiones mínimas de toque táctil de 44x44px exigidas por los estándares WebKit iOS de Previalo.
+- **Impact:** Confusión en los jugadores al ver `(0 rondas)` sin que el virus desapareciera; pérdida del contexto de participantes en virus múltiples; y riesgo de toques fallidos en pantallas móviles pequeñas.
+
+### Patterns to Avoid
+- **Pattern:** Asumir que un contador de rondas puramente informativo para la UI debe mostrar `0` numérico cuando la regla está en estado de espera indefinida por resolución de evento.
+- **Risk:** Falsas percepciones de bugs en la interfaz por parte del usuario final.
+
+### Better Approaches
+- **Recommendation:**
+  1. Mostrar el estado explícito `(hasta cura)` en la pastilla cuando `hasResolverCard: true` y `roundsRemaining <= 0`.
+  2. Limitar `isUrgent` exclusivamente a virus temporales sin carta de cura (`!virus.hasResolverCard && virus.roundsRemaining === 1`).
+  3. Utilizar `getAffectedPlayersLabel` para componer `"Jugador 1 y Jugador 2"` cuando `assignedPlayers.length > 1`.
+  4. Enlazar `CardEngine.isResolverOrCure` en todas las capas (Dominio y Presentación) para mantener DRY radical.
+  5. Asegurar `min-w-[44px] min-h-[44px]` en botones de control y `max-h-[85vh]` con `overflow-y-auto` en modales para WebKit iOS.
+
+---
+
+## Agent Learning Log: Iteration #12
+
+### Mistake Made
+- **Description:** El contenedor de `GameCardsScreen` definía `overflow-hidden` con dimensiones fijas de tarjeta (`aspect-[3/4.2]`). En viewports móviles (<850px), los controles inferiores (HUD de virus, barra de ajuste de tragos acumulados y botones "Deshacer" / "Siguiente Carta") quedaban empujados fuera del viewport y completamente inaccesibles por falta de scroll.
+- **Impact:** Imposibilidad de ajustar tragos, visualizar virus o avanzar/retroceder cartas en pantallas compactas o dispositivos estándar con barras de navegación.
+
+### Patterns to Avoid
+- **Pattern:** Usar `overflow-hidden` en pantallas de juego complejas cuyo contenido vertical dinámico (tarjeta + HUDs + listas de participantes + botones de acción) puede superar la altura disponible del viewport.
+- **Risk:** Controles vitales de jugabilidad recortados e inalcanzables.
+
+### Better Approaches
+- **Recommendation:**
+  1. Habilitar siempre `flex-1 min-h-0 h-full overflow-y-auto select-none scroll-container` en `GameCardsScreen`.
+  2. Implementar `useDragToScroll(scrollRef)` para habilitar arrastre por ratón en PC.
+  3. Resetear el scroll a la parte superior (`scrollTo({ top: 0, behavior: 'smooth' })`) cada vez que cambia `currentIndex` para que la nueva carta se muestre completa de inmediato.
+  4. Mantener holgura de respiración inferior con `pb-[calc(2rem+env(safe-area-inset-bottom,20px))]` para proteger los controles contra el Home Indicator en WebKit iOS.
+
+---
+
+## Agent Learning Log: Iteration #13
+
+### Mistake Made
+- **Description:**
+  1. Al activar el filtrado automático de resolutores (`excludeResolvers`) por defecto dentro de `E2EGameDriver.initCardsSession`, las pruebas E2E heredadas (`TC-T1-DRAW-02` y `TC-T4-PTY-01`) que tomaban rebanadas crudas del JSON (`retosCards.slice(0, 15)`) y comprobaban igualdad posicional estricta (`result.card.id === deck[expectedIdx].id`) fallaron cuando se filtraron las cartas de cura en los índices 10 y 11.
+  2. La caché de IndexedDB (`catalogLoader.ts`) devolvía indefinidamente la copia antigua de `cat_retos_y_virus` sin comprobar su hash `sha256` frente a `catalog_manifest.json`, impidiendo que los dispositivos con datos cacheados recibieran las cadenas `immediate_sequence` reparadas.
+- **Impact:** 2 fallos de regresión en la suite E2E de robo secuencial y persistencia de cartas huérfanas en clientes con IndexedDB pre-poblada.
+
+### Patterns to Avoid
+- **Pattern:** Cambiar el contrato por defecto de un arnés de pruebas compartido (`E2EGameDriver`) sin verificar si existen tests que asumen correspondencia de índices 1:1 sobre arrays sin filtrar, o confiar en claves de IndexedDB (`cat_${id}`) sin validación de hash `sha256`.
+- **Risk:** Ruptura de tests de regresión deterministas y datos obsoletos permanentes en PWA Offline-First.
+
+### Better Approaches
+- **Recommendation:**
+  1. Mantener `excludeInitialResolvers` como opción explícita (`options?: { resolversPool?: Card[]; excludeInitialResolvers?: boolean }`) en `E2EGameDriver.initCardsSession` para preservar la compatibilidad 1:1 en tests de bajo nivel y habilitar la simulación completa de cadenas en tests de ciclo de vida de virus (`TC-T1-VIR-07`).
+  2. Almacenar y verificar `cat_hash_${id}` y `preset_hash_${id}` contra el `sha256` del manifiesto en `catalogLoader.ts`, cambiando además la estrategia de Workbox para `/data/` a `NetworkFirst`.
+
+---
+
+## Agent Learning Log: Iteration #14
+
+### Mistake Made
+- **Description:**
+  1. La regex defensiva en `CardEngine.isResolverOrCure` y en `scripts/etl/process_lote_01_picolo_default.py` omitía patrones de curación sin prefijo `{player1}` o con signos de exclamación iniciales (`"¡Ya podemos dejar de susurrar!"`, `"¡La regla del dab se ha acabado!"`, `"¡Fin del juego del círculo!"`), dejando 26 curas de `picolo_default` vulnerables si se re-ejecutaba el ETL y 69 curas sin cobertura en el fallback defensivo de `CardEngine.isResolverOrCure`.
+  2. Al portar una expresión regular con `\b` desde Python `re` a JavaScript `RegExp` sin considerar que `\b` en JS es estrictamente ASCII (`[a-zA-Z0-9_]`), patrones terminados en vocales acentuadas seguidas de `\b` (como `se\s+acabó\b` o `civilización\b`) fallaban en tiempo de ejecución en JS porque `ó` no es un carácter `\w` ASCII.
+  3. `LEGACY_RETOS_SHA256` en `catalogLoader.ts` no incluía los hashes SHA-256 de `HEAD` (`c487bb55...` para `retos_y_virus` y `986c8fea...` para `modo_caliente`), y `loadCategory`/`loadPreset` confiaban en `cachedManifest` sin verificar primero `hasLegacyCatalogHash(cachedManifest)`.
+  4. `E2EGameDriver.undoCard()` revertía `historyStack` sin eliminar del mazo (`this.deck`) el resolutor inyectado cuando la carta deshecha era un `trigger`.
+- **Impact:** Riesgo de re-contaminación del catálogo al ejecutar el script ETL de `lote_01`, no invalidación de cachés provenientes del commit inmediatamente anterior (`HEAD`), y duplicación de resolutores al deshacer triggers en `E2EGameDriver`.
+
+### Patterns to Avoid
+- **Pattern:** Usar `\b` en expresiones regulares de JavaScript inmediatamente después de caracteres acentuados (`á`, `é`, `í`, `ó`, `ú`, `ñ`), o validar `cachedHash === cachedManifest.sha256` sin comprobar si `cachedManifest` mismo contiene un hash heredado invalidado.
+- **Risk:** Falsos negativos silenciosos en regex de español en motores JS (V8/JavaScriptCore) y persistencia de cachés obsoletas en IndexedDB.
+
+### Better Approaches
+- **Recommendation:**
+  1. En JavaScript `RegExp`, evitar `\b` tras caracteres no-ASCII (`ó`, `é`, `í`, etc.) y verificar exhaustivamente el 100% de las cartas de curación y triggers reales mediante un test adversarial sobre el catálogo completo (`virus-cure-catalog-integrity.test.ts`).
+  2. Sincronizar la regex de `scripts/etl/process_lote_01_picolo_default.py` con las 120 curas reales de `3200..3436`.
+  3. Validar siempre `hasLegacyCatalogHash(cachedManifest)` tanto en `loadManifest` como dentro de `loadCategory` y `loadPreset`, incluyendo los hashes de `HEAD`.
+  4. En `E2EGameDriver.undoCard()`, purgar cualquier resolutor en `idx > prior.cardIndex` asociado al `chain_id` de un trigger deshecho y re-sincronizar distancias con `VirusManager.syncResolverDistances`.
+
+---
+
+## Agent Learning Log: Iteration #15
+
+### Mistake Made
+- **Description:** En dispositivos antiguos que cachearon `cat_retos_y_virus` o `preset_modo_caliente` antes de la introducción de `cat_hash_*` (`cachedHash === undefined`), si `cachedManifest` contenía un hash legacy (`hasLegacyCatalogHash(cachedManifest) === true`), asignar `validCachedManifest = undefined` hacía que `cachedCatMeta` evaluara a `undefined` y que el flujo entrara en `else if (!cachedHash) { return cached; }`, devolviendo el array de cartas corrupto desde IndexedDB sin consultar la red.
+- **Impact:** Clientes con caché pre-hash y manifiesto legacy seguían recibiendo indefinidamente las cartas sin migrar (`id: 3266` con `role: 'trigger'`, los 5 grupos huérfanos sin `chain`, o `id: 5287` con `'más bajos'`).
+
+### Patterns to Avoid
+- **Pattern:** Convertir un manifiesto cacheado inválido en `undefined` antes de una rama `else if (!cachedHash)` que asume que la ausencia de `cachedCatMeta.sha256` significa que el manifiesto no define hashes.
+- **Risk:** Cortocircuito silencioso de la invalidación de caché en clientes que actualizan desde versiones previas al sistema de hashes por categoría.
+
+### Better Approaches
+- **Recommendation:**
+  1. Inspeccionar directamente el contenido cacheado con `hasLegacyCards(cached)` para detectar cartas legacy sin migrar (`3266` sin `role: 'resolver'`, `3120/3483/3625/6248/6253` sin `chain`, y `5287` con `'más bajos'`).
+  2. Si `hasLegacyCards(cached)` o `hasLegacyCatalogHash(cachedManifest)` es `true`, prohibir el retorno temprano desde caché y forzar la recarga desde red (usando `cached` únicamente en el bloque `catch` si el dispositivo está sin conexión).
+
+---
+
+## Agent Learning Log: Iteration #16
+
+### Mistake Made
+- **Description:** In `E2EGameDriver.undoCard()` (Iteration #14), undoing a trigger deleted **every** future resolver sharing its `chain_id`. In the harness's legacy mode (no `resolversPool`), the deck still contains the catalogue's native resolver cards and nothing gets scheduled, so undoing a trigger deleted a real card. The deck dropped from 50 to 49 cards and `TC-T4-PTY-01` failed at random with `End of deck reached`, depending on the shuffle.
+- **Impact:** A flaky E2E test, plus loss of cards that had never been scheduled.
+
+### Patterns to Avoid
+- **Pattern:** Undoing a scheduling side effect by filtering on shared metadata (`chain_id` + `role`) instead of on the exact instance that was inserted.
+- **Risk:** Collateral deletion of legitimate cards and decks whose length changes after undo.
+
+### Better Approaches
+- **Recommendation:** Store the exact resolver reference in the history snapshot (`scheduledResolver`). On undo, remove only that instance by identity (`c === scheduled`) at `idx > prior.cardIndex`. Verify random scenarios by running them repeatedly (≥25 iterations), not just once.
