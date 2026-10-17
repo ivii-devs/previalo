@@ -43,12 +43,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0002",
+        "chain_id": "picolo_v_0001",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -91,12 +89,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0004",
+        "chain_id": "picolo_v_0003",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -139,12 +135,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0006",
+        "chain_id": "picolo_v_0005",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -187,12 +181,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0008",
+        "chain_id": "picolo_v_0007",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -235,12 +227,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0010",
+        "chain_id": "picolo_v_0009",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -283,12 +273,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0012",
+        "chain_id": "picolo_v_0011",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -331,12 +319,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0014",
+        "chain_id": "picolo_v_0013",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -379,12 +365,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0016",
+        "chain_id": "picolo_v_0015",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -403,12 +387,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0017",
+        "chain_id": "picolo_v_0015",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -451,12 +433,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0019",
+        "chain_id": "picolo_v_0018",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -499,12 +479,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0021",
+        "chain_id": "picolo_v_0020",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -523,12 +501,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0022",
+        "chain_id": "picolo_v_0020",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -571,12 +547,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0024",
+        "chain_id": "picolo_v_0023",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -619,12 +593,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0026",
+        "chain_id": "picolo_v_0025",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -667,12 +639,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0028",
+        "chain_id": "picolo_v_0027",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -715,12 +685,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0030",
+        "chain_id": "picolo_v_0029",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -763,12 +731,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0032",
+        "chain_id": "picolo_v_0031",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -787,12 +753,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0033",
+        "chain_id": "picolo_v_0031",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -835,12 +799,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0035",
+        "chain_id": "picolo_v_0034",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -883,12 +845,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0037",
+        "chain_id": "picolo_v_0036",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -931,12 +891,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0039",
+        "chain_id": "picolo_v_0038",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -979,12 +937,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0041",
+        "chain_id": "picolo_v_0040",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1027,12 +983,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0043",
+        "chain_id": "picolo_v_0042",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1075,12 +1029,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0045",
+        "chain_id": "picolo_v_0044",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1123,12 +1075,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0047",
+        "chain_id": "picolo_v_0046",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1171,12 +1121,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0049",
+        "chain_id": "picolo_v_0048",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1219,12 +1167,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0051",
+        "chain_id": "picolo_v_0050",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1267,12 +1213,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0053",
+        "chain_id": "picolo_v_0052",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1315,12 +1259,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0055",
+        "chain_id": "picolo_v_0054",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1363,12 +1305,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0057",
+        "chain_id": "picolo_v_0056",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1411,12 +1351,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0059",
+        "chain_id": "picolo_v_0058",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1459,12 +1397,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0061",
+        "chain_id": "picolo_v_0060",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1507,12 +1443,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0063",
+        "chain_id": "picolo_v_0062",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1555,12 +1489,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0065",
+        "chain_id": "picolo_v_0064",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1603,12 +1535,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0067",
+        "chain_id": "picolo_v_0066",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1651,12 +1581,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0069",
+        "chain_id": "picolo_v_0068",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1745,12 +1673,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0072",
+        "chain_id": "picolo_v_0071",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1793,12 +1719,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0074",
+        "chain_id": "picolo_v_0073",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1841,12 +1765,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0076",
+        "chain_id": "picolo_v_0075",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1889,12 +1811,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0078",
+        "chain_id": "picolo_v_0077",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1937,12 +1857,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0080",
+        "chain_id": "picolo_v_0079",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -1985,12 +1903,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0082",
+        "chain_id": "picolo_v_0081",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2033,12 +1949,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0084",
+        "chain_id": "picolo_v_0083",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2081,12 +1995,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0086",
+        "chain_id": "picolo_v_0085",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2129,12 +2041,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0088",
+        "chain_id": "picolo_v_0087",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2177,12 +2087,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0090",
+        "chain_id": "picolo_v_0089",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2225,12 +2133,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0092",
+        "chain_id": "picolo_v_0091",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2273,12 +2179,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0094",
+        "chain_id": "picolo_v_0093",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2321,12 +2225,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0096",
+        "chain_id": "picolo_v_0095",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2369,12 +2271,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0098",
+        "chain_id": "picolo_v_0097",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2417,12 +2317,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0100",
+        "chain_id": "picolo_v_0099",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2465,12 +2363,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0102",
+        "chain_id": "picolo_v_0101",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2513,12 +2409,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0104",
+        "chain_id": "picolo_v_0103",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2561,12 +2455,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0106",
+        "chain_id": "picolo_v_0105",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2609,12 +2501,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0108",
+        "chain_id": "picolo_v_0107",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2657,12 +2547,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0110",
+        "chain_id": "picolo_v_0109",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2705,12 +2593,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0112",
+        "chain_id": "picolo_v_0111",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2753,12 +2639,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0114",
+        "chain_id": "picolo_v_0113",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2801,12 +2685,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0116",
+        "chain_id": "picolo_v_0115",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2849,12 +2731,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0118",
+        "chain_id": "picolo_v_0117",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2897,12 +2777,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0120",
+        "chain_id": "picolo_v_0119",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2945,12 +2823,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0122",
+        "chain_id": "picolo_v_0121",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -2993,12 +2869,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0124",
+        "chain_id": "picolo_v_0123",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -3041,12 +2915,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0126",
+        "chain_id": "picolo_v_0125",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -3089,12 +2961,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0128",
+        "chain_id": "picolo_v_0127",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -3137,12 +3007,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0130",
+        "chain_id": "picolo_v_0129",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -3185,12 +3053,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0132",
+        "chain_id": "picolo_v_0131",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -3233,12 +3099,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0134",
+        "chain_id": "picolo_v_0133",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -3281,12 +3145,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0136",
+        "chain_id": "picolo_v_0135",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -3329,12 +3191,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0138",
+        "chain_id": "picolo_v_0137",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -3377,12 +3237,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0140",
+        "chain_id": "picolo_v_0139",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "individual",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "individual"
       }
     },
     {
@@ -3517,12 +3375,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0144",
+        "chain_id": "picolo_v_0143",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -3657,12 +3513,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0148",
+        "chain_id": "picolo_v_0147",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -3705,12 +3559,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0150",
+        "chain_id": "picolo_v_0149",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -3799,12 +3651,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0153",
+        "chain_id": "picolo_v_0152",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -3847,12 +3697,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0155",
+        "chain_id": "picolo_v_0154",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -3941,12 +3789,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0158",
+        "chain_id": "picolo_v_0157",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4035,12 +3881,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0161",
+        "chain_id": "picolo_v_0160",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4083,12 +3927,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0163",
+        "chain_id": "picolo_v_0162",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4269,12 +4111,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0168",
+        "chain_id": "picolo_v_0167",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4317,12 +4157,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0170",
+        "chain_id": "picolo_v_0169",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4457,12 +4295,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0174",
+        "chain_id": "picolo_v_0173",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4505,12 +4341,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0176",
+        "chain_id": "picolo_v_0175",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4599,12 +4433,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0179",
+        "chain_id": "picolo_v_0178",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4647,12 +4479,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0181",
+        "chain_id": "picolo_v_0180",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4695,12 +4525,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0183",
+        "chain_id": "picolo_v_0182",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4743,12 +4571,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0185",
+        "chain_id": "picolo_v_0184",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4791,12 +4617,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0187",
+        "chain_id": "picolo_v_0186",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4839,12 +4663,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0189",
+        "chain_id": "picolo_v_0188",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4887,12 +4709,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0191",
+        "chain_id": "picolo_v_0190",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4935,12 +4755,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0193",
+        "chain_id": "picolo_v_0192",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -4983,12 +4801,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0195",
+        "chain_id": "picolo_v_0194",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -5031,12 +4847,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0197",
+        "chain_id": "picolo_v_0196",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -5079,12 +4893,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0199",
+        "chain_id": "picolo_v_0198",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -5127,12 +4939,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0201",
+        "chain_id": "picolo_v_0200",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -5175,12 +4985,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0203",
+        "chain_id": "picolo_v_0202",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -5223,12 +5031,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0205",
+        "chain_id": "picolo_v_0204",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -5271,12 +5077,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0207",
+        "chain_id": "picolo_v_0206",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -5319,12 +5123,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0209",
+        "chain_id": "picolo_v_0208",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -5505,12 +5307,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0214",
+        "chain_id": "picolo_v_0213",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -5553,12 +5353,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0216",
+        "chain_id": "picolo_v_0215",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {
@@ -5647,12 +5445,10 @@
       "origin_type": "github_repository",
       "category_id": "retos_y_virus",
       "chain": {
-        "chain_id": "picolo_v_0219",
+        "chain_id": "picolo_v_0218",
         "chain_type": "timed_virus",
-        "role": "trigger",
-        "virus_scope": "global",
-        "min_delay_cards": 4,
-        "max_delay_cards": 8
+        "role": "resolver",
+        "virus_scope": "global"
       }
     },
     {

@@ -11,8 +11,8 @@
     "card_counts_by_intensity": {
       "1": 1522,
       "2": 3429,
-      "3": 1972,
-      "4": 14
+      "3": 1942,
+      "4": 44
     },
     "token_system": [
       "player1",
@@ -99,8 +99,8 @@
       "name": "Retos y Virus",
       "description": "",
       "file": "by_category/04_retos_y_virus.json",
-      "size_bytes": 1366959,
-      "sha256": "c487bb55f122b67286bd6b0cda411db87317cb7360e3736b79f0a7ae734aebc1",
+      "size_bytes": 1316233,
+      "sha256": "b1ef1aa283efff1d6ccde0838b5b4547da883583deedb640a7afdda3b245a34d",
       "card_count": 2310,
       "packs": [
         {
@@ -192,8 +192,8 @@
       "name": "🎲 El Tablero (La Guatoca)",
       "description": "",
       "file": "by_category/07_el_tablero.json",
-      "size_bytes": 362161,
-      "sha256": "b85d182eccf9ca85c6f062e17d180a2a722ab068379a1cfa42f5c3e104491fd7",
+      "size_bytes": 362156,
+      "sha256": "80221ec8d60df7ce75f78542d00347527b30e8324c4d5f073206ffe65b5f9ce7",
       "card_count": 721,
       "boards": [
         "guatoca_clasica",
@@ -213,7 +213,7 @@
       "description": "Dinámicas grupales de mesa, cartas y botellas: La Copa del Rey, El Autobús de la Previa, Desafíos Extremos y Verdad o Verdad.",
       "file": "by_category/08_mesa_y_minijuegos.json",
       "size_bytes": 90847,
-      "sha256": "02aeb33c684569d49e173105147f6f192b1eee42ac8f9075df1ad3463757c91a",
+      "sha256": "8ab7701ea31d0ce614eb5866fdc11b2f75f6b725104cd8fd46f7666745018797",
       "card_count": 136,
       "packs": [
         {
@@ -236,7 +236,7 @@
           "id": "pack_drink_extreme",
           "name": "⚡ Desafíos Extremos de Mesa",
           "description": "Pruebas de alta tensión en mesa, llamadas incómodas y retos sociales.",
-          "intensity": 3,
+          "intensity": 4,
           "count": 30,
           "actual_count": 30
         },
