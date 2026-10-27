@@ -1,6 +1,6 @@
 ---
 description: Invariantes duros de Clean Architecture, propiedad de dominio, DRY y disciplina de refactor
-globs: ["src/**/*", "scripts/**/*"]
+globs: "src/**/*, scripts/**/*"
 scope: "architecture | domain | refactor"
 ---
 

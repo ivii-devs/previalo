@@ -1,6 +1,6 @@
 ---
 description: Invariantes algorítmicos, pureza funcional y contratos de tipos para motores de dominio
-globs: ["src/domain/**/*.ts"]
+globs: "src/domain/**/*.ts"
 scope: "domain | algorithms | engines"
 ---
 

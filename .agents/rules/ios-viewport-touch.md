@@ -1,6 +1,6 @@
 ---
 description: Estándares de Viewport Pinning, Safe Areas y física táctil en WebKit iOS Standalone
-globs: ["src/presentation/**/*.{tsx,css}", "src/index.css", "index.html"]
+globs: "src/presentation/**/*.{tsx,css}, src/index.css, index.html"
 scope: "ui | viewport | touch"
 ---
 

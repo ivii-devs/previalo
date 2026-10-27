@@ -1,6 +1,6 @@
 ---
 description: Gestión de estado reactivo con Zustand, persistencia y crash recovery
-globs: ["src/application/**/*.ts"]
+globs: "src/application/**/*.ts"
 scope: "application | state | zustand"
 ---
 

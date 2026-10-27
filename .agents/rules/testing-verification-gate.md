@@ -1,6 +1,6 @@
 ---
 description: Protocolo de verificación estricto, gates de CI/CD y suites de pruebas automatizadas
-globs: ["src/**/*.test.{ts,tsx}", "tests/**/*", "package.json", "vitest.config.ts"]
+globs: "src/**/*.test.{ts,tsx}, tests/**/*, package.json, vitest.config.ts"
 scope: "testing | verification | gates"
 ---
 

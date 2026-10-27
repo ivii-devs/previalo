@@ -1,6 +1,6 @@
 ---
 description: Estrategia offline-first, Workbox Cache-First, Web Audio API y almacenamiento WebKit
-globs: ["src/infrastructure/**/*.ts", "vite.config.ts", "public/**/*"]
+globs: "src/infrastructure/**/*.ts, vite.config.ts, public/**/*"
 scope: "infrastructure | service-worker | storage | audio"
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: Rendimiento visual 60/120Hz ProMotion, Framer Motion y arquitectura de theming con Tailwind v4
-globs: ["src/presentation/**/*.{tsx,css}"]
+globs: "src/presentation/**/*.{tsx,css}"
 scope: "ui | animations | themes"
 ---
 
