@@ -30,46 +30,47 @@ export interface PackOption {
   id: string;
   label: string;
   count: number;
-  intensity: IntensityLevel;
+  intensity?: IntensityLevel;
+  intensities?: IntensityLevel[];
 }
 
 export const CATEGORY_PACKS: Record<string, PackOption[]> = {
   yo_nunca: [
-    { id: 'yn_fiesta', label: '🍻 Fiesta', count: 442, intensity: 2 },
-    { id: 'yn_parejas', label: '💘 Parejas', count: 145, intensity: 2 },
-    { id: 'yn_picante', label: '🌶️ Picante (+18)', count: 768, intensity: 3 },
+    { id: 'yn_fiesta', label: '🍻 Fiesta', count: 442, intensity: 2, intensities: [2] },
+    { id: 'yn_parejas', label: '💘 Parejas', count: 145, intensity: 2, intensities: [2] },
+    { id: 'yn_picante', label: '🌶️ Picante (+18)', count: 768, intensity: 3, intensities: [3] },
   ],
   verdad_o_reto: [
-    { id: 'vor_fiesta', label: '⚡ Fiesta', count: 286, intensity: 2 },
-    { id: 'vor_parejas', label: '💘 Parejas', count: 246, intensity: 2 },
-    { id: 'vor_picante', label: '🔥 Picante (+18)', count: 325, intensity: 3 },
+    { id: 'vor_fiesta', label: '⚡ Fiesta', count: 286, intensity: 2, intensities: [2] },
+    { id: 'vor_parejas', label: '💘 Parejas', count: 246, intensity: 2, intensities: [2] },
+    { id: 'vor_picante', label: '🔥 Picante (+18)', count: 325, intensity: 3, intensities: [3] },
   ],
   mesa_y_minijuegos: [
-    { id: 'pack_ring_of_fire', label: '👑 Copa del Rey', count: 26, intensity: 2 },
-    { id: 'pack_partybus', label: '🚌 PartyBus', count: 50, intensity: 2 },
-    { id: 'pack_drink_extreme', label: '⚡ Desafíos Extremos', count: 30, intensity: 4 },
-    { id: 'pack_verdad_o_verdad', label: '🤫 Verdad o Verdad', count: 30, intensity: 2 },
+    { id: 'pack_ring_of_fire', label: '👑 Copa del Rey', count: 26, intensity: 2, intensities: [2, 3] },
+    { id: 'pack_partybus', label: '🚌 PartyBus', count: 50, intensity: 2, intensities: [1, 2, 3] },
+    { id: 'pack_drink_extreme', label: '⚡ Desafíos Extremos', count: 30, intensity: 4, intensities: [4] },
+    { id: 'pack_verdad_o_verdad', label: '🤫 Verdad o Verdad', count: 30, intensity: 2, intensities: [1, 2, 3] },
   ],
   confesiones: [
-    { id: 'conf_fiesta', label: '🎉 Fiesta y Salseo', count: 135, intensity: 2 },
-    { id: 'conf_picante', label: '🌶️ Picante (+18)', count: 51, intensity: 3 },
-    { id: 'conf_deep', label: '💬 Deep Talk', count: 21, intensity: 2 },
+    { id: 'conf_fiesta', label: '🎉 Fiesta y Salseo', count: 135, intensity: 2, intensities: [2] },
+    { id: 'conf_picante', label: '🌶️ Picante (+18)', count: 51, intensity: 3, intensities: [3] },
+    { id: 'conf_deep', label: '💬 Deep Talk', count: 21, intensity: 2, intensities: [2] },
   ],
   quien_es_mas_probable: [
-    { id: 'qemp_fiesta', label: '⚡ Fiesta y Salseo', count: 131, intensity: 2 },
-    { id: 'qemp_picante', label: '🔥 Picante (+18)', count: 50, intensity: 3 },
-    { id: 'qemp_parejas', label: '💘 Parejas y Exs', count: 18, intensity: 2 },
+    { id: 'qemp_fiesta', label: '⚡ Fiesta y Salseo', count: 131, intensity: 2, intensities: [2] },
+    { id: 'qemp_picante', label: '🔥 Picante (+18)', count: 50, intensity: 3, intensities: [3] },
+    { id: 'qemp_parejas', label: '💘 Parejas y Exs', count: 18, intensity: 2, intensities: [2] },
   ],
   guerra_equipos: [
-    { id: 'picolo_war', label: '⚔️ Por Equipos', count: 788, intensity: 2 },
-    { id: 'versus', label: '🥊 Duelos Versus', count: 75, intensity: 2 },
+    { id: 'picolo_war', label: '⚔️ Por Equipos', count: 788, intensity: 2, intensities: [2] },
+    { id: 'versus', label: '🥊 Duelos Versus', count: 75, intensity: 2, intensities: [2] },
   ],
   que_prefieres: [
-    { id: 'picolo_default', label: '⚖️ Clásicos', count: 155, intensity: 1 },
-    { id: 'picolo_silly', label: '🤪 Humor Absurdo', count: 69, intensity: 2 },
-    { id: 'picolo_hot', label: '🌶️ Picantes', count: 36, intensity: 3 },
-    { id: 'qp_guatoca', label: '🎲 Guatoca', count: 18, intensity: 2 },
-    { id: 'qp_verdad_o_verdad', label: '🤫 Confesiones', count: 11, intensity: 2 },
+    { id: 'picolo_default', label: '⚖️ Clásicos', count: 155, intensity: 1, intensities: [1] },
+    { id: 'picolo_silly', label: '🤪 Humor Absurdo', count: 69, intensity: 2, intensities: [2] },
+    { id: 'picolo_hot', label: '🌶️ Picantes', count: 36, intensity: 3, intensities: [3] },
+    { id: 'qp_guatoca', label: '🎲 Guatoca', count: 18, intensity: 2, intensities: [2, 3] },
+    { id: 'qp_verdad_o_verdad', label: '🤫 Confesiones', count: 11, intensity: 2, intensities: [2, 3] },
   ],
 };
 
@@ -158,6 +159,15 @@ export const getIntensityCounts = (
   }
 };
 
+export const isPackCompatibleWithIntensities = (
+  pack: PackOption,
+  selectedIntensities: Set<IntensityLevel>
+): boolean => {
+  const packIntensities =
+    pack.intensities ?? (pack.intensity !== undefined ? [pack.intensity] : [1, 2, 3, 4]);
+  return packIntensities.some((lvl) => selectedIntensities.has(lvl));
+};
+
 export const SetupScreen: React.FC<SetupScreenProps> = ({
   mode,
   targetId,
@@ -187,6 +197,23 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
 
   const isAllIntensitiesActive = availableLevels.every((l) => selectedIntensities.has(l));
 
+  // All packs defined for active category
+  const allCategoryPacks = useMemo(
+    () => CATEGORY_PACKS[targetId || ''] || [],
+    [targetId]
+  );
+
+  // Available packs filtered reactively by current selected intensities
+  const availablePacks = useMemo(() => {
+    return allCategoryPacks.filter((p) =>
+      isPackCompatibleWithIntensities(p, selectedIntensities)
+    );
+  }, [allCategoryPacks, selectedIntensities]);
+
+  const [selectedPacks, setSelectedPacks] = useState<string[]>(() =>
+    allCategoryPacks.map((p) => p.id)
+  );
+
   const toggleIntensity = (level: IntensityLevel) => {
     soundService.playTap();
     setSelectedIntensities((prev) => {
@@ -201,28 +228,57 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
       } else {
         next.add(level);
       }
+
+      // Synchronize selectedPacks with new intensities
+      setSelectedPacks((prevPacks) => {
+        const nextAvailable = allCategoryPacks.filter((p) =>
+          isPackCompatibleWithIntensities(p, next)
+        );
+        const nextAvailableIds = new Set(nextAvailable.map((p) => p.id));
+
+        let updated: string[];
+        if (next.has(level)) {
+          // Intensity was enabled: keep previous valid selections + auto-select newly compatible packs containing this level
+          const packsWithThisLevel = allCategoryPacks
+            .filter((p) => {
+              const lvls = p.intensities ?? (p.intensity !== undefined ? [p.intensity] : []);
+              return lvls.includes(level);
+            })
+            .map((p) => p.id);
+          updated = Array.from(new Set([...prevPacks, ...packsWithThisLevel])).filter((id) =>
+            nextAvailableIds.has(id)
+          );
+        } else {
+          // Intensity was disabled: remove packs that are no longer compatible
+          updated = prevPacks.filter((id) => nextAvailableIds.has(id));
+        }
+
+        // Invariant: Ensure at least one pack remains selected if available packs exist
+        if (updated.length === 0 && nextAvailable.length > 0) {
+          updated = [nextAvailable[0].id];
+        }
+        return updated;
+      });
+
       return next;
     });
   };
 
   const handleSelectAllIntensities = () => {
     soundService.playTap();
-    setSelectedIntensities(new Set(availableLevels));
+    const allLevels = new Set(availableLevels);
+    setSelectedIntensities(allLevels);
+    setSelectedPacks(allCategoryPacks.map((p) => p.id));
   };
-
-  // Sub-filter: Packs (for categories)
-  const initialPacks = useMemo(() => {
-    const packs = CATEGORY_PACKS[targetId || ''] || [];
-    return packs.map((p) => p.id);
-  }, [targetId]);
-
-  const [selectedPacks, setSelectedPacks] = useState<string[]>(initialPacks);
 
   const togglePack = (packId: string) => {
     soundService.playTap();
     setSelectedPacks((prev) => {
+      const activeAvailablePacks = prev.filter((id) =>
+        availablePacks.some((p) => p.id === id)
+      );
       if (prev.includes(packId)) {
-        if (prev.length <= 1) {
+        if (activeAvailablePacks.length <= 1) {
           soundService.vibrate([30, 30]);
           return prev;
         }
@@ -364,12 +420,20 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
       if (mode === 'category') {
         const catId = targetId || 'yo_nunca';
         const packsForCat = CATEGORY_PACKS[catId] || [];
+        const activeSelectedPacks = selectedPacks.filter((id) =>
+          availablePacks.some((p) => p.id === id)
+        );
 
-        if (packsForCat.length > 0 && selectedPacks.length < packsForCat.length) {
-          filterOptions.packIds = selectedPacks;
+        if (packsForCat.length > 0 && activeSelectedPacks.length < packsForCat.length) {
+          filterOptions.packIds = activeSelectedPacks;
         }
 
-        if (catId === 'yo_nunca' && yoNuncaSubGroup !== 'all') {
+        if (
+          catId === 'yo_nunca' &&
+          selectedIntensities.has(3) &&
+          activeSelectedPacks.includes('yn_picante') &&
+          yoNuncaSubGroup !== 'all'
+        ) {
           filterOptions.yoNuncaSubGroup = yoNuncaSubGroup;
         }
 
@@ -377,7 +441,12 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
           if (selectedTypes.length > 0 && selectedTypes.length < 2) {
             filterOptions.types = selectedTypes;
           }
-          if (selectedHotTiers.length > 0 && selectedHotTiers.length < 3) {
+          if (
+            selectedIntensities.has(3) &&
+            activeSelectedPacks.includes('vor_picante') &&
+            selectedHotTiers.length > 0 &&
+            selectedHotTiers.length < 3
+          ) {
             filterOptions.hotTiers = selectedHotTiers;
           }
         }
@@ -467,8 +536,8 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   useDragToScroll(scrollRef);
 
-  // Available packs for active category
-  const activePacks = CATEGORY_PACKS[targetId || ''] || [];
+  // Available packs for active category (reactively filtered by selected intensities)
+  const activePacks = availablePacks;
 
   return (
     <div
@@ -693,7 +762,7 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
               Packs y Temáticas
             </span>
             <span className="text-[10px] theme-text-muted font-bold">
-              {selectedPacks.length} de {activePacks.length}
+              {selectedPacks.filter((id) => availablePacks.some((p) => p.id === id)).length} de {activePacks.length}
             </span>
           </div>
 
@@ -721,7 +790,7 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
           </div>
 
           {/* Special Sub-filter for Yo Nunca Picante: Suave vs +18 */}
-          {targetId === 'yo_nunca' && selectedPacks.includes('yn_picante') && (
+          {targetId === 'yo_nunca' && selectedIntensities.has(3) && selectedPacks.includes('yn_picante') && (
             <div className="pt-2 border-t theme-border space-y-2" data-testid="yn-picante-subgroup">
               <span className="text-[11px] font-black uppercase tracking-wider text-rose-400 block">
                 🌶️ Nivel Picante en Yo Nunca:
@@ -804,8 +873,8 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
             </div>
           )}
 
-          {/* Special Sub-filter for Verdad o Reto: Niveles Hot (cuando vor_picante o Hot está activo) */}
-          {targetId === 'verdad_o_reto' && (selectedPacks.includes('vor_picante') || selectedIntensities.has(3)) && (
+          {/* Special Sub-filter for Verdad o Reto: Niveles Hot (cuando vor_picante Y Hot están activos) */}
+          {targetId === 'verdad_o_reto' && selectedIntensities.has(3) && selectedPacks.includes('vor_picante') && (
             <div className="pt-2 border-t theme-border space-y-2" data-testid="vor-hot-tiers">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-black uppercase tracking-wider text-rose-400">
