@@ -8,8 +8,8 @@ import { useGameSessionStore } from '../../application/useGameSessionStore';
  * Do not use or re-import in App.tsx.
  */
 export interface BottomNavProps {
-  currentScreen: 'home' | 'setup' | 'game-cards' | 'game-board' | 'podium';
-  onNavigate: (screen: 'home' | 'setup' | 'game-cards' | 'game-board' | 'podium') => void;
+  currentScreen: 'home' | 'setup' | 'game-cards' | 'game-board';
+  onNavigate: (screen: 'home' | 'setup' | 'game-cards' | 'game-board') => void;
 }
 
 /**

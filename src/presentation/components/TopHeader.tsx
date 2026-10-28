@@ -6,7 +6,7 @@ import { soundService } from '../../infrastructure/soundService';
 
 export interface TopHeaderProps {
   currentScreen?: string;
-  onNavigate?: (screen: 'home' | 'setup' | 'game-cards' | 'game-board' | 'podium') => void;
+  onNavigate?: (screen: 'home' | 'setup' | 'game-cards' | 'game-board') => void;
   onOpenSettings?: () => void;
 }
 
@@ -66,7 +66,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
     }
   };
 
-  const showResumeBanner = hasActive && currentScreen !== 'game-cards' && currentScreen !== 'game-board' && currentScreen !== 'podium';
+  const showResumeBanner = hasActive && currentScreen !== 'game-cards' && currentScreen !== 'game-board';
 
   return (
     <header className="w-full border-b theme-border bg-[var(--bg-surface)] shrink-0 z-30 select-none pt-safe">

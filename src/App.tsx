@@ -7,12 +7,11 @@ import { HomeScreen } from './presentation/screens/HomeScreen';
 import { SetupScreen } from './presentation/screens/SetupScreen';
 import { GameCardsScreen } from './presentation/screens/GameCardsScreen';
 import { GameBoardScreen } from './presentation/screens/GameBoardScreen';
-import { PodiumScreen } from './presentation/screens/PodiumScreen';
 import { soundService } from './infrastructure/soundService';
 import { PWAHelper } from './infrastructure/registerSW';
 import './presentation/styles/themes.css';
 
-export type ScreenId = 'home' | 'setup' | 'game-cards' | 'game-board' | 'podium';
+export type ScreenId = 'home' | 'setup' | 'game-cards' | 'game-board';
 
 export const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<ScreenId>('home');
@@ -21,7 +20,6 @@ export const App: React.FC = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const theme = useSettingsStore((state) => state.theme);
-  const activeSessionMode = useGameSessionStore((state) => state.mode);
 
   // Sync theme to root element and meta theme-color
   useEffect(() => {
@@ -149,24 +147,17 @@ export const App: React.FC = () => {
 
         {currentScreen === 'game-cards' && (
           <GameCardsScreen
-            onGameOver={() => setCurrentScreen('podium')}
+            onPlayAgain={() => {
+              setCurrentScreen('setup');
+            }}
             onExitHome={() => setCurrentScreen('home')}
           />
         )}
 
         {currentScreen === 'game-board' && (
           <GameBoardScreen
-            onVictory={() => setCurrentScreen('podium')}
-            onExitHome={() => setCurrentScreen('home')}
-          />
-        )}
-
-        {currentScreen === 'podium' && (
-          <PodiumScreen
             onPlayAgain={() => {
-              if (activeSessionMode === 'board') {
-                setSetupMode('board');
-              }
+              setSetupMode('board');
               setCurrentScreen('setup');
             }}
             onExitHome={() => setCurrentScreen('home')}

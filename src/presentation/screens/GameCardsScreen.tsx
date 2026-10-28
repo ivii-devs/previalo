@@ -1,21 +1,24 @@
 import React, { useEffect, useRef } from 'react';
-import { RotateCcw, Home, Plus, Minus, ArrowRight, Beer } from 'lucide-react';
+import { RotateCcw, Home, ArrowRight } from 'lucide-react';
 import { useGameSessionStore } from '../../application/useGameSessionStore';
 import { usePlayerStore } from '../../application/usePlayerStore';
 import { SwipeableCard } from '../components/SwipeableCard';
 import { CardDeck } from '../components/CardDeck';
 import { VirusHUD } from '../components/VirusHUD';
 import { VirusExpiredModal } from '../components/VirusExpiredModal';
+import { GameOverModal } from '../components/GameOverModal';
 import { soundService } from '../../infrastructure/soundService';
 import { useDragToScroll } from '../hooks/useDragToScroll';
 
 export interface GameCardsScreenProps {
-  onGameOver: () => void;
+  onGameOver?: () => void;
+  onPlayAgain?: () => void;
   onExitHome: () => void;
 }
 
 export const GameCardsScreen: React.FC<GameCardsScreenProps> = ({
   onGameOver,
+  onPlayAgain,
   onExitHome,
 }) => {
   const storeDeck = useGameSessionStore((state) => state.deck);
@@ -39,26 +42,33 @@ export const GameCardsScreen: React.FC<GameCardsScreenProps> = ({
   const storeViruses = useGameSessionStore((state) => state.activeViruses);
   const activeViruses = storeViruses.length > 0 ? storeViruses : useGameSessionStore.getState().activeViruses;
 
-  const expiredVirusesQueue = useGameSessionStore((state) => state.expiredVirusesQueue);
-  const isGameOver = useGameSessionStore((state) => state.isGameOver);
+  const storeExpired = useGameSessionStore((state) => state.expiredVirusesQueue);
+  const expiredVirusesQueue = storeExpired.length > 0 ? storeExpired : useGameSessionStore.getState().expiredVirusesQueue;
+
+  const storeGameOver = useGameSessionStore((state) => state.isGameOver);
+  const isGameOver = storeGameOver || useGameSessionStore.getState().isGameOver;
   const nextCard = useGameSessionStore((state) => state.nextCard);
   const previousCard = useGameSessionStore((state) => state.previousCard);
   const dismissExpiredVirus = useGameSessionStore((state) => state.dismissExpiredVirus);
 
   const storePlayers = usePlayerStore((state) => state.players);
   const players = storePlayers.length > 0 ? storePlayers : usePlayerStore.getState().players;
-  const addSips = usePlayerStore((state) => state.addSips);
+  const resetPlayerStats = usePlayerStore((state) => state.resetPlayerStats);
+  const endSession = useGameSessionStore((state) => state.endSession);
 
-  // Detect game over and route to podium
+  // Backward compatibility: trigger onGameOver if provided by legacy tests without onPlayAgain
   useEffect(() => {
-    if (isGameOver || (deck.length > 0 && currentIndex >= deck.length)) {
+    if (onGameOver && !onPlayAgain && (isGameOver || (deck.length > 0 && currentIndex >= deck.length))) {
       onGameOver();
     }
-  }, [isGameOver, currentIndex, deck.length, onGameOver]);
+  }, [isGameOver, currentIndex, deck.length, onGameOver, onPlayAgain]);
 
   const handleNext = () => {
     if (currentIndex >= deck.length - 1) {
-      onGameOver();
+      useGameSessionStore.setState({ isGameOver: true });
+      if (onGameOver && !onPlayAgain) {
+        onGameOver();
+      }
     } else {
       nextCard(players);
     }
@@ -70,10 +80,21 @@ export const GameCardsScreen: React.FC<GameCardsScreenProps> = ({
     previousCard();
   };
 
-  const handleManualSip = (playerId: string, delta: number) => {
+  const handlePlayAgain = () => {
     soundService.playTap();
-    soundService.vibrate(8);
-    addSips(playerId, delta);
+    resetPlayerStats();
+    endSession();
+    if (onPlayAgain) {
+      onPlayAgain();
+    } else if (onGameOver) {
+      onGameOver();
+    }
+  };
+
+  const handleExitHome = () => {
+    soundService.playTap();
+    endSession();
+    onExitHome();
   };
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -174,47 +195,6 @@ export const GameCardsScreen: React.FC<GameCardsScreenProps> = ({
         {/* Active Virus HUD */}
         <VirusHUD activeViruses={activeViruses} />
 
-        {/* Manual Sip Counters Bar per player */}
-        <div className="p-2 rounded-2xl border theme-border bg-[var(--bg-surface)] space-y-1.5">
-          <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider theme-text-muted px-1">
-            <span className="flex items-center gap-1">
-              <Beer className="w-3 h-3 text-amber-400" />
-              <span>Tragos Acumulados</span>
-            </span>
-            <span>Ajuste Rápido</span>
-          </div>
-
-          <div className="flex items-center space-x-2 overflow-x-auto pb-1" data-testid="player-sips-bar">
-            {players.map((p) => (
-              <div
-                key={p.id}
-                className="shrink-0 flex items-center space-x-1 px-2 py-1 rounded-xl border theme-border bg-[var(--bg-elevated)] text-xs font-bold"
-              >
-                <span>{p.avatar || '👤'}</span>
-                <span className="theme-text-primary text-[11px] truncate max-w-[65px]">{p.name}</span>
-                <span className="font-black text-amber-400 mx-0.5">{p.sips ?? 0}</span>
-
-                <button
-                  onClick={() => handleManualSip(p.id, -1)}
-                  className="min-w-[32px] min-h-[32px] rounded-lg bg-[var(--bg-surface)] hover:bg-gray-700 flex items-center justify-center text-gray-400 hover:text-white cursor-pointer active:scale-95 transition-transform"
-                  title="Restar 1 trago"
-                  data-testid={`minus-sip-${p.id}`}
-                >
-                  <Minus className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => handleManualSip(p.id, 1)}
-                  className="min-w-[32px] min-h-[32px] rounded-lg bg-[var(--accent-primary)]/20 hover:bg-[var(--accent-primary)]/40 flex items-center justify-center theme-accent-primary cursor-pointer active:scale-95 transition-transform"
-                  title="Sumar 1 trago"
-                  data-testid={`plus-sip-${p.id}`}
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Action Controls: Undo and Next */}
         <div className="flex items-center space-x-2">
           {/* Undo Button */}
@@ -244,6 +224,13 @@ export const GameCardsScreen: React.FC<GameCardsScreenProps> = ({
       <VirusExpiredModal
         expiredViruses={expiredVirusesQueue}
         onDismiss={dismissExpiredVirus}
+      />
+
+      {/* Game Over Modal */}
+      <GameOverModal
+        isOpen={isGameOver || (deck.length > 0 && currentIndex >= deck.length)}
+        onPlayAgain={handlePlayAgain}
+        onExitHome={handleExitHome}
       />
     </div>
   );

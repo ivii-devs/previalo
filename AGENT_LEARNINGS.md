@@ -377,3 +377,19 @@ const snapshot: HistorySnapshot = {
 
 ### Better Approaches
 - **Recommendation:** Store the exact resolver reference in the history snapshot (`scheduledResolver`). On undo, remove only that instance by identity (`c === scheduled`) at `idx > prior.cardIndex`. Verify random scenarios by running them repeatedly (≥25 iterations), not just once.
+
+---
+
+## Agent Learning Log: Iteration #17
+
+### Mistake Made
+- **Description:** En los componentes de presentación evaluados bajo pruebas con `renderToString` (`GameCardsScreen`, `GameBoardScreen`), la bandera `isGameOver` se leía únicamente mediante el hook selector `useGameSessionStore((state) => state.isGameOver)` sin aplicar el patrón unificado de fallback (`storeGameOver || useGameSessionStore.getState().isGameOver`). Al mutar el store directamente con `setState` en pruebas unitarias antes de invocar `renderToString`, el selector retenía el estado inicial en frío y no renderizaba el modal condicional `GameOverModal`.
+- **Impact:** Fallos de aserción en pruebas de integración de fin de partida en entorno SSR / Node.
+
+### Patterns to Avoid
+- **Pattern:** Omitir el patrón de fallback `getState()` en selectores booleanos reactivos dentro de pantallas que se auditan en SSR con `renderToString`.
+- **Risk:** Inconsistencias de hidratación estática y fallos de detección de estado en arneses de pruebas sin ciclo de vida completo de DOM.
+
+### Better Approaches
+- **Recommendation:** Aplicar sistemáticamente `const isGameOver = storeGameOver || useGameSessionStore.getState().isGameOver;` para garantizar paridad inmediata tanto en renderizado reactivo del navegador como en renderizado estático de pruebas.
+

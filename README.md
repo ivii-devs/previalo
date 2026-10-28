@@ -33,7 +33,7 @@ La aplicación está diseñada para colocarse en el centro de la mesa o circular
                                    ▼
                        [ 3. Registro y Cierre ]
                        • Conteo acumulativo de penitencias
-                       • Podio final y estadísticas de sesión
+                       • Modal de fin de partida y reinicio limpio
 ```
 
 ### 1. Configuración de Sesión

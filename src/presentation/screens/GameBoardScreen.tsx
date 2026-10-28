@@ -5,18 +5,21 @@ import { usePlayerStore } from '../../application/usePlayerStore';
 import { BoardGrid } from '../components/BoardGrid';
 import { Dice3D } from '../components/Dice3D';
 import { TileModal } from '../components/TileModal';
+import { GameOverModal } from '../components/GameOverModal';
 import { CatalogLoader } from '../../infrastructure/catalogLoader';
 import { soundService } from '../../infrastructure/soundService';
 import type { BoardTile, BoardId } from '../../domain/types/board';
 import type { Player } from '../../domain/types/player';
 
 export interface GameBoardScreenProps {
-  onVictory: () => void;
+  onVictory?: () => void;
+  onPlayAgain?: () => void;
   onExitHome: () => void;
 }
 
 export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
   onVictory,
+  onPlayAgain,
   onExitHome,
 }) => {
   const storeModeConfig = useGameSessionStore((state) => state.modeConfig);
@@ -48,9 +51,31 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
 
   const storeLastRoll = useGameSessionStore((state) => state.lastDiceRoll);
   const lastDiceRoll = storeLastRoll ?? useGameSessionStore.getState().lastDiceRoll;
-  const isGameOver = useGameSessionStore((state) => state.isGameOver);
+  const storeGameOver = useGameSessionStore((state) => state.isGameOver);
+  const isGameOver = storeGameOver || useGameSessionStore.getState().isGameOver;
+  const storeWinner = useGameSessionStore((state) => state.winner);
+  const winner = storeWinner || useGameSessionStore.getState().winner;
   const rollBoardDice = useGameSessionStore((state) => state.rollBoardDice);
   const startBoardSession = useGameSessionStore((state) => state.startBoardSession);
+  const endSession = useGameSessionStore((state) => state.endSession);
+  const resetPlayerStats = usePlayerStore((state) => state.resetPlayerStats);
+
+  const handlePlayAgain = () => {
+    soundService.playTap();
+    resetPlayerStats();
+    endSession();
+    if (onPlayAgain) {
+      onPlayAgain();
+    } else if (onVictory) {
+      onVictory();
+    }
+  };
+
+  const handleExitHome = () => {
+    soundService.playTap();
+    endSession();
+    onExitHome();
+  };
 
   // Load board tiles and dynamic board cards on mount
   useEffect(() => {
@@ -93,9 +118,11 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
   useEffect(() => {
     if (isGameOver) {
       soundService.playVictory();
-      onVictory();
+      if (onVictory && !onPlayAgain) {
+        onVictory();
+      }
     }
-  }, [isGameOver, onVictory]);
+  }, [isGameOver, onVictory, onPlayAgain]);
 
   const activePlayers = players.length >= 2 ? players : [
     { id: 'p_1', name: 'Jugador 1', color: '#ec4899', avatar: '🦁', sips: 0, timesTargeted: 0 },
@@ -124,7 +151,10 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
 
       // Check victory
       if (result.isVictory) {
-        onVictory();
+        soundService.playVictory();
+        if (onVictory && !onPlayAgain) {
+          onVictory();
+        }
         return;
       }
 
@@ -262,6 +292,14 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
         player={activeTileModal?.player ?? null}
         actionResult={activeTileModal?.actionResult}
         onClose={() => setActiveTileModal(null)}
+      />
+
+      {/* Game Over Modal */}
+      <GameOverModal
+        isOpen={isGameOver}
+        winnerName={winner?.name}
+        onPlayAgain={handlePlayAgain}
+        onExitHome={handleExitHome}
       />
     </div>
   );
