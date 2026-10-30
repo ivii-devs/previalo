@@ -44,6 +44,11 @@ export class CardEngine {
     return CardEngine.shuffle(array);
   }
 
+  public static readonly MIN_VIRUS_SPACING = 11;
+  public static readonly CHAOS_VIRUS_WEIGHT_MULTIPLIER = 3.5;
+  public static readonly DEFAULT_VIRUS_MIN_DELAY = 6;
+  public static readonly DEFAULT_VIRUS_MAX_DELAY = 10;
+
   private static readonly LEGACY_RESOLVER_IDS = new Set<number>([
     3120, 3121, 3483, 3484, 3485, 3625, 3626, 3627, 6248, 6249, 6250, 6253, 6254, 6255,
   ]);
@@ -78,9 +83,114 @@ export class CardEngine {
   }
 
   /**
-   * Builds a playable deck from a single category with optional pack, intensity, hotTier, and type filtering.
+   * Identifies whether a card is an active temporal virus trigger (excluding cures/resolvers).
    */
-  public buildCategoryDeck(cards: Card[], filter?: CardFilterOptions): Card[] {
+  public static isTimedVirusTrigger(card: Card): boolean {
+    if (card.chain?.role === 'resolver' || CardEngine.isResolverOrCure(card)) {
+      return false;
+    }
+    return card.type === 'virus' || card.chain?.chain_type === 'timed_virus';
+  }
+
+  /**
+   * Pure domain helper that interleaves temporal virus triggers among non-virus cards
+   * guaranteeing at least `minGap` (default 11) non-virus cards between any two virus triggers
+   * so that two active viruses never overlap in a match.
+   */
+  public static enforceVirusSpacing(
+    cards: readonly Card[] | Card[],
+    minGap: number = CardEngine.MIN_VIRUS_SPACING
+  ): Card[] {
+    const virusCards = CardEngine.shuffle(
+      cards.filter((c) => CardEngine.isTimedVirusTrigger(c))
+    );
+    const nonVirusCards = CardEngine.shuffle(
+      cards.filter((c) => !CardEngine.isTimedVirusTrigger(c))
+    );
+
+    if (virusCards.length === 0) {
+      return nonVirusCards;
+    }
+    if (nonVirusCards.length === 0) {
+      if (virusCards.length <= 1) {
+        return [...virusCards];
+      }
+      return virusCards.map((c, idx) =>
+        idx === 0 ? { ...c } : { ...c, type: 'dare', chain: undefined }
+      );
+    }
+
+    const result: Card[] = [];
+    let vIdx = 0;
+    let nvIdx = 0;
+
+    // Initial offset of non-virus cards before the first virus (0 to 5 cards)
+    const canFitAllViruses =
+      nonVirusCards.length >= (virusCards.length - 1) * minGap;
+    const maxInitialOffset = canFitAllViruses
+      ? Math.min(5, nonVirusCards.length - (virusCards.length - 1) * minGap)
+      : Math.min(5, Math.max(0, nonVirusCards.length - minGap));
+    const initialOffset = Math.floor(Math.random() * (maxInitialOffset + 1));
+
+    for (let i = 0; i < initialOffset && nvIdx < nonVirusCards.length; i++) {
+      result.push(nonVirusCards[nvIdx++]);
+    }
+
+    // Place the first virus card
+    result.push(virusCards[vIdx++]);
+
+    while (vIdx < virusCards.length) {
+      const remNV = nonVirusCards.length - nvIdx;
+      const remV = virusCards.length - vIdx;
+
+      if (remNV < minGap) {
+        // Not enough non-virus cards remain to maintain >= minGap separation.
+        // Flush remaining non-virus cards and convert overflow virus triggers into normal instant dares
+        // to preserve total card count while strictly upholding the >= minGap spacing invariant.
+        while (nvIdx < nonVirusCards.length) {
+          result.push(nonVirusCards[nvIdx++]);
+        }
+        while (vIdx < virusCards.length) {
+          result.push({
+            ...virusCards[vIdx++],
+            type: 'dare',
+            chain: undefined,
+          });
+        }
+        break;
+      }
+
+      let extraGap = 0;
+      if (remNV >= remV * minGap) {
+        const tightSlack = remNV - remV * minGap;
+        const avgExtra = Math.floor(tightSlack / remV);
+        const maxExtra = Math.min(tightSlack, Math.max(3, avgExtra * 2));
+        extraGap = Math.floor(Math.random() * (maxExtra + 1));
+      } else {
+        const maxExtra = Math.min(2, remNV - minGap);
+        extraGap = Math.floor(Math.random() * (maxExtra + 1));
+      }
+
+      const gap = minGap + extraGap;
+      for (let i = 0; i < gap && nvIdx < nonVirusCards.length; i++) {
+        result.push(nonVirusCards[nvIdx++]);
+      }
+
+      result.push(virusCards[vIdx++]);
+    }
+
+    while (nvIdx < nonVirusCards.length) {
+      result.push(nonVirusCards[nvIdx++]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Builds a playable deck from a single category with optional pack, intensity, hotTier, and type filtering.
+   * Enforces a minimum separation of >= 11 cards between temporal virus triggers.
+   */
+  public static buildCategoryDeck(cards: Card[], filter?: CardFilterOptions): Card[] {
     let filtered = cards.filter((c) => !CardEngine.isResolverOrCure(c));
 
     // 1. Intensity filter (prefer multi-intensity array, fallback to single intensity)
@@ -125,13 +235,20 @@ export class CardEngine {
       }
     }
 
-    return CardEngine.shuffle(filtered);
+    return CardEngine.enforceVirusSpacing(filtered, CardEngine.MIN_VIRUS_SPACING);
+  }
+
+  /**
+   * Instance alias for buildCategoryDeck.
+   */
+  public buildCategoryDeck(cards: Card[], filter?: CardFilterOptions): Card[] {
+    return CardEngine.buildCategoryDeck(cards, filter);
   }
 
   /**
    * Builds a playable deck from a curated preset (e.g. modo_caliente, modo_parejas).
    */
-  public buildPresetDeck(cards: Card[], filter?: CardFilterOptions): Card[] {
+  public static buildPresetDeck(cards: Card[], filter?: CardFilterOptions): Card[] {
     let filtered = cards.filter((c) => !CardEngine.isResolverOrCure(c));
 
     if (filter?.intensities && filter.intensities.length > 0) {
@@ -149,7 +266,14 @@ export class CardEngine {
       });
     }
 
-    return CardEngine.shuffle(filtered);
+    return CardEngine.enforceVirusSpacing(filtered, CardEngine.MIN_VIRUS_SPACING);
+  }
+
+  /**
+   * Instance alias for buildPresetDeck.
+   */
+  public buildPresetDeck(cards: Card[], filter?: CardFilterOptions): Card[] {
+    return CardEngine.buildPresetDeck(cards, filter);
   }
 
   /**
@@ -214,14 +338,17 @@ export class CardEngine {
 
   /**
    * Builds a chaos mix deck from multiple categories with strict interleaving:
-   * guarantees no more than 3 consecutive cards belong to the same category.
-   * Excludes 'guerra_equipos', 'el_tablero', and any card flagged with exclude_from_chaos: true.
+   * - Guarantees no more than 3 consecutive cards belong to the same category.
+   * - Splits 'retos_y_virus' into instant dares (weight 1.0x) and timed viruses (weight ~3.5x).
+   * - Enforces >= 11 non-virus cards between any two timed virus cards so two viruses never overlap.
+   * - Excludes 'guerra_equipos', 'el_tablero', and any card flagged with exclude_from_chaos: true.
    */
-  public buildChaosDeck(
+  public static buildChaosDeck(
     categoriesCards: Record<string, Card[]>,
     filter?: CardFilterOptions
   ): Card[] {
     const pools: Record<string, Card[]> = {};
+    const rawViruses: Card[] = [];
 
     for (const [catId, cards] of Object.entries(categoriesCards)) {
       if (catId === 'guerra_equipos' || catId === 'el_tablero') continue;
@@ -240,13 +367,26 @@ export class CardEngine {
       } else if (filter?.intensity !== undefined) {
         filtered = filtered.filter((c) => c.intensity === filter.intensity);
       }
-      if (filtered.length > 0) {
-        pools[catId] = CardEngine.shuffle(filtered);
+
+      const nonVirus: Card[] = [];
+      for (const c of filtered) {
+        if (CardEngine.isTimedVirusTrigger(c)) {
+          rawViruses.push({ ...c, category_id: c.category_id || catId });
+        } else {
+          nonVirus.push(c);
+        }
+      }
+
+      if (nonVirus.length > 0) {
+        pools[catId] = CardEngine.shuffle(nonVirus);
       }
     }
 
+    const virusPool = CardEngine.shuffle(rawViruses);
+    let virusPoolIndex = 0;
+
     const categoryKeys = Object.keys(pools);
-    if (categoryKeys.length === 0) return [];
+    if (categoryKeys.length === 0 && virusPool.length === 0) return [];
 
     const chaosDeck: Card[] = [];
     const poolIndices: Record<string, number> = {};
@@ -254,8 +394,11 @@ export class CardEngine {
 
     let consecutiveCategoryCount = 0;
     let lastCategoryId = '';
+    let cardsSinceLastVirus = CardEngine.MIN_VIRUS_SPACING;
+    let hasPlacedVirus = false;
 
-    const maxCards = Object.values(pools).reduce((acc, p) => acc + p.length, 0);
+    const maxCards =
+      Object.values(pools).reduce((acc, p) => acc + p.length, 0) + virusPool.length;
     let safety = 0;
 
     while (chaosDeck.length < maxCards && safety < maxCards * 2) {
@@ -264,52 +407,145 @@ export class CardEngine {
         (k) => k !== lastCategoryId && poolIndices[k] < pools[k].length
       );
 
-      let pickedCat: string;
+      const remViruses = virusPool.length - virusPoolIndex;
+      const nextVirusCat =
+        remViruses > 0 ? virusPool[virusPoolIndex].category_id || 'retos_y_virus' : '';
+      const isVirusSpacingReady = cardsSinceLastVirus >= CardEngine.MIN_VIRUS_SPACING;
+
+      let pickedVirus = false;
+      let pickedCat = '';
+
       if (consecutiveCategoryCount >= 2 && otherCategories.length > 0) {
         // Bias towards category switch when at 2 or more consecutive, weighted by remaining cards
-        const totalRem = otherCategories.reduce((acc, k) => acc + (pools[k].length - poolIndices[k]), 0);
-        let r = Math.random() * totalRem;
-        pickedCat = otherCategories[0];
-        for (const k of otherCategories) {
-          r -= (pools[k].length - poolIndices[k]);
-          if (r <= 0) {
-            pickedCat = k;
-            break;
+        const totalRem = otherCategories.reduce(
+          (acc, k) => acc + (pools[k].length - poolIndices[k]),
+          0
+        );
+        const canPickVirus =
+          remViruses > 0 && isVirusSpacingReady && nextVirusCat !== lastCategoryId;
+
+        let virusWeight = 0;
+        if (canPickVirus) {
+          if (!hasPlacedVirus) {
+            virusWeight = remViruses * CardEngine.CHAOS_VIRUS_WEIGHT_MULTIPLIER;
+          } else {
+            const targetExtraWait = Math.max(
+              1.5,
+              totalRem / (remViruses * CardEngine.CHAOS_VIRUS_WEIGHT_MULTIPLIER) -
+                CardEngine.MIN_VIRUS_SPACING
+            );
+            virusWeight =
+              totalRem > 0
+                ? totalRem / targetExtraWait
+                : remViruses * CardEngine.CHAOS_VIRUS_WEIGHT_MULTIPLIER;
+          }
+        }
+
+        let r = Math.random() * (totalRem + virusWeight);
+        if (canPickVirus && r < virusWeight) {
+          pickedVirus = true;
+        } else {
+          if (canPickVirus) r -= virusWeight;
+          pickedCat = otherCategories[0];
+          for (const k of otherCategories) {
+            r -= pools[k].length - poolIndices[k];
+            if (r <= 0) {
+              pickedCat = k;
+              break;
+            }
           }
         }
       } else {
         const available = categoryKeys.filter(
-          (k) => poolIndices[k] < pools[k].length && (k !== lastCategoryId || consecutiveCategoryCount < 3)
+          (k) =>
+            poolIndices[k] < pools[k].length &&
+            (k !== lastCategoryId || consecutiveCategoryCount < 3)
         );
-        if (available.length === 0) {
-          // If only lastCategoryId remains and it has reached 3 consecutive, break to uphold invariant
+        const canPickVirus =
+          remViruses > 0 &&
+          isVirusSpacingReady &&
+          (nextVirusCat !== lastCategoryId || consecutiveCategoryCount < 3);
+
+        if (available.length === 0 && !canPickVirus) {
+          // If only lastCategoryId remains and it has reached 3 consecutive (or virus spacing blocked), break to uphold invariants
           break;
         }
-        const totalRem = available.reduce((acc, k) => acc + (pools[k].length - poolIndices[k]), 0);
-        let r = Math.random() * totalRem;
-        pickedCat = available[0];
-        for (const k of available) {
-          r -= (pools[k].length - poolIndices[k]);
-          if (r <= 0) {
-            pickedCat = k;
-            break;
+
+        const totalRem = available.reduce(
+          (acc, k) => acc + (pools[k].length - poolIndices[k]),
+          0
+        );
+
+        let virusWeight = 0;
+        if (canPickVirus) {
+          if (!hasPlacedVirus || totalRem === 0) {
+            virusWeight = remViruses * CardEngine.CHAOS_VIRUS_WEIGHT_MULTIPLIER;
+          } else {
+            const targetExtraWait = Math.max(
+              1.5,
+              totalRem / (remViruses * CardEngine.CHAOS_VIRUS_WEIGHT_MULTIPLIER) -
+                CardEngine.MIN_VIRUS_SPACING
+            );
+            virusWeight = totalRem / targetExtraWait;
+          }
+        }
+
+        if (available.length === 0 && canPickVirus) {
+          pickedVirus = true;
+        } else {
+          let r = Math.random() * (totalRem + virusWeight);
+          if (canPickVirus && r < virusWeight) {
+            pickedVirus = true;
+          } else {
+            if (canPickVirus) r -= virusWeight;
+            pickedCat = available[0];
+            for (const k of available) {
+              r -= pools[k].length - poolIndices[k];
+              if (r <= 0) {
+                pickedCat = k;
+                break;
+              }
+            }
           }
         }
       }
 
-      const card = { ...pools[pickedCat][poolIndices[pickedCat]++] };
-      card.category_id = card.category_id || pickedCat;
+      let card: Card;
+      let cardCategoryId: string;
+      if (pickedVirus) {
+        card = { ...virusPool[virusPoolIndex++] };
+        cardCategoryId = card.category_id || 'retos_y_virus';
+        card.category_id = cardCategoryId;
+        cardsSinceLastVirus = 0;
+        hasPlacedVirus = true;
+      } else {
+        card = { ...pools[pickedCat][poolIndices[pickedCat]++] };
+        cardCategoryId = card.category_id || pickedCat;
+        card.category_id = cardCategoryId;
+        cardsSinceLastVirus++;
+      }
+
       chaosDeck.push(card);
 
-      if (pickedCat === lastCategoryId) {
+      if (cardCategoryId === lastCategoryId) {
         consecutiveCategoryCount++;
       } else {
-        lastCategoryId = pickedCat;
+        lastCategoryId = cardCategoryId;
         consecutiveCategoryCount = 1;
       }
     }
 
     return chaosDeck;
+  }
+
+  /**
+   * Instance alias for buildChaosDeck.
+   */
+  public buildChaosDeck(
+    categoriesCards: Record<string, Card[]>,
+    filter?: CardFilterOptions
+  ): Card[] {
+    return CardEngine.buildChaosDeck(categoriesCards, filter);
   }
 
   // --- Undo & History Stack Management ---
@@ -380,7 +616,8 @@ export class CardEngine {
 
   /**
    * Pure domain engine scheduling a matching resolver (cure/continuation) card into the remaining deck
-   * at an offset D dictated by delay_cards or min_delay_cards / max_delay_cards.
+   * at an offset D. For timed viruses, schedules the cure globally between 6 and 10 rounds ahead
+   * (unless an explicit non-default custom test range is specified).
    * Attaches fixedAssignedPlayers to the resolver card when the trigger targeted specific players,
    * while allowing fresh player picks for group-round starters or global triggers (e.g. 6247).
    */
@@ -425,16 +662,48 @@ export class CardEngine {
       assignedPlayers && assignedPlayers.length > 0 && !isGroupStarterPrompt
     );
 
+    const triggerHasMultiTokens =
+      triggerCard.text.includes('{player2}') ||
+      triggerCard.text.includes('{player3}') ||
+      triggerCard.text.includes('{player4}');
+    const resolverIsSingleToken =
+      selected.text.includes('{player1}') &&
+      !selected.text.includes('{player2}') &&
+      !selected.text.includes('{player3}') &&
+      !selected.text.includes('{player4}');
+
+    const resolvedFixedPlayers =
+      shouldFixPlayers && assignedPlayers
+        ? triggerHasMultiTokens && resolverIsSingleToken
+          ? [assignedPlayers[0]]
+          : [...assignedPlayers]
+        : undefined;
+
     const scheduledResolver: Card = {
       ...selected,
       chain: selected.chain ? { ...selected.chain, role: 'resolver' } : undefined,
-      fixedAssignedPlayers: shouldFixPlayers && assignedPlayers ? [...assignedPlayers] : undefined,
+      fixedAssignedPlayers: resolvedFixedPlayers,
     };
+
+    const isTimedVirus =
+      triggerCard.type === 'virus' || triggerCard.chain.chain_type === 'timed_virus';
 
     // Calculate delay D
     let delay: number;
     if (triggerCard.chain.delay_cards !== undefined) {
       delay = triggerCard.chain.delay_cards;
+    } else if (isTimedVirus) {
+      const rawMin = triggerCard.chain.min_delay_cards;
+      const rawMax = triggerCard.chain.max_delay_cards;
+      const isCatalogOrDefaultRange =
+        rawMin === undefined || (rawMin === 4 && (rawMax === 8 || rawMax === undefined));
+      const min = isCatalogOrDefaultRange ? CardEngine.DEFAULT_VIRUS_MIN_DELAY : rawMin;
+      const max = isCatalogOrDefaultRange
+        ? CardEngine.DEFAULT_VIRUS_MAX_DELAY
+        : rawMax !== undefined
+          ? Math.max(min, rawMax)
+          : min;
+      delay = Math.floor(Math.random() * (max - min + 1)) + min;
     } else if (triggerCard.chain.min_delay_cards !== undefined) {
       const min = triggerCard.chain.min_delay_cards;
       const max =

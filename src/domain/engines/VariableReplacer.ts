@@ -4,18 +4,10 @@
  * strict player distinctness, player count guards, and intensity drink scaling.
  */
 
-import type { IntensityLevel, Card } from '../types/card';
+import type { IntensityLevel, Card, VariableContext } from '../types/card';
 import type { Player } from '../types/player';
 
-export interface VariableContext {
-  intensity: IntensityLevel;
-  baseDrinks?: number;
-  turnHistory?: Map<string, number> | Record<string, number>; // player id -> pick count
-  lastPickedTurn?: Map<string, number> | Record<string, number>; // player id -> turn index
-  currentTurnIndex?: number;
-  forcedFirstPlayer?: Player;
-  fixedAssignedPlayers?: Player[];
-}
+export type { VariableContext };
 
 export interface VariableResult {
   interpolatedText: string;
@@ -24,6 +16,49 @@ export interface VariableResult {
 }
 
 export class VariableReplacer {
+  /**
+   * Formats a list of players using natural Spanish conjunction rules:
+   * - 1 player: "Dani"
+   * - 2 players: "Dani y Carlos" / "Dani e Iván"
+   * - 3+ players: "Dani, Carlos y Sofía" / "Dani, Carlos e Iván"
+   * Uses "e" instead of "y" when the last player's name starts with the /i/ phoneme
+   * (spelled I-, Í-, Hi-, Hí- followed by a non-vowel).
+   */
+  public static formatPlayerConjunction(players: readonly Player[] | Player[]): string {
+    if (!players || players.length === 0) {
+      return '';
+    }
+    if (players.length === 1) {
+      return players[0].name;
+    }
+    const last = players[players.length - 1].name;
+    const cleanLast = last.trim().replace(/^[¡!¿?"'«(\s]+/, '');
+    const usesE = /^(?:h?[ií])(?![aeiouáéíóú])/i.test(cleanLast);
+    const conjunction = usesE ? 'e' : 'y';
+    const head = players
+      .slice(0, -1)
+      .map((p) => p.name)
+      .join(', ');
+    return `${head} ${conjunction} ${last}`;
+  }
+
+  /**
+   * Calculates how many distinct players should be targeted by an individual virus card
+   * according to session capacity:
+   * - < 5 players: 1 player
+   * - 5 or 6 players: 2 players
+   * - >= 7 players: 2 or 3 players (50% / 50%, maximum 3)
+   */
+  public static calculateTargetCount(playerCount: number): number {
+    if (playerCount < 5) {
+      return 1;
+    }
+    if (playerCount <= 6) {
+      return 2;
+    }
+    return Math.random() < 0.5 ? 2 : 3;
+  }
+
   /**
    * Evaluates the dynamic drink penalty according to session intensity:
    * Level 1 (Chill): exactly 1 trago
@@ -190,16 +225,51 @@ export class VariableReplacer {
     const usedIds = new Set<string>();
 
     const fixed = context.fixedAssignedPlayers;
+    const isIndividualPlayerCard =
+      interpolatedText.includes('{player1}') &&
+      !interpolatedText.includes('{player2}') &&
+      !interpolatedText.includes('{player3}') &&
+      !interpolatedText.includes('{player4}');
 
     // 1. {player1}
     if (interpolatedText.includes('{player1}')) {
-      const p1 =
-        fixed && fixed[0]
-          ? fixed[0]
-          : (context.forcedFirstPlayer ?? this.pickWeightedPlayer(players, context, usedIds));
-      usedIds.add(p1.id);
-      assignedPlayers.push(p1);
-      interpolatedText = interpolatedText.replace(/\{player1\}/g, p1.name);
+      if (isIndividualPlayerCard && fixed && fixed.length > 0) {
+        for (const fp of fixed) {
+          usedIds.add(fp.id);
+          assignedPlayers.push(fp);
+        }
+        interpolatedText = interpolatedText.replace(
+          /\{player1\}/g,
+          this.formatPlayerConjunction(fixed)
+        );
+      } else if (isIndividualPlayerCard && context.isVirus && players.length > 0) {
+        const targetCount = Math.min(
+          players.length,
+          this.calculateTargetCount(players.length)
+        );
+        for (let i = 0; i < targetCount; i++) {
+          const picked =
+            i === 0 && context.forcedFirstPlayer
+              ? context.forcedFirstPlayer
+              : this.pickWeightedPlayer(players, context, usedIds);
+          if (picked) {
+            usedIds.add(picked.id);
+            assignedPlayers.push(picked);
+          }
+        }
+        interpolatedText = interpolatedText.replace(
+          /\{player1\}/g,
+          this.formatPlayerConjunction(assignedPlayers)
+        );
+      } else {
+        const p1 =
+          fixed && fixed[0]
+            ? fixed[0]
+            : (context.forcedFirstPlayer ?? this.pickWeightedPlayer(players, context, usedIds));
+        usedIds.add(p1.id);
+        assignedPlayers.push(p1);
+        interpolatedText = interpolatedText.replace(/\{player1\}/g, p1.name);
+      }
     } else if (context.forcedFirstPlayer) {
       usedIds.add(context.forcedFirstPlayer.id);
       assignedPlayers.push(context.forcedFirstPlayer);
@@ -241,7 +311,7 @@ export class VariableReplacer {
     // 5. {drinks}
     const hasDrinksToken = interpolatedText.includes('{drinks}');
     const drinks = hasDrinksToken
-      ? this.calculateDrinks(context.intensity, context.baseDrinks)
+      ? this.calculateDrinks(context.intensity ?? 2, context.baseDrinks)
       : 0;
     if (hasDrinksToken) {
       interpolatedText = this.interpolateDrinks(interpolatedText, drinks);

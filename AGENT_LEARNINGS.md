@@ -393,3 +393,36 @@ const snapshot: HistorySnapshot = {
 ### Better Approaches
 - **Recommendation:** Aplicar sistemáticamente `const isGameOver = storeGameOver || useGameSessionStore.getState().isGameOver;` para garantizar paridad inmediata tanto en renderizado reactivo del navegador como en renderizado estático de pruebas.
 
+---
+
+## Agent Learning Log: Iteration #18
+
+### Mistake Made
+- **Description:** Al escribir el suite `VirusRebalance.test.ts`, se invocó `CardEngine.buildCategoryDeck` y `CardEngine.buildChaosDeck` como métodos estáticos cuando originalmente sólo estaban definidos como métodos de instancia (a diferencia de `CardEngine.buildBoardDeck`, `CardEngine.shuffle` y `CardEngine.scheduleResolverInDeck`), y se asumió que los virus del catálogo carecían de `min_delay_cards`/`max_delay_cards` explícitos cuando en realidad todos los `timed_virus` de `04_retos_y_virus.json` y `02_modo_caliente.json` tienen `"min_delay_cards": 4, "max_delay_cards": 8` grabados en el JSON protegido por SHA-256.
+- **Impact:** Fallo inicial en 4 tests de `VirusRebalance.test.ts` (`TypeError: CardEngine.buildCategoryDeck is not a function`) y necesidad de normalizar en el motor (`scheduleResolverInDeck` y `VirusManager.calculateDuration`) el rango legado `4..8` de virus reales al nuevo rango global `6..10` sin alterar los ficheros de `public/data/`.
+
+### Patterns to Avoid
+- **Pattern:** Exponer algunos constructores de mazo en `CardEngine` sólo como métodos de instancia mientras otros son estáticos + alias de instancia, o asumir que `chain.min_delay_cards ?? 6` basta para cambiar la duración global cuando el catálogo JSON trae `4..8` explícito en cada carta.
+- **Risk:** Inconsistencia de API en `CardEngine` y reglas globales de duración que no surten efecto sobre las cartas reales del catálogo.
+
+### Better Approaches
+- **Recommendation:** Mantener paridad dual (`public static` + alias de instancia) en todos los constructores de mazo de `CardEngine` (`buildCategoryDeck`, `buildPresetDeck`, `buildBoardDeck`, `buildChaosDeck`) y, al actualizar rangos globales de cadenas (`timed_virus`) sin tocar `public/data/*.json`, mapear explícitamente el rango de catálogo legado (`4..8`) al nuevo rango canónico (`6..10`) preservando rangos sintéticos personalizados en tests unitarios.
+
+---
+
+## Agent Learning Log: Iteration #19
+
+### Mistake Made
+- **Description:**
+  1. En `CardEngine.scheduleResolverInDeck`, al adjuntar `fixedAssignedPlayers: [...assignedPlayers]` sin distinguir si la carta trigger tenía múltiples tokens (`{player1}` y `{player2}`, como `3212`, `3219`, `3230`, `3317`) mientras su carta de cura sólo tenía `{player1}` (`3213`, `3220`, `3231`, `3318`), `VariableReplacer.replaceTokens` interpretaba los 2 jugadores fijados como una expansión multi-jugador de `{player1}`, generando textos agramaticales como `"Dani y Carlos, puedes recuperar tu móvil"` cuando sólo `Dani` había entregado el móvil.
+  2. En `CardEngine.enforceVirusSpacing`, calcular `slackForFirst = Math.max(0, nonVirusCards.length - (virusCards.length - 1) * minGap)` provocaba que en catálogos densos como `04_retos_y_virus.json` (`1866 < 194 * 11`) el `initialOffset` evaluara siempre a `0`, forzando que la primera carta (`deck[0]`) fuese un virus el 100% de las partidas. Además, en mazos dispersos como `02_modo_caliente.json` (`avgGap ≈ 63`), limitar `maxExtra` a `avgGap - minGap + 2` tenía media `(avgGap - minGap) / 2`, comprimiendo todos los virus en el primer 60% del mazo.
+- **Impact:** Interpolación incorrecta de `{player1}` en 4 curas del catálogo oficial, aparición determinista de virus en el turno 0 de `Retos y Virus` y agotamiento prematuro de virus a mitad de partida en `Modo Spicy`.
+
+### Patterns to Avoid
+- **Pattern:** Asumir que `fixedAssignedPlayers.length > 1` en una carta con un único `{player1}` siempre proviene de un escalado multi-jugador de `{player1}`, o usar un intervalo uniforme `[0, M]` esperando media `M` en vez de `M / 2`.
+- **Risk:** Inyección de jugadores secundarios (`{player2}`) dentro del sujeto `{player1}` de la cura y sesgo posicional en el barajado.
+
+### Better Approaches
+- **Recommendation:**
+  1. En `CardEngine.scheduleResolverInDeck`, si el trigger contiene `{player2..4}` y el resolutor sólo contiene `{player1}`, fijar únicamente `[assignedPlayers[0]]` en `fixedAssignedPlayers`.
+  2. En `CardEngine.enforceVirusSpacing`, permitir `initialOffset` aleatorio en `0..5` siempre que `nonVirusCards.length >= minGap` y escalar `maxExtra` a `Math.min(tightSlack, Math.max(3, avgExtra * 2))` para centrar el valor esperado del espaciado en `avgGap`.

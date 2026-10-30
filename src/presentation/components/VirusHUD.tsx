@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ShieldAlert, X, Clock } from 'lucide-react';
 import type { ActiveVirus } from '../../domain/types/virus';
+import { VariableReplacer } from '../../domain/engines/VariableReplacer';
 import { soundService } from '../../infrastructure/soundService';
 
 export interface VirusHUDProps {
@@ -14,7 +15,7 @@ export interface ActiveVirusDetailModalProps {
 
 export const getAffectedPlayersLabel = (virus: ActiveVirus): string => {
   if (virus.assignedPlayers && virus.assignedPlayers.length > 1) {
-    return virus.assignedPlayers.map((p) => p.name).join(' y ');
+    return VariableReplacer.formatPlayerConjunction(virus.assignedPlayers);
   }
   return virus.targetPlayerName || 'Todos';
 };
@@ -166,14 +167,14 @@ export const VirusHUD: React.FC<VirusHUDProps> = ({ activeViruses }) => {
 
                 <div className="flex flex-col text-left min-w-0">
                   <div className="flex items-center space-x-1">
-                    <span className="text-[11px] font-black text-white truncate max-w-[120px]">
+                    <span className="text-[11px] font-black text-white truncate max-w-[200px] sm:max-w-[240px]">
                       {affectedLabel}
                     </span>
                     <span className="text-[10px] theme-text-muted shrink-0">
                       {durationLabel}
                     </span>
                   </div>
-                  <span className="text-[10px] theme-text-muted line-clamp-1 max-w-[170px]">
+                  <span className="text-[10px] theme-text-muted line-clamp-1 max-w-[260px] sm:max-w-[300px]">
                     {virus.ruleText}
                   </span>
                 </div>

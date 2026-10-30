@@ -58,3 +58,15 @@ export interface Card {
   option_b?: string | null;
   fixedAssignedPlayers?: Player[];
 }
+
+export interface VariableContext {
+  intensity?: IntensityLevel;
+  baseDrinks?: number;
+  turnHistory?: Map<string, number> | Record<string, number>;
+  lastPickedTurn?: Map<string, number> | Record<string, number>;
+  currentTurnIndex?: number;
+  forcedFirstPlayer?: Player;
+  fixedAssignedPlayers?: Player[];
+  isVirus?: boolean;
+}
+

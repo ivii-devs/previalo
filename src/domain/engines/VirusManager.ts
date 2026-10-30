@@ -34,14 +34,21 @@ export class VirusManager {
 
   /**
    * Determines the duration in rounds for a virus card.
-   * Prioritizes card.duration_rounds, then chain.min_delay_cards, falling back to 3 rounds.
+   * Prioritizes card.duration_rounds, then chain.min_delay_cards (upgrading catalog 4..8 range to 6),
+   * falling back to 6 rounds for timed_virus chains and 3 rounds for unchained legacy definitions.
    */
   public static calculateDuration(card: Card): number {
     if (card.duration_rounds && card.duration_rounds > 0) {
       return card.duration_rounds;
     }
     if (card.chain?.min_delay_cards && card.chain.min_delay_cards > 0) {
+      if (card.chain.min_delay_cards === 4 && card.chain.max_delay_cards === 8) {
+        return CardEngine.DEFAULT_VIRUS_MIN_DELAY;
+      }
       return card.chain.min_delay_cards;
+    }
+    if (card.chain?.chain_type === 'timed_virus') {
+      return CardEngine.DEFAULT_VIRUS_MIN_DELAY;
     }
     return 3;
   }
@@ -51,10 +58,7 @@ export class VirusManager {
    * Resolvers (cure cards) never qualify as new virus triggers.
    */
   public static isVirusCard(card: Card): boolean {
-    if (card.chain?.role === 'resolver' || CardEngine.isResolverOrCure(card)) {
-      return false;
-    }
-    return card.type === 'virus' || card.chain?.chain_type === 'timed_virus';
+    return CardEngine.isTimedVirusTrigger(card);
   }
 
   /**

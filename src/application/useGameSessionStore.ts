@@ -137,6 +137,27 @@ const clearActiveSessionFromStorage = () => {
   }
 };
 
+const isCardVirus = (card: Card): boolean => VirusManager.isVirusCard(card);
+
+const getSipRecipients = (card: Card, assignedPlayers: Player[]): Player[] => {
+  if (assignedPlayers.length === 0) return [];
+  const isSingleTokenCard =
+    !card.text.includes('{player2}') &&
+    !card.text.includes('{player3}') &&
+    !card.text.includes('{player4}');
+  const isMultiVirusOrCure =
+    isSingleTokenCard &&
+    (isCardVirus(card) ||
+      (card.fixedAssignedPlayers !== undefined && card.fixedAssignedPlayers.length > 1));
+  if (isMultiVirusOrCure) {
+    return assignedPlayers;
+  }
+  if (card.target === 'pair') {
+    return assignedPlayers.slice(0, 2);
+  }
+  return [assignedPlayers[0]];
+};
+
 export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
   mode: null,
   modeConfig: null,
@@ -217,6 +238,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
         baseDrinks: firstCard.drinks_penalty,
         currentTurnIndex: 0,
         fixedAssignedPlayers: firstCard.fixedAssignedPlayers,
+        isVirus: isCardVirus(firstCard),
       });
 
     // If first card is a trigger, schedule its resolver in the deck
@@ -269,11 +291,9 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
         !firstCard.target) &&
       assignedPlayers.length > 0
     ) {
-      usePlayerStore.getState().addSips(assignedPlayers[0].id, calculatedDrinks);
-      sipsAwarded[assignedPlayers[0].id] = calculatedDrinks;
-      if (firstCard.target === 'pair' && assignedPlayers.length > 1) {
-        usePlayerStore.getState().addSips(assignedPlayers[1].id, calculatedDrinks);
-        sipsAwarded[assignedPlayers[1].id] = calculatedDrinks;
+      for (const recipient of getSipRecipients(firstCard, assignedPlayers)) {
+        usePlayerStore.getState().addSips(recipient.id, calculatedDrinks);
+        sipsAwarded[recipient.id] = calculatedDrinks;
       }
     }
 
@@ -337,9 +357,8 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
           !currentCard.target) &&
         assignedPlayers.length > 0
       ) {
-        sipsAwarded[assignedPlayers[0].id] = calculatedDrinks;
-        if (currentCard.target === 'pair' && assignedPlayers.length > 1) {
-          sipsAwarded[assignedPlayers[1].id] = calculatedDrinks;
+        for (const recipient of getSipRecipients(currentCard, assignedPlayers)) {
+          sipsAwarded[recipient.id] = calculatedDrinks;
         }
       }
 
@@ -377,6 +396,7 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
       baseDrinks: nextCard.drinks_penalty,
       currentTurnIndex: nextIndex,
       fixedAssignedPlayers: nextCard.fixedAssignedPlayers,
+      isVirus: isCardVirus(nextCard),
     });
 
     // 5. Chain resolution & Virus lifecycle
@@ -438,13 +458,10 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
         !nextCard.target) &&
       replacement.assignedPlayers.length > 0
     ) {
-      usePlayerStore
-        .getState()
-        .addSips(replacement.assignedPlayers[0].id, replacement.calculatedDrinks);
-      if (nextCard.target === 'pair' && replacement.assignedPlayers.length > 1) {
+      for (const recipient of getSipRecipients(nextCard, replacement.assignedPlayers)) {
         usePlayerStore
           .getState()
-          .addSips(replacement.assignedPlayers[1].id, replacement.calculatedDrinks);
+          .addSips(recipient.id, replacement.calculatedDrinks);
       }
     }
 
@@ -485,9 +502,8 @@ export const useGameSessionStore = create<GameSessionState>()((set, get) => ({
         !currentCard.target) &&
       assignedPlayers.length > 0
     ) {
-      usePlayerStore.getState().addSips(assignedPlayers[0].id, -calculatedDrinks);
-      if (currentCard.target === 'pair' && assignedPlayers.length > 1) {
-        usePlayerStore.getState().addSips(assignedPlayers[1].id, -calculatedDrinks);
+      for (const recipient of getSipRecipients(currentCard, assignedPlayers)) {
+        usePlayerStore.getState().addSips(recipient.id, -calculatedDrinks);
       }
     }
 

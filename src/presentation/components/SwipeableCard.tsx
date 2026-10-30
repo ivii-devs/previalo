@@ -55,7 +55,8 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   const isCure =
     isResolver && (card.chain?.chain_type === 'timed_virus' || card.type === 'virus');
   const isContinuation = isResolver && !isCure;
-  const isVirus = (card.type === 'virus' || Boolean(card.duration_rounds)) && !isResolver;
+  const isVirus =
+    CardEngine.isTimedVirusTrigger(card) || (Boolean(card.duration_rounds) && !isResolver);
   const isChallenge = card.type === 'challenge' && !isResolver;
   const intensity = card.intensity ?? 2;
 
