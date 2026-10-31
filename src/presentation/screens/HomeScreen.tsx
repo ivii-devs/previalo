@@ -11,6 +11,7 @@ import {
 import { CatalogLoader } from '../../infrastructure/catalogLoader';
 import { soundService } from '../../infrastructure/soundService';
 import { useDragToScroll } from '../hooks/useDragToScroll';
+import { LegalModal } from '../components/LegalModal';
 
 export interface HomeScreenProps {
   onSelectMode: (mode: 'category' | 'preset' | 'chaos' | 'board', targetId?: string) => void;
@@ -51,6 +52,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectMode }) => {
   const [totalCards, setTotalCards] = useState<number>(6937);
   const [spicyCardsCount, setSpicyCardsCount] = useState<number>(1661);
   const [parejasCardsCount, setParejasCardsCount] = useState<number>(395);
+  const [isLegalOpen, setIsLegalOpen] = useState(false);
+  const [legalTab, setLegalTab] = useState<'terms' | 'privacy' | 'storage'>('terms');
 
   useEffect(() => {
     CatalogLoader.loadManifest()
@@ -233,6 +236,56 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onSelectMode }) => {
           ))}
         </div>
       </div>
+
+      {/* Footer Legal & Info */}
+      <footer className="pt-2 pb-4 border-t theme-border flex flex-col items-center text-center space-y-2 text-[11px] text-[var(--text-muted)]">
+        <div className="flex items-center gap-3 font-semibold">
+          <button
+            onClick={() => {
+              soundService.playTap();
+              setLegalTab('terms');
+              setIsLegalOpen(true);
+            }}
+            className="hover:text-white transition-colors cursor-pointer py-1"
+            data-testid="home-legal-terms-btn"
+          >
+            Términos (+18)
+          </button>
+          <span>•</span>
+          <button
+            onClick={() => {
+              soundService.playTap();
+              setLegalTab('privacy');
+              setIsLegalOpen(true);
+            }}
+            className="hover:text-white transition-colors cursor-pointer py-1"
+            data-testid="home-legal-privacy-btn"
+          >
+            Privacidad
+          </button>
+          <span>•</span>
+          <button
+            onClick={() => {
+              soundService.playTap();
+              setLegalTab('storage');
+              setIsLegalOpen(true);
+            }}
+            className="hover:text-white transition-colors cursor-pointer py-1"
+            data-testid="home-legal-storage-btn"
+          >
+            Almacenamiento
+          </button>
+        </div>
+        <p className="text-[10px] opacity-75">
+          Previalo v1.0.0 • 100% Offline • Sin Anuncios
+        </p>
+      </footer>
+
+      <LegalModal
+        isOpen={isLegalOpen}
+        onClose={() => setIsLegalOpen(false)}
+        defaultTab={legalTab}
+      />
     </div>
   );
 };

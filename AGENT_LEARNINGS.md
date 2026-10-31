@@ -426,3 +426,28 @@ const snapshot: HistorySnapshot = {
 - **Recommendation:**
   1. En `CardEngine.scheduleResolverInDeck`, si el trigger contiene `{player2..4}` y el resolutor sólo contiene `{player1}`, fijar únicamente `[assignedPlayers[0]]` en `fixedAssignedPlayers`.
   2. En `CardEngine.enforceVirusSpacing`, permitir `initialOffset` aleatorio en `0..5` siempre que `nonVirusCards.length >= minGap` y escalar `maxExtra` a `Math.min(tightSlack, Math.max(3, avgExtra * 2))` para centrar el valor esperado del espaciado en `avgGap`.
+
+---
+
+## Agent Learning Log: Iteration #20
+
+### Mistake Made
+- **Description:**
+  1. En `LegalModal`, inicializar `activeTab` con `useState<'terms' | 'privacy' | 'storage'>(defaultTab)` sin un `useEffect` sincronizador provocaba que si el componente permanecía montado en el árbol React y el usuario abría el modal desde distintos botones (ej. "Privacidad" o "Cookies/LSSI"), el modal continuara mostrando la pestaña abierta anteriormente ("terms").
+  2. El componente `OfflineFallback.tsx` fue creado como componente huérfano sin integrarse en `SetupScreen` ante errores de carga de red/offline (`PWAHelper.isOffline()`), impidiendo al usuario ver la vista de rescate en la UI cuando un catálogo no precacheado fallaba.
+  3. En `TileModal.tsx`, la descripción estática de casilla (`tile.description`) omitía la clase `.selectable` cuando no había carta de acción dinámica, violando la regla de accesibilidad en textos de reglas.
+  4. La lectura de shortcuts de la PWA (`window.location.search`) en `App.tsx` dependía únicamente de `useEffect`, provocando un parpadeo visual en frío del `HomeScreen` antes de transicionar a la pantalla de configuración del modo invocado, e impidiendo la resolución síncrona en entornos SSR / tests unitarios con `renderToString`.
+  5. En `vite.config.ts`, el manifiesto omitía `lang: 'es'`, defaulting a `'en'` en una PWA completamente en español.
+
+### Patterns to Avoid
+- **Pattern:** Asumir que `useState(prop)` se actualiza cuando `prop` cambia en modales que se ocultan devolviendo `null` sin desmontarse del árbol padre, o crear componentes visuales de rescate sin conectarlos a los manejadores de error de las pantallas.
+- **Risk:** Desincronización de UI, componentes huérfanos sin cobertura de flujo real y flashes de renderizado en lanzamientos desde shortcuts.
+
+### Better Approaches
+- **Recommendation:**
+  1. Sincronizar siempre `defaultTab` reactivamente: `useEffect(() => { if (isOpen) setActiveTab(defaultTab); }, [isOpen, defaultTab])`.
+  2. Integrar `OfflineFallback` en los bloques `catch` de inicio de juego en `SetupScreen` cuando `PWAHelper.isOffline()` o `isNetworkError` sea verdadero.
+  3. Extraer la lógica de parseo de shortcuts a `parseShortcutQuery` e inicializar síncronamente los estados de `currentScreen`, `setupMode` y `setupTargetId` en `App.tsx` para evitar parpadeos visuales y permitir verificación determinista en SSR y tests.
+  4. Añadir siempre `.selectable` tanto en `dynamicPrompt` como en `tile.description`.
+  5. Declarar `lang: 'es'` en el manifiesto PWA e incluir `sitemap.xml` para máxima puntuación de auditoría en producción.
+

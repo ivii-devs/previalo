@@ -33,7 +33,7 @@ export const VirusExpiredModal: React.FC<VirusExpiredModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm select-none animate-in fade-in duration-200"
       data-testid="virus-expired-modal"
     >
-      <div className="w-full max-w-sm rounded-3xl border-2 border-emerald-500 bg-[var(--bg-surface)] p-6 shadow-[0_0_30px_rgba(16,185,129,0.35)] flex flex-col items-center text-center space-y-4">
+      <div className="w-full max-w-sm rounded-3xl border-2 border-emerald-500 bg-[var(--bg-surface)] p-6 shadow-[0_0_30px_rgba(16,185,129,0.35)] flex flex-col items-center text-center space-y-4 max-h-[calc(100dvh-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px)-2rem)] overflow-y-auto scroll-container">
         {/* Animated Celebration Icon */}
         <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/40 shadow-inner animate-pulse">
           <ShieldCheck className="w-9 h-9" />
@@ -56,7 +56,7 @@ export const VirusExpiredModal: React.FC<VirusExpiredModalProps> = ({
               Liberado: <span className="text-white font-black">{currentExpired.targetPlayerName}</span>
             </div>
           )}
-          <p className="text-sm font-semibold theme-text-primary leading-snug">
+          <p className="text-sm font-semibold theme-text-primary leading-snug selectable">
             "{currentExpired.ruleText}"
           </p>
           <p className="text-[11px] theme-text-muted italic">
@@ -67,7 +67,7 @@ export const VirusExpiredModal: React.FC<VirusExpiredModalProps> = ({
         {/* Dismiss Button */}
         <button
           onClick={handleDismiss}
-          className="w-full py-3 px-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black text-sm tracking-wide shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all cursor-pointer flex items-center justify-center space-x-2"
+          className="w-full py-3 px-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black text-sm tracking-wide shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all cursor-pointer flex items-center justify-center space-x-2 min-h-[44px]"
           data-testid="dismiss-virus-btn"
         >
           <CheckCircle2 className="w-4 h-4" />

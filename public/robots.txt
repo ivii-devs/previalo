@@ -1,0 +1,8 @@
+# Previalo PWA Robots.txt
+User-agent: *
+Allow: /
+Disallow: /data/
+
+# Canonical Host & Sitemap
+Host: https://previalo.vercel.app
+Sitemap: https://previalo.vercel.app/sitemap.xml

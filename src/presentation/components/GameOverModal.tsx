@@ -26,7 +26,7 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm select-none"
       data-testid="game-over-modal"
     >
-      <div className="w-full max-w-sm rounded-3xl border theme-border bg-[var(--bg-surface)] p-6 space-y-5 shadow-2xl text-center">
+      <div className="w-full max-w-sm rounded-3xl border theme-border bg-[var(--bg-surface)] p-6 space-y-5 shadow-2xl text-center max-h-[calc(100dvh-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px)-2rem)] overflow-y-auto scroll-container">
         <div className="w-14 h-14 mx-auto rounded-2xl bg-[var(--accent-primary)]/15 border border-[var(--accent-primary)]/30 text-[var(--accent-primary)] flex items-center justify-center">
           {winnerName ? <Trophy className="w-7 h-7" /> : <Sparkles className="w-7 h-7" />}
         </div>
@@ -35,7 +35,7 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
           <h2 className="text-xl font-black theme-text-primary">
             {winnerName ? `¡Ganó ${winnerName}!` : title}
           </h2>
-          <p className="text-xs theme-text-muted leading-relaxed">
+          <p className="text-xs theme-text-muted leading-relaxed selectable">
             {description ||
               (winnerName
                 ? '¡Ha alcanzado la meta del tablero!'
