@@ -77,9 +77,11 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
           className="flex items-center space-x-2 focus:outline-none group text-left cursor-pointer min-h-[44px] py-1"
           data-testid="header-logo-btn"
         >
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center font-black text-lg bg-gradient-to-tr from-[var(--accent-primary)] to-[var(--accent-secondary)] text-white shadow-[var(--glow-shadow)] group-hover:scale-105 transition-transform">
-            P
-          </div>
+          <img
+            src="/favicon.svg"
+            alt="Previalo"
+            className="w-8 h-8 rounded-lg shadow-md group-hover:scale-105 transition-transform object-contain"
+          />
           <span className="font-black text-xl tracking-wider theme-text-primary">
             PREVIALO
           </span>
