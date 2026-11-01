@@ -45,10 +45,14 @@ tests/
 # ========================================================
 /data/
 /data/**
-/scripts/
+/scripts/*
+!/scripts/generate_screenshots.mjs
+
 /tools/
 /docs/
 /docs/**
+docs/screenshots/
+
 
 # ========================================================
 # 7. Logs

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSettingsStore, type Theme } from './application/useSettingsStore';
 import { useGameSessionStore } from './application/useGameSessionStore';
+import { usePlayerStore } from './application/usePlayerStore';
 import { TopHeader } from './presentation/components/TopHeader';
 import { SettingsModal } from './presentation/components/SettingsModal';
 import { HomeScreen } from './presentation/screens/HomeScreen';
@@ -68,6 +69,15 @@ export const App: React.FC = () => {
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
 
   const theme = useSettingsStore((state) => state.theme);
+
+  // Expose screen router and stores for automation / testing arneses
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as any).__setScreen = (s: ScreenId) => setCurrentScreen(s);
+      (window as any).__gameSessionStore = useGameSessionStore;
+      (window as any).__playerStore = usePlayerStore;
+    }
+  }, []);
 
   // Sync theme to root element and meta theme-color
   useEffect(() => {
