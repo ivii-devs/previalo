@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Home, Lock } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Home, Lock, Dices, Flame, Layers } from 'lucide-react';
 import { useGameSessionStore } from '../../application/useGameSessionStore';
 import { usePlayerStore } from '../../application/usePlayerStore';
 import { BoardGrid } from '../components/BoardGrid';
@@ -8,6 +8,7 @@ import { TileModal } from '../components/TileModal';
 import { GameOverModal } from '../components/GameOverModal';
 import { CatalogLoader } from '../../infrastructure/catalogLoader';
 import { soundService } from '../../infrastructure/soundService';
+import { useDragToScroll } from '../hooks/useDragToScroll';
 import type { BoardTile, BoardId } from '../../domain/types/board';
 import type { Player } from '../../domain/types/player';
 
@@ -41,13 +42,19 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
   const storePlayers = usePlayerStore((state) => state.players);
   const players = storePlayers.length > 0 ? storePlayers : usePlayerStore.getState().players;
   const storePositions = useGameSessionStore((state) => state.boardPositions);
-  const boardPositions = Object.keys(storePositions).length > 0 ? storePositions : useGameSessionStore.getState().boardPositions;
+  const boardPositions =
+    Object.keys(storePositions).length > 0
+      ? storePositions
+      : useGameSessionStore.getState().boardPositions;
 
   const storeJails = useGameSessionStore((state) => state.boardJails);
   const boardJails = storeJails || useGameSessionStore.getState().boardJails;
 
   const storeTurnIndex = useGameSessionStore((state) => state.currentTurnPlayerIndex);
-  const currentTurnPlayerIndex = storeTurnIndex !== undefined ? storeTurnIndex : useGameSessionStore.getState().currentTurnPlayerIndex;
+  const currentTurnPlayerIndex =
+    storeTurnIndex !== undefined
+      ? storeTurnIndex
+      : useGameSessionStore.getState().currentTurnPlayerIndex;
 
   const storeLastRoll = useGameSessionStore((state) => state.lastDiceRoll);
   const lastDiceRoll = storeLastRoll ?? useGameSessionStore.getState().lastDiceRoll;
@@ -59,6 +66,9 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
   const startBoardSession = useGameSessionStore((state) => state.startBoardSession);
   const endSession = useGameSessionStore((state) => state.endSession);
   const resetPlayerStats = usePlayerStore((state) => state.resetPlayerStats);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useDragToScroll(scrollRef);
 
   const handlePlayAgain = () => {
     soundService.playTap();
@@ -101,8 +111,8 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
             players.length >= 2
               ? players
               : [
-                  { id: 'p_1', name: 'Jugador 1', color: '#ec4899', avatar: '🦁', sips: 0, timesTargeted: 0 },
-                  { id: 'p_2', name: 'Jugador 2', color: '#06b6d4', avatar: '🦊', sips: 0, timesTargeted: 0 },
+                  { id: 'p_1', name: 'Jugador 1', color: '#ff6257', avatar: '🦁', sips: 0, timesTargeted: 0 },
+                  { id: 'p_2', name: 'Jugador 2', color: '#4ade9a', avatar: '🦊', sips: 0, timesTargeted: 0 },
                 ],
             loadedCards,
             state.modeConfig?.hotTiers || [1, 2, 3]
@@ -124,10 +134,13 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
     }
   }, [isGameOver, onVictory, onPlayAgain]);
 
-  const activePlayers = players.length >= 2 ? players : [
-    { id: 'p_1', name: 'Jugador 1', color: '#ec4899', avatar: '🦁', sips: 0, timesTargeted: 0 },
-    { id: 'p_2', name: 'Jugador 2', color: '#06b6d4', avatar: '🦊', sips: 0, timesTargeted: 0 },
-  ];
+  const activePlayers =
+    players.length >= 2
+      ? players
+      : [
+          { id: 'p_1', name: 'Jugador 1', color: '#ff6257', avatar: '🦁', sips: 0, timesTargeted: 0 },
+          { id: 'p_2', name: 'Jugador 2', color: '#4ade9a', avatar: '🦊', sips: 0, timesTargeted: 0 },
+        ];
 
   const currentTurnPlayer = activePlayers[currentTurnPlayerIndex % activePlayers.length];
 
@@ -144,12 +157,11 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
 
       if (result.skipped) {
         const playerName = result.player?.name || currentTurnPlayer?.name || 'El jugador';
-        setJailAlert(`${playerName} está en la cárcel. ¡Pierde el turno!`);
+        setJailAlert(`${playerName} está en la cárcel. Pierde el turno.`);
         soundService.vibrate([80, 40]);
         return;
       }
 
-      // Check victory
       if (result.isVictory) {
         soundService.playVictory();
         if (onVictory && !onPlayAgain) {
@@ -158,7 +170,6 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
         return;
       }
 
-      // Open landing tile modal for special actions or rules
       if (result.tile) {
         const targetPlayer = result.player || currentTurnPlayer;
         if (targetPlayer) {
@@ -174,32 +185,42 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
 
   const badgeStyle =
     boardId === 'guatoca_hot'
-      ? 'border-rose-500/40 bg-rose-500/15 text-rose-300'
+      ? 'border-spicy-line bg-spicy-quiet text-spicy'
       : boardId === 'guatoca_todos'
-      ? 'border-amber-500/40 bg-amber-500/15 text-amber-300'
-      : 'border-emerald-500/40 bg-emerald-500/15 text-emerald-300';
+      ? 'border-warning-line bg-warning-quiet text-warning'
+      : 'border-success-line bg-success-quiet text-success';
+
+  const badgeIcon =
+    boardId === 'guatoca_hot' ? (
+      <Flame className="w-3.5 h-3.5 shrink-0" />
+    ) : boardId === 'guatoca_todos' ? (
+      <Layers className="w-3.5 h-3.5 shrink-0" />
+    ) : (
+      <Dices className="w-3.5 h-3.5 shrink-0" />
+    );
 
   const badgeLabel =
     boardId === 'guatoca_hot'
-      ? `🌶️ Hot (64) · Niveles ${hotTiers.join(', ')}`
+      ? `Hot (64) · Niveles ${hotTiers.join(', ')}`
       : boardId === 'guatoca_todos'
-      ? `🎲 Todos (64) · Niveles ${hotTiers.join(', ')}`
-      : '🍻 Clásica (64)';
+      ? `Todos (64) · Niveles ${hotTiers.join(', ')}`
+      : 'Clásica (64)';
 
   return (
     <div
-      className="flex flex-col h-full w-full max-w-md mx-auto justify-between px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] overflow-hidden select-none"
+      className="flex-1 min-h-0 flex flex-col h-full w-full max-w-md mx-auto overflow-hidden select-none"
       data-testid="game-board-screen"
     >
-      {/* Top Header */}
-      <div className="space-y-2 shrink-0">
-        <div className="flex items-center justify-between">
+      {/* Compact Top Header */}
+      <div className="shrink-0 px-3 pt-3 pb-2 space-y-2 border-b border-border bg-background/95">
+        <div className="flex items-center justify-between gap-2">
           <button
+            type="button"
             onClick={() => {
               soundService.playTap();
               onExitHome();
             }}
-            className="p-2 rounded-xl border theme-border bg-[var(--bg-elevated)] text-[var(--text-muted)] hover:text-white transition-colors cursor-pointer"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl border border-border bg-surface text-text-secondary interactive-surface active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-colors cursor-pointer shrink-0"
             aria-label="Salir al inicio"
             data-testid="exit-board-btn"
           >
@@ -208,35 +229,38 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
 
           {/* Read-only Active Board Modality Badge */}
           <div
-            className={`px-3 py-1 rounded-full border text-xs font-black tracking-wide ${badgeStyle}`}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold ${badgeStyle}`}
             data-testid="active-board-badge"
           >
-            {badgeLabel}
+            {badgeIcon}
+            <span>{badgeLabel}</span>
           </div>
         </div>
 
-        {/* Current Turn Player Banner */}
+        {/* Compact Turn Player Banner */}
         {currentTurnPlayer && (
           <div
-            style={{ borderColor: currentTurnPlayer.color || '#ec4899' }}
-            className="flex items-center justify-between p-2.5 rounded-2xl border-2 bg-[var(--bg-surface)] shadow-sm"
+            style={{ borderLeftColor: currentTurnPlayer.color || 'var(--pv-action)' }}
+            className="flex items-center justify-between px-3 py-2 rounded-xl border border-border border-l-4 bg-surface"
             data-testid="turn-player-banner"
           >
-            <div className="flex items-center space-x-2">
-              <span className="text-xl">{currentTurnPlayer.avatar || '👤'}</span>
-              <div>
-                <div className="text-[10px] uppercase font-bold text-[var(--text-muted)]">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="text-xl shrink-0" aria-hidden="true">
+                {currentTurnPlayer.avatar || '👤'}
+              </span>
+              <div className="min-w-0">
+                <div className="text-[11px] font-medium text-text-muted leading-none">
                   Turno de
                 </div>
-                <div className="text-sm font-black theme-text-primary">
+                <div className="font-heading text-sm font-bold text-text truncate mt-0.5">
                   {currentTurnPlayer.name}
                 </div>
               </div>
             </div>
 
-            <div className="text-right">
-              <div className="text-[10px] theme-text-muted">Casilla actual</div>
-              <div className="text-base font-black text-emerald-400">
+            <div className="text-right shrink-0 pl-2">
+              <div className="text-[11px] text-text-muted leading-none">Casilla actual</div>
+              <div className="font-mono text-base font-bold text-success mt-0.5 tabular-nums">
                 #{boardPositions[currentTurnPlayer.id] ?? 1}
               </div>
             </div>
@@ -245,15 +269,18 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
 
         {/* Jail Alert Notification */}
         {jailAlert && (
-          <div className="p-2.5 rounded-xl bg-purple-500/20 border border-purple-500/40 text-purple-200 text-xs flex items-center space-x-2 animate-pulse">
-            <Lock className="w-4 h-4 shrink-0 text-purple-400" />
-            <span className="font-bold">{jailAlert}</span>
+          <div className="p-2.5 rounded-xl bg-virus-quiet border border-virus-line text-virus text-xs flex items-center gap-2">
+            <Lock className="w-4 h-4 shrink-0" />
+            <span className="font-semibold">{jailAlert}</span>
           </div>
         )}
       </div>
 
-      {/* Main Center Area: Serpentine Board Grid */}
-      <div className="flex-1 overflow-y-auto my-2 rounded-2xl border theme-border bg-[var(--bg-surface)] p-2">
+      {/* Full-Width Scrollable Serpentine Board Grid (Zero card-in-card) */}
+      <div
+        ref={scrollRef}
+        className="flex-1 min-h-0 overflow-y-auto scroll-container px-2.5 py-2.5"
+      >
         {tiles.length > 0 ? (
           <BoardGrid
             tiles={tiles}
@@ -269,14 +296,23 @@ export const GameBoardScreen: React.FC<GameBoardScreenProps> = ({
             }}
           />
         ) : (
-          <div className="flex items-center justify-center h-full text-xs theme-text-muted">
-            Cargando tablero...
+          <div
+            className="grid grid-cols-4 gap-2 py-1"
+            aria-label="Cargando tablero"
+            data-testid="board-loading-skeleton"
+          >
+            {Array.from({ length: 16 }).map((_, idx) => (
+              <div
+                key={idx}
+                className="min-h-[84px] rounded-xl border border-border bg-surface skeleton-shimmer"
+              />
+            ))}
           </div>
         )}
       </div>
 
-      {/* Bottom Dice Rolling Zone */}
-      <div className="pt-2 shrink-0 border-t theme-border bg-[var(--bg-surface)] p-3 rounded-2xl shadow-lg">
+      {/* Compact Horizontal Dice Dock in Thumb-Zone */}
+      <div className="shrink-0 border-t border-border bg-surface px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))]">
         <Dice3D
           rolling={rolling}
           value={lastDiceRoll}

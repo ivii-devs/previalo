@@ -49,9 +49,9 @@ tests/
 !/scripts/generate_screenshots.mjs
 
 /tools/
-/docs/
-/docs/**
-docs/screenshots/
+/docs/*
+!/docs/screenshots/
+!/docs/screenshots/**
 
 
 # ========================================================
