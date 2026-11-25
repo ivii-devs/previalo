@@ -74,7 +74,7 @@ export const TileModal: React.FC<TileModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm select-none animate-in fade-in duration-200"
       data-testid="tile-modal"
     >
-      <div className="w-full max-w-sm rounded-3xl border-2 theme-border bg-[var(--bg-surface)] p-6 shadow-[var(--glow-shadow)] flex flex-col items-center text-center space-y-4">
+      <div className="w-full max-w-sm rounded-3xl border-2 theme-border bg-[var(--bg-surface)] p-6 shadow-[var(--glow-shadow)] flex flex-col items-center text-center space-y-4 max-h-[calc(100dvh-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px)-2rem)] overflow-y-auto scroll-container">
         {/* Header Icon */}
         <div className="w-16 h-16 rounded-2xl bg-[var(--bg-elevated)] border theme-border flex items-center justify-center shadow-inner">
           {renderIcon()}
@@ -113,13 +113,13 @@ export const TileModal: React.FC<TileModalProps> = ({
         <div className="w-full p-4 rounded-2xl border theme-border bg-[var(--bg-elevated)] space-y-2.5">
           {dynamicPrompt ? (
             <p
-              className="text-sm font-bold theme-text-primary leading-relaxed"
+              className="text-sm font-bold theme-text-primary leading-relaxed selectable"
               data-testid="tile-dynamic-card"
             >
               {dynamicPrompt}
             </p>
           ) : (
-            <p className="text-sm font-semibold theme-text-primary leading-relaxed">
+            <p className="text-sm font-semibold theme-text-primary leading-relaxed selectable">
               {tile.description}
             </p>
           )}
@@ -167,7 +167,7 @@ export const TileModal: React.FC<TileModalProps> = ({
         {/* Dismiss Button */}
         <button
           onClick={handleClose}
-          className="w-full py-3 px-4 rounded-2xl bg-[var(--accent-primary)] hover:brightness-110 active:scale-95 text-white font-black text-sm tracking-wide shadow-[var(--glow-shadow)] transition-all cursor-pointer flex items-center justify-center space-x-2"
+          className="w-full py-3 px-4 rounded-2xl bg-[var(--accent-primary)] hover:brightness-110 active:scale-95 text-white font-black text-sm tracking-wide shadow-[var(--glow-shadow)] transition-all cursor-pointer flex items-center justify-center space-x-2 min-h-[44px]"
           data-testid="close-tile-modal-btn"
         >
           <CheckCircle2 className="w-4 h-4" />

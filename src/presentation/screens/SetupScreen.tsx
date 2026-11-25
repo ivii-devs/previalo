@@ -15,6 +15,8 @@ import { useGameSessionStore } from '../../application/useGameSessionStore';
 import { CardEngine, type CardFilterOptions } from '../../domain/engines/CardEngine';
 import { CatalogLoader } from '../../infrastructure/catalogLoader';
 import { soundService } from '../../infrastructure/soundService';
+import { PWAHelper } from '../../infrastructure/registerSW';
+import { OfflineFallback } from '../components/OfflineFallback';
 import { useDragToScroll } from '../hooks/useDragToScroll';
 import type { IntensityLevel } from '../../domain/types/card';
 import type { BoardId, HotTier } from '../../domain/types/board';
@@ -179,6 +181,7 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
   const [selectedBoardHotTiers, setSelectedBoardHotTiers] = useState<HotTier[]>([1, 2, 3]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [isOfflineError, setIsOfflineError] = useState(false);
 
   // Available intensities for this active mode/category
   const availableLevels = useMemo(
@@ -502,7 +505,18 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
       soundService.playSwipe();
       onStartGame('cards');
     } catch (err) {
-      setErrorMsg(`Error al cargar las cartas: ${(err as Error).message}`);
+      const errMsg = (err as Error)?.message || '';
+      const isNetwork =
+        PWAHelper.isOffline() ||
+        errMsg.toLowerCase().includes('failed to fetch') ||
+        errMsg.toLowerCase().includes('network') ||
+        errMsg.toLowerCase().includes('offline');
+
+      if (isNetwork) {
+        setIsOfflineError(true);
+      } else {
+        setErrorMsg(`Error al cargar las cartas: ${errMsg}`);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -538,6 +552,21 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
 
   // Available packs for active category (reactively filtered by selected intensities)
   const activePacks = availablePacks;
+
+  if (isOfflineError) {
+    return (
+      <OfflineFallback
+        onRetry={() => {
+          setIsOfflineError(false);
+          handleStart();
+        }}
+        onBack={() => {
+          setIsOfflineError(false);
+          onBack();
+        }}
+      />
+    );
+  }
 
   return (
     <div

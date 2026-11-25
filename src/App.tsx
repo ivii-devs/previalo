@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSettingsStore, type Theme } from './application/useSettingsStore';
 import { useGameSessionStore } from './application/useGameSessionStore';
+import { usePlayerStore } from './application/usePlayerStore';
 import { TopHeader } from './presentation/components/TopHeader';
 import { SettingsModal } from './presentation/components/SettingsModal';
 import { HomeScreen } from './presentation/screens/HomeScreen';
@@ -9,17 +10,74 @@ import { GameCardsScreen } from './presentation/screens/GameCardsScreen';
 import { GameBoardScreen } from './presentation/screens/GameBoardScreen';
 import { soundService } from './infrastructure/soundService';
 import { PWAHelper } from './infrastructure/registerSW';
+import { PWAInstallPrompt } from './presentation/components/PWAInstallPrompt';
+import { UpdateToast } from './presentation/components/UpdateToast';
 import './presentation/styles/themes.css';
 
 export type ScreenId = 'home' | 'setup' | 'game-cards' | 'game-board';
 
+export interface ShortcutConfig {
+  screen: ScreenId;
+  mode: 'category' | 'preset' | 'chaos' | 'board';
+  targetId?: string;
+}
+
+export const parseShortcutQuery = (search: string): ShortcutConfig | null => {
+  if (!search) return null;
+  try {
+    const params = new URLSearchParams(search);
+    const mode = params.get('mode');
+    const category = params.get('category');
+
+    if (mode === 'chaos') {
+      return { screen: 'setup', mode: 'chaos' };
+    }
+    if (mode === 'spicy') {
+      return { screen: 'setup', mode: 'preset', targetId: 'modo_caliente' };
+    }
+    if (mode === 'board') {
+      return { screen: 'setup', mode: 'board' };
+    }
+    if (category) {
+      if (category === 'el_tablero') {
+        return { screen: 'setup', mode: 'board' };
+      }
+      return { screen: 'setup', mode: 'category', targetId: category };
+    }
+  } catch {
+    // Ignored
+  }
+  return null;
+};
+
 export const App: React.FC = () => {
-  const [currentScreen, setCurrentScreen] = useState<ScreenId>('home');
-  const [setupMode, setSetupMode] = useState<'category' | 'preset' | 'chaos' | 'board'>('chaos');
-  const [setupTargetId, setSetupTargetId] = useState<string | undefined>(undefined);
+  const initialShortcut = React.useMemo(() => {
+    if (typeof window === 'undefined' || !window.location?.search) return null;
+    return parseShortcutQuery(window.location.search);
+  }, []);
+
+  const [currentScreen, setCurrentScreen] = useState<ScreenId>(
+    () => initialShortcut?.screen ?? 'home'
+  );
+  const [setupMode, setSetupMode] = useState<'category' | 'preset' | 'chaos' | 'board'>(
+    () => initialShortcut?.mode ?? 'chaos'
+  );
+  const [setupTargetId, setSetupTargetId] = useState<string | undefined>(
+    () => initialShortcut?.targetId
+  );
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
 
   const theme = useSettingsStore((state) => state.theme);
+
+  // Expose screen router and stores for automation / testing arneses
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as any).__setScreen = (s: ScreenId) => setCurrentScreen(s);
+      (window as any).__gameSessionStore = useGameSessionStore;
+      (window as any).__playerStore = usePlayerStore;
+    }
+  }, []);
 
   // Sync theme to root element and meta theme-color
   useEffect(() => {
@@ -33,9 +91,16 @@ export const App: React.FC = () => {
         'sunset-hot': '#160b0e',
         'day-mode': '#f8fafc',
       };
-      metaThemeColor.setAttribute('content', themeColors[theme] || '#0b0f19');
+      metaThemeColor.setAttribute('content', themeColors[theme] || '#000000');
     }
   }, [theme]);
+
+  // Service Worker registration with update notification hook
+  useEffect(() => {
+    PWAHelper.registerServiceWorker({
+      onUpdate: () => setIsUpdateAvailable(true),
+    });
+  }, []);
 
   // WebKit iOS background/foreground resilience
   useEffect(() => {
@@ -90,6 +155,17 @@ export const App: React.FC = () => {
     setCurrentScreen('setup');
   };
 
+  // Shortcuts handling via URL search query
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.location?.search) return;
+    const shortcut = parseShortcutQuery(window.location.search);
+    if (shortcut) {
+      setSetupMode(shortcut.mode);
+      setSetupTargetId(shortcut.targetId);
+      setCurrentScreen(shortcut.screen);
+    }
+  }, []);
+
   const handleStartGame = (mode: 'cards' | 'board') => {
     if (mode === 'board') {
       setCurrentScreen('game-board');
@@ -112,7 +188,7 @@ export const App: React.FC = () => {
 
   return (
     <div
-      className="fixed inset-0 bottom-[calc(-1*env(safe-area-inset-top,0px))] flex flex-col w-full max-w-md mx-auto select-none overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)]"
+      className="fixed inset-0 flex flex-col w-full max-w-md mx-auto select-none overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)]"
       style={{
         bottom: 0,
         overscrollBehaviorY: 'none',
@@ -164,6 +240,16 @@ export const App: React.FC = () => {
           />
         )}
       </main>
+
+      {/* PWA Floating Update Banner */}
+      <UpdateToast
+        isVisible={isUpdateAvailable}
+        onUpdate={() => window.location.reload()}
+        onDismiss={() => setIsUpdateAvailable(false)}
+      />
+
+      {/* PWA Guided Install Prompt */}
+      <PWAInstallPrompt />
 
       {/* Global Settings Modal */}
       <SettingsModal

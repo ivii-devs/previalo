@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "test:e2e": "vitest run tests/e2e",
     "typecheck": "tsc -b --noEmit",
-    "sync:data": "python scripts/sync_production_data.py"
+    "sync:data": "python scripts/sync_production_data.py",
+    "screenshots": "node scripts/generate_screenshots.mjs"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
@@ -29,6 +30,8 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
+    "device-frame-pro": "^1.0.9",
+    "puppeteer": "^25.16.0",
     "tailwindcss": "^4.0.9",
     "typescript": "^5.7.3",
     "vite": "^6.2.0",
