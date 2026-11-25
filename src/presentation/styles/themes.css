@@ -1,4 +1,4 @@
-/* Previalo Presentation Styles & Theme Tokens */
+/* Previalo Presentation Styles & Motion Primitives */
 
 :root {
   --perspective-deck: 1000px;
@@ -10,21 +10,23 @@
   -webkit-transform-style: preserve-3d;
 }
 
-/* Custom Scrollbar for Neon Look */
+/* Matte Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-surface);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
+  background: var(--pv-border-strong);
   border-radius: 9999px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-primary);
+@media (hover: hover) {
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--pv-action);
+  }
 }

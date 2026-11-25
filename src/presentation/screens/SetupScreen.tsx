@@ -1,14 +1,20 @@
 import React, { useState, useRef, useMemo } from 'react';
-import { 
-  UserPlus, 
-  Trash2, 
-  Play, 
-  ArrowLeft, 
-  Users, 
+import {
+  UserPlus,
+  Trash2,
+  Play,
+  ArrowLeft,
+  Users,
   AlertCircle,
   SlidersHorizontal,
   Flame,
-  Check
+  Check,
+  Sparkles,
+  Coffee,
+  Wine,
+  Zap,
+  Dices,
+  Layers,
 } from 'lucide-react';
 import { usePlayerStore } from '../../application/usePlayerStore';
 import { useGameSessionStore } from '../../application/useGameSessionStore';
@@ -38,61 +44,77 @@ export interface PackOption {
 
 export const CATEGORY_PACKS: Record<string, PackOption[]> = {
   yo_nunca: [
-    { id: 'yn_fiesta', label: '🍻 Fiesta', count: 442, intensity: 2, intensities: [2] },
-    { id: 'yn_parejas', label: '💘 Parejas', count: 145, intensity: 2, intensities: [2] },
-    { id: 'yn_picante', label: '🌶️ Picante (+18)', count: 768, intensity: 3, intensities: [3] },
+    { id: 'yn_fiesta', label: 'Fiesta', count: 442, intensity: 2, intensities: [2] },
+    { id: 'yn_parejas', label: 'Parejas', count: 145, intensity: 2, intensities: [2] },
+    { id: 'yn_picante', label: 'Picante (+18)', count: 768, intensity: 3, intensities: [3] },
   ],
   verdad_o_reto: [
-    { id: 'vor_fiesta', label: '⚡ Fiesta', count: 286, intensity: 2, intensities: [2] },
-    { id: 'vor_parejas', label: '💘 Parejas', count: 246, intensity: 2, intensities: [2] },
-    { id: 'vor_picante', label: '🔥 Picante (+18)', count: 325, intensity: 3, intensities: [3] },
+    { id: 'vor_fiesta', label: 'Fiesta', count: 286, intensity: 2, intensities: [2] },
+    { id: 'vor_parejas', label: 'Parejas', count: 246, intensity: 2, intensities: [2] },
+    { id: 'vor_picante', label: 'Picante (+18)', count: 325, intensity: 3, intensities: [3] },
   ],
   mesa_y_minijuegos: [
-    { id: 'pack_ring_of_fire', label: '👑 Copa del Rey', count: 26, intensity: 2, intensities: [2, 3] },
-    { id: 'pack_partybus', label: '🚌 PartyBus', count: 50, intensity: 2, intensities: [1, 2, 3] },
-    { id: 'pack_drink_extreme', label: '⚡ Desafíos Extremos', count: 30, intensity: 4, intensities: [4] },
-    { id: 'pack_verdad_o_verdad', label: '🤫 Verdad o Verdad', count: 30, intensity: 2, intensities: [1, 2, 3] },
+    { id: 'pack_ring_of_fire', label: 'Copa del Rey', count: 26, intensity: 2, intensities: [2, 3] },
+    { id: 'pack_partybus', label: 'PartyBus', count: 50, intensity: 2, intensities: [1, 2, 3] },
+    { id: 'pack_drink_extreme', label: 'Desafíos Extremos', count: 30, intensity: 4, intensities: [4] },
+    { id: 'pack_verdad_o_verdad', label: 'Verdad o Verdad', count: 30, intensity: 2, intensities: [1, 2, 3] },
   ],
   confesiones: [
-    { id: 'conf_fiesta', label: '🎉 Fiesta y Salseo', count: 135, intensity: 2, intensities: [2] },
-    { id: 'conf_picante', label: '🌶️ Picante (+18)', count: 51, intensity: 3, intensities: [3] },
-    { id: 'conf_deep', label: '💬 Deep Talk', count: 21, intensity: 2, intensities: [2] },
+    { id: 'conf_fiesta', label: 'Fiesta y Salseo', count: 135, intensity: 2, intensities: [2] },
+    { id: 'conf_picante', label: 'Picante (+18)', count: 51, intensity: 3, intensities: [3] },
+    { id: 'conf_deep', label: 'Deep Talk', count: 21, intensity: 2, intensities: [2] },
   ],
   quien_es_mas_probable: [
-    { id: 'qemp_fiesta', label: '⚡ Fiesta y Salseo', count: 131, intensity: 2, intensities: [2] },
-    { id: 'qemp_picante', label: '🔥 Picante (+18)', count: 50, intensity: 3, intensities: [3] },
-    { id: 'qemp_parejas', label: '💘 Parejas y Exs', count: 18, intensity: 2, intensities: [2] },
+    { id: 'qemp_fiesta', label: 'Fiesta y Salseo', count: 131, intensity: 2, intensities: [2] },
+    { id: 'qemp_picante', label: 'Picante (+18)', count: 50, intensity: 3, intensities: [3] },
+    { id: 'qemp_parejas', label: 'Parejas y Exs', count: 18, intensity: 2, intensities: [2] },
   ],
   guerra_equipos: [
-    { id: 'picolo_war', label: '⚔️ Por Equipos', count: 788, intensity: 2, intensities: [2] },
-    { id: 'versus', label: '🥊 Duelos Versus', count: 75, intensity: 2, intensities: [2] },
+    { id: 'picolo_war', label: 'Por Equipos', count: 788, intensity: 2, intensities: [2] },
+    { id: 'versus', label: 'Duelos Versus', count: 75, intensity: 2, intensities: [2] },
   ],
   que_prefieres: [
-    { id: 'picolo_default', label: '⚖️ Clásicos', count: 155, intensity: 1, intensities: [1] },
-    { id: 'picolo_silly', label: '🤪 Humor Absurdo', count: 69, intensity: 2, intensities: [2] },
-    { id: 'picolo_hot', label: '🌶️ Picantes', count: 36, intensity: 3, intensities: [3] },
-    { id: 'qp_guatoca', label: '🎲 Guatoca', count: 18, intensity: 2, intensities: [2, 3] },
-    { id: 'qp_verdad_o_verdad', label: '🤫 Confesiones', count: 11, intensity: 2, intensities: [2, 3] },
+    { id: 'picolo_default', label: 'Clásicos', count: 155, intensity: 1, intensities: [1] },
+    { id: 'picolo_silly', label: 'Humor Absurdo', count: 69, intensity: 2, intensities: [2] },
+    { id: 'picolo_hot', label: 'Picantes', count: 36, intensity: 3, intensities: [3] },
+    { id: 'qp_guatoca', label: 'Guatoca', count: 18, intensity: 2, intensities: [2, 3] },
+    { id: 'qp_verdad_o_verdad', label: 'Confesiones', count: 11, intensity: 2, intensities: [2, 3] },
   ],
 };
 
 export const ALL_INTENSITY_OPTIONS: Array<{
   level: IntensityLevel;
   label: string;
-  icon: string;
   desc: string;
 }> = [
-  { level: 1, label: 'Chill', icon: '🍹', desc: '1 trago, relajado' },
-  { level: 2, label: 'Fiesta', icon: '🍻', desc: '1-2 tragos, diversión clásica' },
-  { level: 3, label: 'Hot', icon: '🌶️', desc: '2-3 tragos, picante e indiscreto' },
-  { level: 4, label: 'Extremo', icon: '⚡', desc: '3-5 tragos, para valientes' },
+  { level: 1, label: 'Chill', desc: '1 trago, relajado' },
+  { level: 2, label: 'Fiesta', desc: '1-2 tragos, diversión clásica' },
+  { level: 3, label: 'Hot', desc: '2-3 tragos, picante e indiscreto' },
+  { level: 4, label: 'Extremo', desc: '3-5 tragos, para valientes' },
 ];
 
-export const HOT_TIER_OPTIONS: Array<{ tier: HotTier; label: string; flames: string; desc: string }> = [
-  { tier: 1, label: 'Nivel 1', flames: '🔥', desc: 'Verdades picantes (118)' },
-  { tier: 2, label: 'Nivel 2', flames: '🔥🔥', desc: 'Contacto y prendas (61)' },
-  { tier: 3, label: 'Nivel 3', flames: '🔥🔥🔥', desc: 'Retos sin censura (57)' },
+export const HOT_TIER_OPTIONS: Array<{
+  tier: HotTier;
+  label: string;
+  desc: string;
+}> = [
+  { tier: 1, label: 'Nivel 1', desc: 'Verdades picantes (118)' },
+  { tier: 2, label: 'Nivel 2', desc: 'Contacto y prendas (61)' },
+  { tier: 3, label: 'Nivel 3', desc: 'Retos sin censura (57)' },
 ];
+
+const renderIntensityIcon = (level: IntensityLevel) => {
+  switch (level) {
+    case 1:
+      return <Coffee className="w-4 h-4 mx-auto" />;
+    case 2:
+      return <Wine className="w-4 h-4 mx-auto" />;
+    case 3:
+      return <Flame className="w-4 h-4 mx-auto" />;
+    case 4:
+      return <Zap className="w-4 h-4 mx-auto" />;
+  }
+};
 
 export const getAvailableIntensities = (
   mode: 'category' | 'preset' | 'chaos' | 'board',
@@ -223,7 +245,6 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
       const next = new Set(prev);
       if (next.has(level)) {
         if (next.size <= 1) {
-          // Invariant: Do not allow unchecking the last active intensity
           soundService.vibrate([30, 30]);
           return prev;
         }
@@ -241,7 +262,6 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
 
         let updated: string[];
         if (next.has(level)) {
-          // Intensity was enabled: keep previous valid selections + auto-select newly compatible packs containing this level
           const packsWithThisLevel = allCategoryPacks
             .filter((p) => {
               const lvls = p.intensities ?? (p.intensity !== undefined ? [p.intensity] : []);
@@ -252,11 +272,9 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
             nextAvailableIds.has(id)
           );
         } else {
-          // Intensity was disabled: remove packs that are no longer compatible
           updated = prevPacks.filter((id) => nextAvailableIds.has(id));
         }
 
-        // Invariant: Ensure at least one pack remains selected if available packs exist
         if (updated.length === 0 && nextAvailable.length > 0) {
           updated = [nextAvailable[0].id];
         }
@@ -291,10 +309,7 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
     });
   };
 
-  // Sub-filter: Yo Nunca sub-chips (Picante Suave vs Picante +18)
   const [yoNuncaSubGroup, setYoNuncaSubGroup] = useState<'all' | 'suave' | 'extremo_18'>('all');
-
-  // Sub-filter: Verdad o Reto (Verdades vs Retos)
   const [selectedTypes, setSelectedTypes] = useState<string[]>(['truth', 'dare']);
 
   const toggleType = (t: string) => {
@@ -311,7 +326,6 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
     });
   };
 
-  // Sub-filter: Verdad o Reto Hot Tiers & Modo Spicy Hot Tiers
   const [selectedHotTiers, setSelectedHotTiers] = useState<HotTier[]>([1, 2, 3]);
 
   const toggleHotTier = (tier: HotTier) => {
@@ -345,12 +359,12 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
   const storePlayers = usePlayerStore((state) => state.players);
   const storeHistorical = usePlayerStore((state) => state.historicalPlayers);
   const players = storePlayers.length > 0 ? storePlayers : usePlayerStore.getState().players;
-  const historicalPlayers = storeHistorical.length > 0 ? storeHistorical : usePlayerStore.getState().historicalPlayers;
+  const historicalPlayers =
+    storeHistorical.length > 0 ? storeHistorical : usePlayerStore.getState().historicalPlayers;
   const addPlayer = usePlayerStore((state) => state.addPlayer);
   const quickAddPlayer = usePlayerStore((state) => state.quickAddPlayer);
   const removePlayer = usePlayerStore((state) => state.removePlayer);
 
-  // Filter available quick add chips (exclude currently active players)
   const activePlayerNames = new Set(players.map((p) => p.name.trim().toLowerCase()));
   const availableQuickAdds = historicalPlayers.filter(
     (name) => !activePlayerNames.has(name.trim().toLowerCase())
@@ -550,7 +564,6 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   useDragToScroll(scrollRef);
 
-  // Available packs for active category (reactively filtered by selected intensities)
   const activePacks = availablePacks;
 
   if (isOfflineError) {
@@ -570,526 +583,576 @@ export const SetupScreen: React.FC<SetupScreenProps> = ({
 
   return (
     <div
-      ref={scrollRef}
-      className="flex-1 min-h-0 h-full flex flex-col w-full max-w-md mx-auto px-4 pt-4 pb-[calc(3rem+env(safe-area-inset-bottom,20px))] space-y-4 overflow-y-auto select-none scroll-container"
+      className="flex-1 min-h-0 h-full flex flex-col w-full max-w-md mx-auto select-none overflow-hidden"
       data-testid="setup-screen"
     >
-      {/* Top Header Navigation */}
-      <div className="flex items-center justify-between border-b theme-border pb-3">
+      {/* Fixed Sub-Header Navigation */}
+      <div className="shrink-0 flex items-center justify-between border-b border-border bg-background/95 px-4 py-2 min-h-[52px]">
         <button
+          type="button"
           onClick={() => {
             soundService.playTap();
             onBack();
           }}
-          className="flex items-center space-x-1 text-xs font-bold theme-text-muted hover:text-white transition-colors cursor-pointer"
+          className="min-h-[44px] -ml-2 px-2.5 rounded-xl flex items-center gap-1.5 text-xs font-semibold text-text-secondary hover:text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] transition-colors cursor-pointer"
           data-testid="setup-back-btn"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Volver</span>
         </button>
 
-        <h1 className="text-base font-black uppercase tracking-wider theme-text-primary">
+        <h1 className="font-heading text-base font-bold text-text truncate px-2">
           {getModeTitle()}
         </h1>
 
-        <div className="w-12 text-right text-xs font-black theme-accent-primary">
-          {players.length} 👥
+        <div className="min-w-[44px] flex items-center justify-end gap-1 text-xs font-mono font-bold text-action">
+          <span>{players.length}</span>
+          <Users className="w-3.5 h-3.5" aria-hidden="true" />
         </div>
       </div>
 
-      {/* Error Notice */}
-      {errorMsg && (
-        <div className="p-3 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs flex items-center space-x-2">
-          <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
-          <span>{errorMsg}</span>
-        </div>
-      )}
-
-      {/* Board Selector if Mode is Board */}
-      {mode === 'board' && (
-        <div className="p-4 rounded-2xl border theme-border bg-[var(--bg-surface)] space-y-3">
-          <label className="text-xs font-black uppercase tracking-wider theme-text-muted block">
-            Selecciona el Tablero (64 Casillas)
-          </label>
-          <div className="grid grid-cols-3 gap-2">
-            <button
-              onClick={() => {
-                soundService.playTap();
-                setBoardId('guatoca_clasica');
-              }}
-              className={`p-2.5 rounded-xl border text-xs font-bold transition-all text-left cursor-pointer ${
-                boardId === 'guatoca_clasica'
-                  ? 'border-emerald-500 bg-emerald-950/40 text-emerald-300 ring-1 ring-emerald-500'
-                  : 'theme-border bg-[var(--bg-elevated)] text-[var(--text-muted)]'
-              }`}
-              data-testid="board-select-clasica"
-            >
-              <div className="font-black text-xs">Clásica 🍻</div>
-              <div className="text-[10px] opacity-80 mt-0.5">64 casillas · Previa</div>
-            </button>
-
-            <button
-              onClick={() => {
-                soundService.playTap();
-                setBoardId('guatoca_hot');
-              }}
-              className={`p-2.5 rounded-xl border text-xs font-bold transition-all text-left cursor-pointer ${
-                boardId === 'guatoca_hot'
-                  ? 'border-rose-500 bg-rose-950/40 text-rose-300 ring-1 ring-rose-500'
-                  : 'theme-border bg-[var(--bg-elevated)] text-[var(--text-muted)]'
-              }`}
-              data-testid="board-select-hot"
-            >
-              <div className="font-black text-xs">Hot 🌶️</div>
-              <div className="text-[10px] opacity-80 mt-0.5">64 casillas · +18</div>
-            </button>
-
-            <button
-              onClick={() => {
-                soundService.playTap();
-                setBoardId('guatoca_todos');
-              }}
-              className={`p-2.5 rounded-xl border text-xs font-bold transition-all text-left cursor-pointer ${
-                boardId === 'guatoca_todos'
-                  ? 'border-amber-500 bg-amber-950/40 text-amber-300 ring-1 ring-amber-500'
-                  : 'theme-border bg-[var(--bg-elevated)] text-[var(--text-muted)]'
-              }`}
-              data-testid="board-select-todos"
-            >
-              <div className="font-black text-xs">Todos 🎲</div>
-              <div className="text-[10px] opacity-80 mt-0.5">721 cartas mix</div>
-            </button>
+      {/* Scrollable Configuration Body (Flat sections with hairline dividers, zero card-in-card) */}
+      <div
+        ref={scrollRef}
+        className="flex-1 min-h-0 overflow-y-auto scroll-container px-4 py-4 space-y-5"
+      >
+        {/* Error Notice */}
+        {errorMsg && (
+          <div className="p-3 rounded-xl bg-danger-quiet border border-danger-line text-danger text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>{errorMsg}</span>
           </div>
+        )}
 
-          {/* Progressive Hot Tier Selector when Hot or Todos is active */}
-          {(boardId === 'guatoca_hot' || boardId === 'guatoca_todos') && (
-            <div
-              className="pt-2 border-t theme-border space-y-2"
-              data-testid="hot-tiers-selector"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-black uppercase tracking-wider text-rose-400">
-                  Niveles Picantes (Hot)
-                </span>
-                <span className="text-[10px] theme-text-muted">
-                  Progresión por tramos del tablero
-                </span>
+        {/* Board Selector if Mode is Board */}
+        {mode === 'board' && (
+          <section className="space-y-3">
+            <label className="font-heading text-xs font-bold text-text block">
+              Selecciona el tablero (64 casillas)
+            </label>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  soundService.playTap();
+                  setBoardId('guatoca_clasica');
+                }}
+                className={`p-3 min-h-[72px] rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] ${
+                  boardId === 'guatoca_clasica'
+                    ? 'border-success bg-success-quiet text-text'
+                    : 'border-border bg-surface text-text-secondary interactive-card'
+                }`}
+                data-testid="board-select-clasica"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-heading font-bold text-xs">Clásica</span>
+                  <Dices
+                    className={`w-3.5 h-3.5 ${
+                      boardId === 'guatoca_clasica' ? 'text-success' : 'text-text-muted'
+                    }`}
+                  />
+                </div>
+                <div className="text-[11px] text-text-muted mt-1">64 casillas</div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  soundService.playTap();
+                  setBoardId('guatoca_hot');
+                }}
+                className={`p-3 min-h-[72px] rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] ${
+                  boardId === 'guatoca_hot'
+                    ? 'border-spicy bg-spicy-quiet text-text'
+                    : 'border-border bg-surface text-text-secondary interactive-card'
+                }`}
+                data-testid="board-select-hot"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-heading font-bold text-xs">Hot</span>
+                  <Flame
+                    className={`w-3.5 h-3.5 ${
+                      boardId === 'guatoca_hot' ? 'text-spicy' : 'text-text-muted'
+                    }`}
+                  />
+                </div>
+                <div className="text-[11px] text-text-muted mt-1">64 · +18</div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  soundService.playTap();
+                  setBoardId('guatoca_todos');
+                }}
+                className={`p-3 min-h-[72px] rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] ${
+                  boardId === 'guatoca_todos'
+                    ? 'border-warning bg-warning-quiet text-text'
+                    : 'border-border bg-surface text-text-secondary interactive-card'
+                }`}
+                data-testid="board-select-todos"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-heading font-bold text-xs">Todos</span>
+                  <Layers
+                    className={`w-3.5 h-3.5 ${
+                      boardId === 'guatoca_todos' ? 'text-warning' : 'text-text-muted'
+                    }`}
+                  />
+                </div>
+                <div className="text-[11px] text-text-muted mt-1">721 cartas</div>
+              </button>
+            </div>
+
+            {/* Progressive Hot Tier Selector when Hot or Todos is active */}
+            {(boardId === 'guatoca_hot' || boardId === 'guatoca_todos') && (
+              <div className="pt-3 border-t border-border space-y-2.5" data-testid="hot-tiers-selector">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-spicy">
+                    Niveles picantes (Hot)
+                  </span>
+                  <span className="text-[11px] text-text-muted">
+                    Progresión por tramos
+                  </span>
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  {HOT_TIER_OPTIONS.map((opt) => {
+                    const isSelected = selectedBoardHotTiers.includes(opt.tier);
+                    return (
+                      <button
+                        key={opt.tier}
+                        type="button"
+                        onClick={() => toggleBoardHotTier(opt.tier)}
+                        className={`p-2.5 min-h-[60px] rounded-xl border text-center transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] ${
+                          isSelected
+                            ? 'border-spicy bg-spicy-quiet text-text font-bold'
+                            : 'border-border bg-surface text-text-muted'
+                        }`}
+                        data-testid={`hot-tier-btn-${opt.tier}`}
+                      >
+                        <div className="flex flex-col items-center justify-center gap-0.5 text-xs font-bold">
+                          <span className="whitespace-nowrap">{opt.label}</span>
+                          <span className="inline-flex text-spicy" aria-hidden="true">
+                            {Array.from({ length: opt.tier }).map((_, i) => (
+                              <Flame key={i} className="w-3 h-3 fill-current" />
+                            ))}
+                          </span>
+                        </div>
+                        <div className="text-[10px] text-text-secondary mt-1 leading-tight">
+                          {opt.desc}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="grid grid-cols-3 gap-2">
-                {HOT_TIER_OPTIONS.map((opt) => {
-                  const isSelected = selectedBoardHotTiers.includes(opt.tier);
+            )}
+          </section>
+        )}
+
+        {/* Multi-Selection Intensity Section (for card sessions) */}
+        {mode !== 'board' && (
+          <section className="space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="font-heading text-xs font-bold text-text flex items-center gap-1.5">
+                <SlidersHorizontal className="w-3.5 h-3.5 text-action" />
+                <span>Filtro de intensidad</span>
+              </label>
+              <span className="text-xs font-mono text-text-muted">
+                {selectedIntensities.size > 1 ? `${selectedIntensities.size} activas` : '1 activa'}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-5 gap-1.5">
+              {/* Quick action: "Todas" button */}
+              <button
+                type="button"
+                onClick={handleSelectAllIntensities}
+                className={`py-2 px-1 min-h-[64px] rounded-xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] ${
+                  isAllIntensitiesActive
+                    ? 'border-action bg-selected text-action font-bold'
+                    : 'border-border bg-surface text-text-secondary font-medium interactive-card'
+                }`}
+                data-testid="intensity-opt-0"
+              >
+                <Sparkles className="w-4 h-4" />
+                <div className="text-[11px] truncate">Todas</div>
+              </button>
+
+              {/* Individual intensity buttons */}
+              {ALL_INTENSITY_OPTIONS.map((opt) => {
+                const isAvailable = availableLevels.includes(opt.level);
+                const isActive = selectedIntensities.has(opt.level);
+                const count = intensityCounts[opt.level];
+
+                if (!isAvailable) {
                   return (
                     <button
-                      key={opt.tier}
+                      key={opt.level}
                       type="button"
-                      onClick={() => toggleBoardHotTier(opt.tier)}
-                      className={`p-2 rounded-xl border text-center transition-all cursor-pointer ${
-                        isSelected
-                          ? 'border-rose-500 bg-rose-500/20 text-rose-200 font-black ring-1 ring-rose-500/60'
-                          : 'theme-border bg-[var(--bg-elevated)] theme-text-muted opacity-60'
-                      }`}
-                      data-testid={`hot-tier-btn-${opt.tier}`}
+                      disabled
+                      className="py-2 px-1 min-h-[64px] rounded-xl border border-dashed border-border bg-surface/40 opacity-35 text-text-muted text-center cursor-not-allowed flex flex-col items-center justify-center gap-1"
+                      data-testid={`intensity-opt-${opt.level}`}
                     >
-                      <div className="text-xs font-black">
-                        {opt.label} {opt.flames}
-                      </div>
-                      <div className="text-[9px] opacity-85 mt-0.5 leading-tight">
-                        {opt.desc}
-                      </div>
+                      {renderIntensityIcon(opt.level)}
+                      <div className="text-[11px] truncate">{opt.label}</div>
                     </button>
                   );
-                })}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
+                }
 
-      {/* Multi-Selection Intensity Section (for card sessions) */}
-      {mode !== 'board' && (
-        <div className="p-4 rounded-2xl border theme-border bg-[var(--bg-surface)] space-y-3">
-          <div className="flex items-center justify-between">
-            <label className="text-xs font-black uppercase tracking-wider theme-text-muted flex items-center gap-1.5">
-              <SlidersHorizontal className="w-3.5 h-3.5 theme-accent-primary" />
-              <span>Filtro de Intensidad</span>
-            </label>
-            <span className="text-[10px] font-bold theme-text-muted">
-              {selectedIntensities.size > 1 ? `${selectedIntensities.size} activas` : '1 activa'}
-            </span>
-          </div>
-
-          {/* Toggle buttons grid */}
-          <div className="grid grid-cols-5 gap-1.5">
-            {/* Quick action: "Todas" button */}
-            <button
-              type="button"
-              onClick={handleSelectAllIntensities}
-              className={`py-2 px-1 rounded-xl border text-center transition-all cursor-pointer ${
-                isAllIntensitiesActive
-                  ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/20 theme-accent-primary font-black shadow-sm'
-                  : 'theme-border bg-[var(--bg-elevated)] theme-text-muted font-bold hover:text-white'
-              }`}
-              data-testid="intensity-opt-0"
-            >
-              <div className="text-sm">✨</div>
-              <div className="text-[10px] mt-0.5 truncate font-black">Todas</div>
-            </button>
-
-            {/* Individual intensity buttons */}
-            {ALL_INTENSITY_OPTIONS.map((opt) => {
-              const isAvailable = availableLevels.includes(opt.level);
-              const isActive = selectedIntensities.has(opt.level);
-              const count = intensityCounts[opt.level];
-
-              if (!isAvailable) {
-                // If not in mode, render disabled/hidden state for full 5-column grid or render disabled
                 return (
                   <button
                     key={opt.level}
                     type="button"
-                    disabled
-                    className="py-2 px-1 rounded-xl border border-dashed border-white/10 bg-white/5 opacity-30 text-center cursor-not-allowed"
+                    onClick={() => toggleIntensity(opt.level)}
+                    className={`py-2 px-1 min-h-[64px] rounded-xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] ${
+                      isActive
+                        ? 'border-action bg-selected text-action font-bold'
+                        : 'border-border bg-surface text-text-secondary font-medium interactive-card'
+                    }`}
                     data-testid={`intensity-opt-${opt.level}`}
                   >
-                    <div className="text-sm grayscale">{opt.icon}</div>
-                    <div className="text-[10px] mt-0.5 truncate">{opt.label}</div>
+                    {renderIntensityIcon(opt.level)}
+                    <div className="text-[11px] truncate">{opt.label}</div>
+                    {count > 0 && (
+                      <div className="text-[10px] text-text-muted font-mono leading-none">
+                        {count}
+                      </div>
+                    )}
                   </button>
                 );
-              }
-
-              return (
-                <button
-                  key={opt.level}
-                  type="button"
-                  onClick={() => toggleIntensity(opt.level)}
-                  className={`py-2 px-1 rounded-xl border text-center transition-all cursor-pointer relative ${
-                    isActive
-                      ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/20 theme-accent-primary font-black shadow-sm'
-                      : 'theme-border bg-[var(--bg-elevated)] theme-text-muted font-bold hover:text-white'
-                  }`}
-                  data-testid={`intensity-opt-${opt.level}`}
-                >
-                  <div className="text-sm">{opt.icon}</div>
-                  <div className="text-[10px] mt-0.5 truncate font-bold">{opt.label}</div>
-                  {count > 0 && (
-                    <div className="text-[8px] opacity-70 mt-0.5 font-mono">
-                      {count}
-                    </div>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Sub-Filters: Category Packs Always Visible as Chips */}
-      {mode === 'category' && activePacks.length > 0 && (
-        <div className="p-4 rounded-2xl border theme-border bg-[var(--bg-surface)] space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-black uppercase tracking-wider theme-text-muted">
-              Packs y Temáticas
-            </span>
-            <span className="text-[10px] theme-text-muted font-bold">
-              {selectedPacks.filter((id) => availablePacks.some((p) => p.id === id)).length} de {activePacks.length}
-            </span>
-          </div>
-
-          <div className="flex flex-wrap gap-1.5" data-testid="packs-selector">
-            {activePacks.map((pack) => {
-              const isSelected = selectedPacks.includes(pack.id);
-              return (
-                <button
-                  key={pack.id}
-                  type="button"
-                  onClick={() => togglePack(pack.id)}
-                  className={`px-3 py-1.5 min-h-[36px] rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 ${
-                    isSelected
-                      ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/20 theme-accent-primary font-black ring-1 ring-[var(--accent-primary)]/50'
-                      : 'theme-border bg-[var(--bg-elevated)] theme-text-muted opacity-70'
-                  }`}
-                  data-testid={`pack-chip-${pack.id}`}
-                >
-                  {isSelected && <Check className="w-3 h-3 theme-accent-primary" />}
-                  <span>{pack.label}</span>
-                  <span className="text-[10px] opacity-75 font-mono">({pack.count})</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Special Sub-filter for Yo Nunca Picante: Suave vs +18 */}
-          {targetId === 'yo_nunca' && selectedIntensities.has(3) && selectedPacks.includes('yn_picante') && (
-            <div className="pt-2 border-t theme-border space-y-2" data-testid="yn-picante-subgroup">
-              <span className="text-[11px] font-black uppercase tracking-wider text-rose-400 block">
-                🌶️ Nivel Picante en Yo Nunca:
-              </span>
-              <div className="grid grid-cols-3 gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => setYoNuncaSubGroup('all')}
-                  className={`py-1.5 px-2 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer ${
-                    yoNuncaSubGroup === 'all'
-                      ? 'border-rose-500 bg-rose-500/20 text-rose-200 font-black'
-                      : 'theme-border bg-[var(--bg-elevated)] theme-text-muted'
-                  }`}
-                  data-testid="yn-subgroup-all"
-                >
-                  Todas (768)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setYoNuncaSubGroup('suave')}
-                  className={`py-1.5 px-2 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer ${
-                    yoNuncaSubGroup === 'suave'
-                      ? 'border-rose-500 bg-rose-500/20 text-rose-200 font-black'
-                      : 'theme-border bg-[var(--bg-elevated)] theme-text-muted'
-                  }`}
-                  data-testid="yn-subgroup-suave"
-                >
-                  Suave (554)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setYoNuncaSubGroup('extremo_18')}
-                  className={`py-1.5 px-2 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer ${
-                    yoNuncaSubGroup === 'extremo_18'
-                      ? 'border-rose-500 bg-rose-500/20 text-rose-200 font-black'
-                      : 'theme-border bg-[var(--bg-elevated)] theme-text-muted'
-                  }`}
-                  data-testid="yn-subgroup-extremo"
-                >
-                  Picante +18 (214)
-                </button>
-              </div>
+              })}
             </div>
-          )}
-
-          {/* Special Sub-filter for Verdad o Reto: Tipo de dinámica (Verdad vs Reto) */}
-          {targetId === 'verdad_o_reto' && (
-            <div className="pt-2 border-t theme-border space-y-2" data-testid="vor-types-selector">
-              <span className="text-[11px] font-black uppercase tracking-wider text-amber-400 block">
-                Tipo de Prueba:
-              </span>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => toggleType('truth')}
-                  className={`py-2 px-3 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                    selectedTypes.includes('truth')
-                      ? 'border-amber-500 bg-amber-500/20 text-amber-200 font-black'
-                      : 'theme-border bg-[var(--bg-elevated)] theme-text-muted opacity-60'
-                  }`}
-                  data-testid="vor-type-truth"
-                >
-                  {selectedTypes.includes('truth') && <Check className="w-3.5 h-3.5" />}
-                  <span>Verdades (480)</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => toggleType('dare')}
-                  className={`py-2 px-3 rounded-xl text-xs font-bold border text-center transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                    selectedTypes.includes('dare')
-                      ? 'border-amber-500 bg-amber-500/20 text-amber-200 font-black'
-                      : 'theme-border bg-[var(--bg-elevated)] theme-text-muted opacity-60'
-                  }`}
-                  data-testid="vor-type-dare"
-                >
-                  {selectedTypes.includes('dare') && <Check className="w-3.5 h-3.5" />}
-                  <span>Retos (377)</span>
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Special Sub-filter for Verdad o Reto: Niveles Hot (cuando vor_picante Y Hot están activos) */}
-          {targetId === 'verdad_o_reto' && selectedIntensities.has(3) && selectedPacks.includes('vor_picante') && (
-            <div className="pt-2 border-t theme-border space-y-2" data-testid="vor-hot-tiers">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-black uppercase tracking-wider text-rose-400">
-                  Niveles Picantes en Verdad o Reto:
-                </span>
-              </div>
-              <div className="grid grid-cols-3 gap-1.5">
-                {HOT_TIER_OPTIONS.map((opt) => {
-                  const isSelected = selectedHotTiers.includes(opt.tier);
-                  return (
-                    <button
-                      key={opt.tier}
-                      type="button"
-                      onClick={() => toggleHotTier(opt.tier)}
-                      className={`p-2 rounded-xl border text-center transition-all cursor-pointer ${
-                        isSelected
-                          ? 'border-rose-500 bg-rose-500/20 text-rose-200 font-black ring-1 ring-rose-500/60'
-                          : 'theme-border bg-[var(--bg-elevated)] theme-text-muted opacity-60'
-                      }`}
-                      data-testid={`vor-hot-tier-${opt.tier}`}
-                    >
-                      <div className="text-xs font-black">
-                        {opt.label} {opt.flames}
-                      </div>
-                      <div className="text-[9px] opacity-80 mt-0.5 leading-tight">
-                        {opt.desc}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Preset Sub-Filters (Modo Spicy Hot Tiers) */}
-      {mode === 'preset' && targetId === 'modo_caliente' && (
-        <div className="p-4 rounded-2xl border theme-border bg-[var(--bg-surface)] space-y-2.5">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-black uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
-              <Flame className="w-3.5 h-3.5 text-rose-400" />
-              <span>Niveles Picantes (Hot)</span>
-            </span>
-            <span className="text-[10px] theme-text-muted">1.661 cartas</span>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2">
-            {HOT_TIER_OPTIONS.map((opt) => {
-              const isSelected = selectedHotTiers.includes(opt.tier);
-              return (
-                <button
-                  key={opt.tier}
-                  type="button"
-                  onClick={() => toggleHotTier(opt.tier)}
-                  className={`p-2 rounded-xl border text-center transition-all cursor-pointer ${
-                    isSelected
-                      ? 'border-rose-500 bg-rose-500/20 text-rose-200 font-black ring-1 ring-rose-500/60'
-                      : 'theme-border bg-[var(--bg-elevated)] theme-text-muted opacity-60'
-                  }`}
-                  data-testid={`spicy-hot-tier-${opt.tier}`}
-                >
-                  <div className="text-xs font-black">
-                    {opt.label} {opt.flames}
-                  </div>
-                  <div className="text-[9px] opacity-80 mt-0.5 leading-tight">
-                    {opt.desc}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Player Management Section */}
-      <div className="p-4 rounded-2xl border theme-border bg-[var(--bg-surface)] space-y-3">
-        <div className="flex items-center justify-between">
-          <label className="text-xs font-black uppercase tracking-wider theme-text-muted flex items-center gap-1.5">
-            <Users className="w-3.5 h-3.5 theme-accent-primary" />
-            <span>Jugadores ({players.length})</span>
-          </label>
-          <span className="text-[10px] theme-text-muted">Mínimo 2 jugadores</span>
-        </div>
-
-        {/* Add Player Input Form */}
-        <form onSubmit={handleAddPlayer} className="flex gap-2">
-          <input
-            type="text"
-            value={playerName}
-            onChange={(e) => setPlayerName(e.target.value)}
-            placeholder="Nombre del jugador..."
-            maxLength={18}
-            inputMode="text"
-            enterKeyHint="done"
-            autoCapitalize="words"
-            autoCorrect="off"
-            spellCheck="false"
-            className="flex-1 px-3 py-2.5 rounded-xl border theme-border bg-[var(--bg-elevated)] theme-text-primary text-base focus:outline-none focus:border-[var(--accent-primary)]"
-            data-testid="player-name-input"
-          />
-          <button
-            type="submit"
-            disabled={!playerName.trim()}
-            className="px-4 py-2.5 min-h-[44px] rounded-xl bg-[var(--accent-primary)] text-white font-black text-xs uppercase tracking-wider hover:brightness-110 active:scale-95 disabled:opacity-40 transition-all cursor-pointer flex items-center gap-1 shadow-sm"
-            data-testid="add-player-btn"
-          >
-            <UserPlus className="w-4 h-4" />
-            <span>Agregar</span>
-          </button>
-        </form>
-
-        {/* 1-Tap Quick Add Chips */}
-        {availableQuickAdds.length > 0 && (
-          <div className="space-y-1.5 pt-1">
-            <span className="text-[10px] font-bold theme-text-muted uppercase tracking-wider">
-              Agregar Rápido:
-            </span>
-            <div className="flex flex-wrap gap-1.5" data-testid="quick-add-chips">
-              {availableQuickAdds.slice(0, 6).map((name) => (
-                <button
-                  key={name}
-                  onClick={() => handleQuickAdd(name)}
-                  className="px-2.5 py-1 min-h-[36px] rounded-full text-xs font-bold border theme-border bg-[var(--bg-elevated)] hover:border-[var(--accent-primary)] text-white/90 hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center gap-1"
-                  data-testid={`quick-add-${name}`}
-                >
-                  <span>+</span>
-                  <span>{name}</span>
-                </button>
-              ))}
-            </div>
-          </div>
+          </section>
         )}
 
-        {/* Active Player Roster List */}
-        <div className="space-y-2 pt-2" data-testid="player-roster">
-          {players.length === 0 ? (
-            <div className="p-4 rounded-xl border border-dashed theme-border text-center text-xs theme-text-muted">
-              Agrega al menos 2 jugadores para empezar la previa.
+        {/* Sub-Filters: Category Packs */}
+        {mode === 'category' && activePacks.length > 0 && (
+          <section className="pt-4 border-t border-border space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="font-heading text-xs font-bold text-text">
+                Packs y temáticas
+              </span>
+              <span className="text-xs font-mono text-text-muted">
+                {selectedPacks.filter((id) => availablePacks.some((p) => p.id === id)).length} de{' '}
+                {activePacks.length}
+              </span>
             </div>
-          ) : (
-            players.map((p, index) => (
-              <div
-                key={p.id}
-                style={{ borderColor: p.color || '#ec4899' }}
-                className="flex items-center justify-between p-2.5 rounded-xl border bg-[var(--bg-elevated)] text-sm shadow-xs"
-                data-testid={`player-item-${p.id}`}
-              >
-                <div className="flex items-center space-x-2.5">
-                  <span className="text-lg">{p.avatar || '👤'}</span>
-                  <span className="font-bold theme-text-primary">{p.name}</span>
-                  {index === 0 && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold uppercase">
-                      Inicia
-                    </span>
-                  )}
-                </div>
 
-                <button
-                  onClick={() => handleRemove(p.id)}
-                  className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-lg text-rose-400 hover:bg-rose-500/20 transition-colors cursor-pointer"
-                  aria-label={`Eliminar a ${p.name}`}
-                  data-testid={`remove-player-${p.id}`}
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+            <div className="flex flex-wrap gap-2" data-testid="packs-selector">
+              {activePacks.map((pack) => {
+                const isSelected = selectedPacks.includes(pack.id);
+                return (
+                  <button
+                    key={pack.id}
+                    type="button"
+                    onClick={() => togglePack(pack.id)}
+                    className={`px-3 py-2 min-h-[44px] rounded-xl text-xs font-semibold border transition-all cursor-pointer flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] ${
+                      isSelected
+                        ? 'border-action bg-selected text-text font-bold'
+                        : 'border-border bg-surface text-text-muted interactive-card'
+                    }`}
+                    data-testid={`pack-chip-${pack.id}`}
+                  >
+                    {isSelected && <Check className="w-3.5 h-3.5 text-action shrink-0" />}
+                    <span>{pack.label}</span>
+                    <span className="text-[11px] text-text-muted font-mono">({pack.count})</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Special Sub-filter for Yo Nunca Picante */}
+            {targetId === 'yo_nunca' &&
+              selectedIntensities.has(3) &&
+              selectedPacks.includes('yn_picante') && (
+                <div className="pt-3 border-t border-border space-y-2" data-testid="yn-picante-subgroup">
+                  <span className="text-xs font-bold text-spicy flex items-center gap-1.5">
+                    <Flame className="w-3.5 h-3.5" />
+                    <span>Nivel picante en Yo Nunca</span>
+                  </span>
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setYoNuncaSubGroup('all')}
+                      className={`py-2 px-2 min-h-[44px] rounded-xl text-xs font-semibold border text-center transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${
+                        yoNuncaSubGroup === 'all'
+                          ? 'border-spicy bg-spicy-quiet text-text font-bold'
+                          : 'border-border bg-surface text-text-muted interactive-card'
+                      }`}
+                      data-testid="yn-subgroup-all"
+                    >
+                      Todas (768)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setYoNuncaSubGroup('suave')}
+                      className={`py-2 px-2 min-h-[44px] rounded-xl text-xs font-semibold border text-center transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${
+                        yoNuncaSubGroup === 'suave'
+                          ? 'border-spicy bg-spicy-quiet text-text font-bold'
+                          : 'border-border bg-surface text-text-muted interactive-card'
+                      }`}
+                      data-testid="yn-subgroup-suave"
+                    >
+                      Suave (554)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setYoNuncaSubGroup('extremo_18')}
+                      className={`py-2 px-2 min-h-[44px] rounded-xl text-xs font-semibold border text-center transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${
+                        yoNuncaSubGroup === 'extremo_18'
+                          ? 'border-spicy bg-spicy-quiet text-text font-bold'
+                          : 'border-border bg-surface text-text-muted interactive-card'
+                      }`}
+                      data-testid="yn-subgroup-extremo"
+                    >
+                      Picante +18 (214)
+                    </button>
+                  </div>
+                </div>
+              )}
+
+            {/* Special Sub-filter for Verdad o Reto: Types */}
+            {targetId === 'verdad_o_reto' && (
+              <div className="pt-3 border-t border-border space-y-2" data-testid="vor-types-selector">
+                <span className="text-xs font-bold text-warning block">
+                  Tipo de prueba
+                </span>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => toggleType('truth')}
+                    className={`py-2 px-3 min-h-[44px] rounded-xl text-xs font-semibold border text-center transition-all cursor-pointer flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${
+                      selectedTypes.includes('truth')
+                        ? 'border-warning bg-warning-quiet text-text font-bold'
+                        : 'border-border bg-surface text-text-muted interactive-card'
+                    }`}
+                    data-testid="vor-type-truth"
+                  >
+                    {selectedTypes.includes('truth') && <Check className="w-3.5 h-3.5 text-warning" />}
+                    <span>Verdades (480)</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => toggleType('dare')}
+                    className={`py-2 px-3 min-h-[44px] rounded-xl text-xs font-semibold border text-center transition-all cursor-pointer flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${
+                      selectedTypes.includes('dare')
+                        ? 'border-warning bg-warning-quiet text-text font-bold'
+                        : 'border-border bg-surface text-text-muted interactive-card'
+                    }`}
+                    data-testid="vor-type-dare"
+                  >
+                    {selectedTypes.includes('dare') && <Check className="w-3.5 h-3.5 text-warning" />}
+                    <span>Retos (377)</span>
+                  </button>
+                </div>
               </div>
-            ))
+            )}
+
+            {/* Special Sub-filter for Verdad o Reto: Hot Tiers */}
+            {targetId === 'verdad_o_reto' &&
+              selectedIntensities.has(3) &&
+              selectedPacks.includes('vor_picante') && (
+                <div className="pt-3 border-t border-border space-y-2" data-testid="vor-hot-tiers">
+                  <span className="text-xs font-bold text-spicy block">
+                    Niveles picantes en Verdad o Reto
+                  </span>
+                  <div className="grid grid-cols-3 gap-2">
+                    {HOT_TIER_OPTIONS.map((opt) => {
+                      const isSelected = selectedHotTiers.includes(opt.tier);
+                      return (
+                        <button
+                          key={opt.tier}
+                          type="button"
+                          onClick={() => toggleHotTier(opt.tier)}
+                          className={`p-2.5 min-h-[60px] rounded-xl border text-center transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${
+                            isSelected
+                              ? 'border-spicy bg-spicy-quiet text-text font-bold'
+                              : 'border-border bg-surface text-text-muted interactive-card'
+                          }`}
+                          data-testid={`vor-hot-tier-${opt.tier}`}
+                        >
+                          <div className="flex flex-col items-center justify-center gap-0.5 text-xs font-bold">
+                            <span className="whitespace-nowrap">{opt.label}</span>
+                            <span className="inline-flex text-spicy" aria-hidden="true">
+                              {Array.from({ length: opt.tier }).map((_, i) => (
+                                <Flame key={i} className="w-3 h-3 fill-current" />
+                              ))}
+                            </span>
+                          </div>
+                          <div className="text-[10px] text-text-secondary mt-1 leading-tight">
+                            {opt.desc}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+          </section>
+        )}
+
+        {/* Preset Sub-Filters (Modo Spicy Hot Tiers) */}
+        {mode === 'preset' && targetId === 'modo_caliente' && (
+          <section className="pt-4 border-t border-border space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="font-heading text-xs font-bold text-spicy flex items-center gap-1.5">
+                <Flame className="w-3.5 h-3.5" />
+                <span>Niveles picantes (Hot)</span>
+              </span>
+              <span className="text-xs font-mono text-text-muted">1.661 cartas</span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2">
+              {HOT_TIER_OPTIONS.map((opt) => {
+                const isSelected = selectedHotTiers.includes(opt.tier);
+                return (
+                  <button
+                    key={opt.tier}
+                    type="button"
+                    onClick={() => toggleHotTier(opt.tier)}
+                    className={`p-2.5 min-h-[60px] rounded-xl border text-center transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${
+                      isSelected
+                        ? 'border-spicy bg-spicy-quiet text-text font-bold'
+                        : 'border-border bg-surface text-text-muted interactive-card'
+                    }`}
+                    data-testid={`spicy-hot-tier-${opt.tier}`}
+                  >
+                    <div className="flex flex-col items-center justify-center gap-0.5 text-xs font-bold">
+                      <span className="whitespace-nowrap">{opt.label}</span>
+                      <span className="inline-flex text-spicy" aria-hidden="true">
+                        {Array.from({ length: opt.tier }).map((_, i) => (
+                          <Flame key={i} className="w-3 h-3 fill-current" />
+                        ))}
+                      </span>
+                    </div>
+                    <div className="text-[10px] text-text-secondary mt-1 leading-tight">
+                      {opt.desc}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* Player Management Section */}
+        <section className="pt-4 border-t border-border space-y-3 pb-2">
+          <div className="flex items-center justify-between">
+            <label className="font-heading text-xs font-bold text-text flex items-center gap-1.5">
+              <Users className="w-3.5 h-3.5 text-action" />
+              <span>Jugadores ({players.length})</span>
+            </label>
+            <span className="text-xs text-text-muted">Mínimo 2 jugadores</span>
+          </div>
+
+          {/* Add Player Input Form */}
+          <form onSubmit={handleAddPlayer} className="flex gap-2">
+            <input
+              type="text"
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              placeholder="Nombre del jugador..."
+              maxLength={18}
+              inputMode="text"
+              enterKeyHint="done"
+              autoCapitalize="words"
+              autoCorrect="off"
+              spellCheck="false"
+              className="flex-1 min-w-0 w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-border bg-surface text-text placeholder:text-text-muted text-base focus:outline-none focus:border-action focus:ring-1 focus:ring-focus"
+              data-testid="player-name-input"
+            />
+            <button
+              type="submit"
+              disabled={!playerName.trim()}
+              className="px-4 min-h-[44px] rounded-xl bg-action text-action-ink font-bold text-xs interactive-action active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
+              data-testid="add-player-btn"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>Añadir</span>
+            </button>
+          </form>
+
+          {/* 1-Tap Quick Add Chips */}
+          {availableQuickAdds.length > 0 && (
+            <div className="space-y-2 pt-1">
+              <span className="text-xs font-medium text-text-muted block">
+                Añadir rápido
+              </span>
+              <div className="flex flex-wrap gap-2" data-testid="quick-add-chips">
+                {availableQuickAdds.slice(0, 6).map((name) => (
+                  <button
+                    key={name}
+                    type="button"
+                    onClick={() => handleQuickAdd(name)}
+                    className="px-3.5 min-h-[44px] rounded-full text-xs font-semibold border border-border bg-surface text-text interactive-surface active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-all cursor-pointer flex items-center gap-1"
+                    data-testid={`quick-add-${name}`}
+                  >
+                    <span className="text-action font-bold">+</span>
+                    <span>{name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
           )}
-        </div>
+
+          {/* Active Player Roster List (Player avatars are the ONLY emojis kept) */}
+          <div className="space-y-2 pt-1" data-testid="player-roster">
+            {players.length === 0 ? (
+              <div className="p-4 rounded-xl border border-dashed border-border-strong bg-surface/50 text-center text-xs text-text-secondary">
+                Añade al menos 2 jugadores para empezar la previa.
+              </div>
+            ) : (
+              players.map((p, index) => (
+                <div
+                  key={p.id}
+                  style={{ borderLeftColor: p.color || 'var(--pv-action)' }}
+                  className="flex items-center justify-between pl-3 pr-1.5 py-1.5 min-h-[52px] rounded-xl border border-border border-l-4 bg-surface text-sm"
+                  data-testid={`player-item-${p.id}`}
+                >
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <span className="text-lg shrink-0" aria-hidden="true">
+                      {p.avatar || '👤'}
+                    </span>
+                    <span className="font-semibold text-text truncate">{p.name}</span>
+                    {index === 0 && (
+                      <span className="text-[11px] px-2 py-0.5 rounded-full bg-success-quiet border border-success-line text-success font-semibold shrink-0">
+                        Inicia
+                      </span>
+                    )}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => handleRemove(p.id)}
+                    className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl text-danger hover:bg-danger-quiet focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95] transition-colors cursor-pointer shrink-0"
+                    aria-label={`Eliminar a ${p.name}`}
+                    data-testid={`remove-player-${p.id}`}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        </section>
       </div>
 
-      {/* Start Button CTA */}
-      <div className="pt-2">
+      {/* Sticky Thumb-Zone Footer CTA */}
+      <div className="shrink-0 border-t border-border bg-background/95 px-4 pt-3 pb-[calc(1rem+env(safe-area-inset-bottom,0px))]">
         <button
+          type="button"
           onClick={handleStart}
           disabled={players.length < 2 || isLoading}
-          className="w-full py-4 rounded-2xl bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] text-white font-black text-base uppercase tracking-wider shadow-[var(--glow-shadow)] hover:brightness-110 active:scale-98 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center justify-center space-x-2"
+          className="w-full min-h-[48px] py-3.5 px-4 rounded-2xl bg-action text-action-ink font-heading font-extrabold text-sm tracking-tight interactive-action active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all cursor-pointer flex items-center justify-center gap-2"
           data-testid="start-game-btn"
         >
           {isLoading ? (
-            <span>Cargando cartas...</span>
+            <span>Preparando partida...</span>
           ) : (
             <>
-              <Play className="w-5 h-5 fill-current" />
-              <span>¡EMPEZAR PREVIA!</span>
+              <Play className="w-4 h-4 fill-current" />
+              <span>Empezar previa</span>
             </>
           )}
         </button>

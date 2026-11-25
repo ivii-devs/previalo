@@ -39,20 +39,20 @@ export const TileModal: React.FC<TileModalProps> = ({
   const renderIcon = () => {
     switch (tile.tile_type) {
       case 'jump':
-        return <ArrowUpRight className="w-8 h-8 text-cyan-400" />;
+        return <ArrowUpRight className="w-7 h-7 text-info" />;
       case 'trap_jail':
-        return <Lock className="w-8 h-8 text-purple-400" />;
+        return <Lock className="w-7 h-7 text-virus" />;
       case 'trap_skull':
-        return <Skull className="w-8 h-8 text-rose-400" />;
+        return <Skull className="w-7 h-7 text-danger" />;
       case 'trap_back':
-        return <RotateCcw className="w-8 h-8 text-orange-400" />;
+        return <RotateCcw className="w-7 h-7 text-danger" />;
       case 'finish':
-        return <Trophy className="w-8 h-8 text-yellow-400" />;
+        return <Trophy className="w-7 h-7 text-warning" />;
       case 'drink':
       case 'give_drink':
-        return <Beer className="w-8 h-8 text-amber-400" />;
+        return <Beer className="w-7 h-7 text-warning" />;
       default:
-        return <Sparkles className="w-8 h-8 text-[var(--accent-primary)]" />;
+        return <Sparkles className="w-7 h-7 text-action" />;
     }
   };
 
@@ -71,107 +71,123 @@ export const TileModal: React.FC<TileModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm select-none animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center px-4 pt-[calc(1rem+env(safe-area-inset-top,0px))] pb-[calc(1rem+env(safe-area-inset-bottom,0px))] bg-black/75 select-none"
       data-testid="tile-modal"
+      role="dialog"
+      aria-modal="true"
     >
-      <div className="w-full max-w-sm rounded-3xl border-2 theme-border bg-[var(--bg-surface)] p-6 shadow-[var(--glow-shadow)] flex flex-col items-center text-center space-y-4 max-h-[calc(100dvh-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px)-2rem)] overflow-y-auto scroll-container">
+      <div className="w-full max-w-sm rounded-[20px] border border-border-strong bg-surface p-6 shadow-modal flex flex-col items-center text-center space-y-4 max-h-[calc(100dvh-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px)-2rem)] overflow-y-auto scroll-container">
         {/* Header Icon */}
-        <div className="w-16 h-16 rounded-2xl bg-[var(--bg-elevated)] border theme-border flex items-center justify-center shadow-inner">
+        <div className="w-14 h-14 rounded-2xl bg-surface-muted border border-border flex items-center justify-center">
           {renderIcon()}
         </div>
 
         {/* Tile Title & Number */}
         <div className="space-y-1">
           <div className="flex items-center justify-center gap-2">
-            <span className="text-xs font-black uppercase tracking-wider text-[var(--accent-primary)]">
+            <span className="text-xs font-mono font-bold text-action">
               Casilla #{tile.tile_number}
             </span>
             {hotTier && (
               <span
-                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-500/20 border border-rose-500/40 text-rose-300"
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-spicy-quiet border border-spicy-line text-spicy"
                 data-testid="tile-hot-tier-badge"
               >
-                <Flame className="w-3 h-3 text-rose-400" />
+                <Flame className="w-3 h-3" />
                 Nivel {hotTier}
               </span>
             )}
           </div>
-          <h3 className="text-xl font-black theme-text-primary">
-            {tile.title || '¡Evento de Tablero!'}
+          <h3 className="font-heading text-xl font-bold text-text">
+            {tile.title || 'Evento de tablero'}
           </h3>
         </div>
 
-        {/* Player Name Banner */}
+        {/* Player Name Banner (keeping avatar emoji) */}
         {player && (
-          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[var(--bg-elevated)] border theme-border">
-            <span>{player.avatar || '👤'}</span>
-            <span className="theme-text-primary">{player.name}</span>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-surface-muted border border-border text-text">
+            <span aria-hidden="true">{player.avatar || '👤'}</span>
+            <span>{player.name}</span>
           </div>
         )}
 
         {/* Dynamic Card & Tile Effect Box */}
-        <div className="w-full p-4 rounded-2xl border theme-border bg-[var(--bg-elevated)] space-y-2.5">
+        <div className="w-full p-4 rounded-2xl border border-border bg-surface-muted space-y-2.5">
           {dynamicPrompt ? (
             <p
-              className="text-sm font-bold theme-text-primary leading-relaxed selectable"
+              className="text-sm font-semibold text-text leading-relaxed selectable"
               data-testid="tile-dynamic-card"
             >
               {dynamicPrompt}
             </p>
           ) : (
-            <p className="text-sm font-semibold theme-text-primary leading-relaxed selectable">
+            <p className="text-sm font-medium text-text leading-relaxed selectable">
               {tile.description}
             </p>
           )}
 
-          {/* Special Action Callouts */}
+          {/* Special Action Callouts (vector icons, zero emojis) */}
           {isJump && (
-            <div className="text-xs font-black text-cyan-300">
-              ¡De bar en bar! Salta a la casilla {actionResult?.destination ?? tile.action_jump_to} y vuelve a tirar.
+            <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-info pt-1">
+              <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
+              <span>
+                De bar en bar: salta a la casilla {actionResult?.destination ?? tile.action_jump_to} y vuelve a tirar.
+              </span>
             </div>
           )}
 
           {isJail && (
-            <div className="text-xs font-black text-purple-300">
-              🔒 ¡A la Cárcel! Pierdes {actionResult?.turnsLost ?? tile.turns_lost ?? 1}{' '}
-              {(actionResult?.turnsLost ?? tile.turns_lost ?? 1) === 1 ? 'turno' : 'turnos'}.
+            <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-virus pt-1">
+              <Lock className="w-3.5 h-3.5 shrink-0" />
+              <span>
+                A la cárcel: pierdes {actionResult?.turnsLost ?? tile.turns_lost ?? 1}{' '}
+                {(actionResult?.turnsLost ?? tile.turns_lost ?? 1) === 1 ? 'turno' : 'turnos'}.
+              </span>
             </div>
           )}
 
           {isSkull && (
-            <div className="text-xs font-black text-rose-300">
-              💀 ¡Muerte súbita! Vuelves al inicio (casilla 1).
+            <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-danger pt-1">
+              <Skull className="w-3.5 h-3.5 shrink-0" />
+              <span>Muerte súbita: vuelves al inicio (casilla 1).</span>
             </div>
           )}
 
           {isBack && (
-            <div className="text-xs font-black text-orange-300">
-              ↩️ ¡Retroceso! Vuelves a la casilla {actionResult?.destination ?? tile.action_jump_to}.
+            <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-danger pt-1">
+              <RotateCcw className="w-3.5 h-3.5 shrink-0" />
+              <span>
+                Retroceso: vuelves a la casilla {actionResult?.destination ?? tile.action_jump_to}.
+              </span>
             </div>
           )}
 
           {isFinish && (
-            <div className="text-xs font-black text-yellow-300 animate-pulse">
-              🏆 ¡Llegada a la Meta! ¡Victoria absoluta!
+            <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-warning pt-1">
+              <Trophy className="w-3.5 h-3.5 shrink-0" />
+              <span>Llegada a la meta. Victoria absoluta.</span>
             </div>
           )}
 
           {drinks > 0 && (
-            <div className="flex items-center justify-center space-x-1 text-xs font-black text-amber-400 pt-1">
-              <Beer className="w-3.5 h-3.5" />
-              <span>Castigo: toma {drinks} {drinks === 1 ? 'trago' : 'tragos'}</span>
+            <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-xl bg-warning-quiet border border-warning-line text-xs font-bold text-warning mt-1">
+              <Beer className="w-3.5 h-3.5 shrink-0" />
+              <span>
+                Castigo: toma {drinks} {drinks === 1 ? 'trago' : 'tragos'}
+              </span>
             </div>
           )}
         </div>
 
         {/* Dismiss Button */}
         <button
+          type="button"
           onClick={handleClose}
-          className="w-full py-3 px-4 rounded-2xl bg-[var(--accent-primary)] hover:brightness-110 active:scale-95 text-white font-black text-sm tracking-wide shadow-[var(--glow-shadow)] transition-all cursor-pointer flex items-center justify-center space-x-2 min-h-[44px]"
+          className="w-full min-h-[48px] py-3 px-4 rounded-2xl bg-action text-action-ink font-heading font-extrabold text-sm interactive-action active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-all cursor-pointer flex items-center justify-center gap-2"
           data-testid="close-tile-modal-btn"
         >
           <CheckCircle2 className="w-4 h-4" />
-          <span>CONTINUAR</span>
+          <span>Continuar</span>
         </button>
       </div>
     </div>

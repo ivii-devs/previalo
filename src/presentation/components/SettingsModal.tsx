@@ -5,19 +5,18 @@ import {
   Volume2,
   VolumeX,
   Vibrate,
-  Sparkles,
-  Zap,
-  Flame,
-  Beer,
-  SunMedium,
   Bell,
   BellOff,
   Trash2,
   AlertTriangle,
+  Check,
 } from 'lucide-react';
 import { useSettingsStore, type Theme } from '../../application/useSettingsStore';
 import { soundService } from '../../infrastructure/soundService';
-import { notificationService, type NotificationStatus } from '../../infrastructure/notificationService';
+import {
+  notificationService,
+  type NotificationStatus,
+} from '../../infrastructure/notificationService';
 import { LegalModal } from './LegalModal';
 import { clear as clearIndexedDB } from 'idb-keyval';
 
@@ -30,39 +29,39 @@ interface ThemeConfig {
   id: Theme;
   name: string;
   accent: string;
-  icon: React.ReactNode;
+  surface: string;
 }
 
-const THEMES: ThemeConfig[] = [
+export const SETTINGS_THEMES: ThemeConfig[] = [
   {
-    id: 'cyber-neon',
-    name: 'Cyber Neon',
-    accent: '#ec4899',
-    icon: <Sparkles className="w-4 h-4 text-[#ec4899]" />,
+    id: 'coral-night',
+    name: 'Noche Coral',
+    accent: '#ff6257',
+    surface: '#121113',
   },
   {
-    id: 'electric-purple',
-    name: 'Electric Purple',
-    accent: '#a855f7',
-    icon: <Zap className="w-4 h-4 text-[#a855f7]" />,
+    id: 'indigo-obsidian',
+    name: 'Obsidiana Índigo',
+    accent: '#7c7aff',
+    surface: '#101118',
   },
   {
-    id: 'acid-lime',
-    name: 'Acid Lime',
-    accent: '#84cc16',
-    icon: <Beer className="w-4 h-4 text-[#84cc16]" />,
+    id: 'emerald-forest',
+    name: 'Bosque Esmeralda',
+    accent: '#2ecc87',
+    surface: '#0f1412',
   },
   {
-    id: 'sunset-hot',
-    name: 'Sunset Hot',
-    accent: '#f97316',
-    icon: <Flame className="w-4 h-4 text-[#f97316]" />,
+    id: 'amber-dusk',
+    name: 'Ámbar Nocturno',
+    accent: '#f59e0b',
+    surface: '#14110f',
   },
   {
-    id: 'day-mode',
-    name: 'Day Mode',
-    accent: '#db2777',
-    icon: <SunMedium className="w-4 h-4 text-[#db2777]" />,
+    id: 'warm-day',
+    name: 'Modo Día',
+    accent: '#cc3931',
+    surface: '#f7f4ef',
   },
 ];
 
@@ -113,15 +112,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
   const handleToggleNotifications = async () => {
     soundService.playTap();
     if (notificationStatus === 'granted') {
-      // In web, permissions cannot be revoked programmatically once granted
       return;
     }
 
     const result = await notificationService.requestPermission();
     setNotificationStatus(result);
     if (result === 'granted') {
-      await notificationService.showNotification('Previalo Activado', {
-        body: '¡Notificaciones activadas con éxito para tus previas!',
+      await notificationService.showNotification('Previalo activado', {
+        body: 'Notificaciones activadas para tus previas.',
       });
     }
   };
@@ -155,24 +153,28 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
   return (
     <>
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm select-none animate-in fade-in duration-200"
+        className="fixed inset-0 z-50 flex items-center justify-center px-4 pt-[calc(1rem+env(safe-area-inset-top,0px))] pb-[calc(1rem+env(safe-area-inset-bottom,0px))] bg-black/75 select-none"
         data-testid="settings-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="settings-modal-title"
       >
-        <div className="w-full max-w-sm rounded-3xl border-2 theme-border bg-[var(--bg-surface)] p-5 shadow-[var(--glow-shadow)] flex flex-col space-y-5 max-h-[calc(100dvh-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px)-2rem)] overflow-y-auto scroll-container">
+        <div className="w-full max-w-sm rounded-[20px] border border-border-strong bg-surface p-5 shadow-modal flex flex-col space-y-5 max-h-[calc(100dvh-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px)-2rem)] overflow-y-auto scroll-container">
           {/* Modal Header */}
-          <div className="flex items-center justify-between border-b theme-border pb-3 shrink-0">
-            <div className="flex items-center space-x-2">
-              <Palette className="w-5 h-5 theme-accent-primary" />
-              <h3 className="text-lg font-black uppercase tracking-wider theme-text-primary">
+          <div className="flex items-center justify-between border-b border-border pb-3 shrink-0">
+            <div className="flex items-center gap-2.5">
+              <Palette className="w-5 h-5 text-action" />
+              <h3 id="settings-modal-title" className="font-heading text-lg font-bold text-text">
                 Configuración
               </h3>
             </div>
             <button
+              type="button"
               onClick={() => {
                 soundService.playTap();
                 onClose();
               }}
-              className="p-1.5 rounded-xl border theme-border bg-[var(--bg-elevated)] text-[var(--text-muted)] hover:text-white transition-all cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="min-w-[44px] min-h-[44px] -mr-1 rounded-xl border border-border bg-surface-muted text-text-secondary interactive-surface active:scale-[0.95] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-colors cursor-pointer flex items-center justify-center"
               aria-label="Cerrar modal"
               data-testid="close-settings-btn"
             >
@@ -181,106 +183,140 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
           </div>
 
           {/* Theme Selector */}
-          <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-wider text-[var(--text-muted)]">
-              Tema Visual Neón
+          <section className="space-y-2.5">
+            <label className="font-heading text-xs font-bold text-text-secondary block">
+              Tema visual
             </label>
             <div className="grid grid-cols-2 gap-2">
-              {THEMES.map((item) => {
+              {SETTINGS_THEMES.map((item) => {
                 const active = currentTheme === item.id;
                 return (
                   <button
                     key={item.id}
+                    type="button"
                     onClick={() => handleSelectTheme(item.id)}
-                    style={{
-                      borderColor: active ? item.accent : 'transparent',
-                      boxShadow: active ? `0 0 10px ${item.accent}55` : 'none',
-                    }}
-                    className={`flex items-center space-x-2 px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left bg-[var(--bg-elevated)] cursor-pointer min-h-[44px] ${
-                      active ? 'ring-1' : 'opacity-70 hover:opacity-100'
+                    className={`flex items-center justify-between gap-1.5 px-2.5 py-2 rounded-xl border text-[11px] font-semibold transition-all text-left cursor-pointer min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] ${
+                      active
+                        ? 'border-action bg-selected text-text font-bold'
+                        : 'border-border bg-surface-muted text-text-secondary interactive-surface'
                     }`}
                     data-testid={`theme-option-${item.id}`}
+                    data-accent={item.accent}
                   >
-                    <div className="shrink-0">{item.icon}</div>
-                    <span className="truncate theme-text-primary">{item.name}</span>
+                    <span className="flex items-center gap-1.5 min-w-0">
+                      <span
+                        className="w-4 h-4 rounded-full shrink-0 border border-border-strong flex items-center justify-center"
+                        style={{ backgroundColor: item.surface }}
+                        aria-hidden="true"
+                      >
+                        <span
+                          className="w-2 h-2 rounded-full"
+                          style={{ backgroundColor: item.accent }}
+                        />
+                      </span>
+                      <span className="leading-tight break-words">{item.name}</span>
+                    </span>
+                    {active && <Check className="w-3.5 h-3.5 text-action shrink-0" />}
                   </button>
                 );
               })}
             </div>
-          </div>
+          </section>
 
           {/* Audio & Haptic Feedback Controls */}
-          <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-wider text-[var(--text-muted)]">
-              Efectos y Respuestas
+          <section className="space-y-2.5 pt-1 border-t border-border">
+            <label className="font-heading text-xs font-bold text-text-secondary block pt-3">
+              Efectos y respuestas
             </label>
-            <div className="space-y-2">
+            <div className="divide-y divide-border rounded-2xl border border-border bg-surface-muted overflow-hidden">
               {/* Sound Toggle */}
-              <div className="flex items-center justify-between p-3 rounded-2xl border theme-border bg-[var(--bg-elevated)] min-h-[52px]">
-                <div className="flex items-center space-x-2.5">
+              <div className="flex items-center justify-between px-3.5 py-2 min-h-[56px]">
+                <div className="flex items-center gap-2.5 min-w-0">
                   {soundEnabled ? (
-                    <Volume2 className="w-4 h-4 text-emerald-400" />
+                    <Volume2 className="w-4 h-4 text-success shrink-0" />
                   ) : (
-                    <VolumeX className="w-4 h-4 text-gray-400" />
+                    <VolumeX className="w-4 h-4 text-text-muted shrink-0" />
                   )}
-                  <div>
-                    <div className="text-xs font-bold theme-text-primary">Sonido FX</div>
-                    <div className="text-[10px] theme-text-muted">Audio procedural Web Audio</div>
+                  <div className="min-w-0">
+                    <div className="text-xs font-semibold text-text">Sonido FX</div>
+                    <div className="text-[11px] text-text-muted truncate">
+                      Audio procedural Web Audio
+                    </div>
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={handleToggleSound}
-                  className={`w-12 h-6 rounded-full transition-colors relative cursor-pointer min-h-[24px]`}
-                  style={{ backgroundColor: soundEnabled ? 'var(--accent-primary)' : '#374151' }}
-                  data-testid="toggle-sound-btn"
+                  role="switch"
+                  aria-checked={soundEnabled}
                   aria-label="Alternar sonido"
+                  className="min-w-[48px] min-h-[44px] flex items-center justify-end cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded-xl"
+                  data-testid="toggle-sound-btn"
                 >
-                  <div
-                    className={`w-4 h-4 rounded-full bg-white absolute top-1 transition-transform ${
-                      soundEnabled ? 'right-1' : 'left-1'
+                  <span
+                    className={`w-11 h-6 rounded-full transition-colors relative block ${
+                      soundEnabled ? 'bg-action' : 'bg-border-strong'
                     }`}
-                  />
+                  >
+                    <span
+                      className={`w-4 h-4 rounded-full absolute top-1 left-1 transition-transform ${
+                        soundEnabled ? 'translate-x-5 bg-action-ink' : 'translate-x-0 bg-text'
+                      }`}
+                    />
+                  </span>
                 </button>
               </div>
 
               {/* Haptics Toggle */}
-              <div className="flex items-center justify-between p-3 rounded-2xl border theme-border bg-[var(--bg-elevated)] min-h-[52px]">
-                <div className="flex items-center space-x-2.5">
+              <div className="flex items-center justify-between px-3.5 py-2 min-h-[56px]">
+                <div className="flex items-center gap-2.5 min-w-0">
                   <Vibrate
-                    className={`w-4 h-4 ${hapticsEnabled ? 'text-amber-400' : 'text-gray-400'}`}
+                    className={`w-4 h-4 shrink-0 ${
+                      hapticsEnabled ? 'text-warning' : 'text-text-muted'
+                    }`}
                   />
-                  <div>
-                    <div className="text-xs font-bold theme-text-primary">Vibración Háptica</div>
-                    <div className="text-[10px] theme-text-muted">Respuesta táctil en toques</div>
+                  <div className="min-w-0">
+                    <div className="text-xs font-semibold text-text">Vibración háptica</div>
+                    <div className="text-[11px] text-text-muted truncate">
+                      Respuesta táctil en toques
+                    </div>
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={handleToggleHaptics}
-                  className={`w-12 h-6 rounded-full transition-colors relative cursor-pointer min-h-[24px]`}
-                  style={{ backgroundColor: hapticsEnabled ? 'var(--accent-primary)' : '#374151' }}
-                  data-testid="toggle-haptics-btn"
+                  role="switch"
+                  aria-checked={hapticsEnabled}
                   aria-label="Alternar háptica"
+                  className="min-w-[48px] min-h-[44px] flex items-center justify-end cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus rounded-xl"
+                  data-testid="toggle-haptics-btn"
                 >
-                  <div
-                    className={`w-4 h-4 rounded-full bg-white absolute top-1 transition-transform ${
-                      hapticsEnabled ? 'right-1' : 'left-1'
+                  <span
+                    className={`w-11 h-6 rounded-full transition-colors relative block ${
+                      hapticsEnabled ? 'bg-action' : 'bg-border-strong'
                     }`}
-                  />
+                  >
+                    <span
+                      className={`w-4 h-4 rounded-full absolute top-1 left-1 transition-transform ${
+                        hapticsEnabled ? 'translate-x-5 bg-action-ink' : 'translate-x-0 bg-text'
+                      }`}
+                    />
+                  </span>
                 </button>
               </div>
 
               {/* Notifications Double Opt-in Toggle */}
               {notificationStatus !== 'unsupported' && (
-                <div className="flex items-center justify-between p-3 rounded-2xl border theme-border bg-[var(--bg-elevated)] min-h-[52px]">
-                  <div className="flex items-center space-x-2.5">
+                <div className="flex items-center justify-between px-3.5 py-2 min-h-[56px]">
+                  <div className="flex items-center gap-2.5 min-w-0">
                     {notificationStatus === 'granted' ? (
-                      <Bell className="w-4 h-4 text-emerald-400" />
+                      <Bell className="w-4 h-4 text-success shrink-0" />
                     ) : (
-                      <BellOff className="w-4 h-4 text-gray-400" />
+                      <BellOff className="w-4 h-4 text-text-muted shrink-0" />
                     )}
-                    <div>
-                      <div className="text-xs font-bold theme-text-primary">Notificaciones</div>
-                      <div className="text-[10px] theme-text-muted">
+                    <div className="min-w-0">
+                      <div className="text-xs font-semibold text-text">Notificaciones</div>
+                      <div className="text-[11px] text-text-muted truncate">
                         {notificationStatus === 'granted'
                           ? 'Activadas'
                           : notificationStatus === 'denied'
@@ -291,105 +327,113 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                   </div>
                   {notificationStatus !== 'granted' && notificationStatus !== 'denied' && (
                     <button
+                      type="button"
                       onClick={handleToggleNotifications}
-                      className="px-2.5 py-1 rounded-xl bg-[var(--accent-primary)] text-black font-extrabold text-[11px] cursor-pointer min-h-[36px]"
+                      className="px-3 min-h-[44px] rounded-xl bg-action text-action-ink font-bold text-xs cursor-pointer interactive-action focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                       data-testid="enable-notifications-btn"
                     >
                       Activar
                     </button>
                   )}
                   {notificationStatus === 'granted' && (
-                    <span className="text-[10px] font-bold text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30">
+                    <span className="text-[11px] font-semibold text-success px-2.5 py-1 rounded-full bg-success-quiet border border-success-line">
                       Activo
                     </span>
                   )}
                 </div>
               )}
             </div>
-          </div>
+          </section>
 
           {/* Legal & Privacy Section */}
-          <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-wider text-[var(--text-muted)]">
-              Legal y Almacenamiento
+          <section className="space-y-2.5 pt-1 border-t border-border">
+            <label className="font-heading text-xs font-bold text-text-secondary block pt-3">
+              Legal y almacenamiento
             </label>
             <div className="grid grid-cols-3 gap-2">
               <button
+                type="button"
                 onClick={() => openLegal('terms')}
-                className="p-2 rounded-xl border theme-border bg-[var(--bg-elevated)] text-[10px] font-bold theme-text-primary hover:bg-[var(--bg-surface)] cursor-pointer min-h-[44px] flex items-center justify-center text-center"
+                className="p-2 rounded-xl border border-border bg-surface-muted text-xs font-semibold text-text interactive-surface cursor-pointer min-h-[44px] flex items-center justify-center text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 data-testid="legal-terms-btn"
               >
                 Términos +18
               </button>
               <button
+                type="button"
                 onClick={() => openLegal('privacy')}
-                className="p-2 rounded-xl border theme-border bg-[var(--bg-elevated)] text-[10px] font-bold theme-text-primary hover:bg-[var(--bg-surface)] cursor-pointer min-h-[44px] flex items-center justify-center text-center"
+                className="p-2 rounded-xl border border-border bg-surface-muted text-xs font-semibold text-text interactive-surface cursor-pointer min-h-[44px] flex items-center justify-center text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 data-testid="legal-privacy-btn"
               >
                 Privacidad
               </button>
               <button
+                type="button"
                 onClick={() => openLegal('storage')}
-                className="p-2 rounded-xl border theme-border bg-[var(--bg-elevated)] text-[10px] font-bold theme-text-primary hover:bg-[var(--bg-surface)] cursor-pointer min-h-[44px] flex items-center justify-center text-center"
+                className="p-2 rounded-xl border border-border bg-surface-muted text-xs font-semibold text-text interactive-surface cursor-pointer min-h-[44px] flex items-center justify-center text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 data-testid="legal-storage-btn"
               >
                 Cookies/LSSI
               </button>
             </div>
-          </div>
+          </section>
 
-          {/* Reset / Supresión de Datos */}
-          <div className="pt-2 border-t theme-border space-y-2">
+          {/* Reset / Data Erasure */}
+          <section className="pt-3 border-t border-border space-y-2">
             {!showClearConfirm ? (
               <button
+                type="button"
                 onClick={() => {
                   soundService.playTap();
                   setShowClearConfirm(true);
                 }}
-                className="w-full py-2.5 px-3 rounded-2xl border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20 text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer min-h-[44px]"
+                className="w-full py-2.5 px-3 rounded-xl border border-danger-line bg-danger-quiet text-danger text-xs font-semibold flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-all cursor-pointer min-h-[44px]"
                 data-testid="clear-data-prompt-btn"
               >
-                <Trash2 className="w-3.5 h-3.5" />
+                <Trash2 className="w-4 h-4 shrink-0" />
                 <span>Borrar datos locales y vaciar caché</span>
               </button>
             ) : (
-              <div className="p-3 rounded-2xl border border-red-500/40 bg-red-500/15 space-y-2 animate-in fade-in">
-                <div className="flex items-center gap-2 text-red-300 text-xs font-bold">
+              <div className="p-3.5 rounded-2xl border border-danger-line bg-danger-quiet space-y-2.5">
+                <div className="flex items-center gap-2 text-danger text-xs font-bold">
                   <AlertTriangle className="w-4 h-4 shrink-0" />
                   <span>¿Confirmar borrado total?</span>
                 </div>
-                <p className="text-[10px] text-red-200/80 leading-snug">
-                  Se restablecerán las partidas, nombres guardados y se vaciará la caché de cartas.
+                <p className="text-xs text-text-secondary leading-snug">
+                  Se restablecerán las partidas, los nombres guardados y se vaciará la caché de cartas.
                 </p>
                 <div className="flex gap-2">
                   <button
+                    type="button"
                     onClick={handleClearAllData}
-                    className="flex-1 py-1.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs cursor-pointer min-h-[40px]"
+                    className="flex-1 min-h-[44px] py-2 rounded-xl bg-danger text-danger-ink font-bold text-xs cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     data-testid="clear-data-confirm-btn"
                   >
                     Sí, borrar todo
                   </button>
                   <button
+                    type="button"
                     onClick={() => setShowClearConfirm(false)}
-                    className="flex-1 py-1.5 rounded-xl bg-[var(--bg-elevated)] border border-slate-700 text-slate-300 text-xs font-bold cursor-pointer min-h-[40px]"
+                    className="flex-1 min-h-[44px] py-2 rounded-xl bg-surface border border-border text-text text-xs font-semibold cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     Cancelar
                   </button>
                 </div>
               </div>
             )}
-          </div>
+          </section>
 
           {/* Close Button */}
           <button
+            type="button"
             onClick={() => {
               soundService.playTap();
               onClose();
             }}
-            className="w-full py-3 rounded-2xl bg-[var(--accent-primary)] text-black font-black text-xs uppercase tracking-wider shadow-[var(--glow-shadow)] hover:brightness-110 active:scale-95 transition-all cursor-pointer min-h-[44px] shrink-0"
+            className="w-full min-h-[48px] py-3 rounded-2xl bg-action text-action-ink font-heading font-extrabold text-sm interactive-action active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-all cursor-pointer shrink-0"
             data-testid="modal-done-btn"
           >
-            Guardar y Cerrar
+            Guardar y cerrar
           </button>
         </div>
       </div>

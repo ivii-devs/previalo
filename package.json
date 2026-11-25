@@ -15,6 +15,8 @@
     "screenshots": "node scripts/generate_screenshots.mjs"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/plus-jakarta-sans": "^5.3.0",
     "canvas-confetti": "^1.9.4",
     "framer-motion": "^12.43.0",
     "idb-keyval": "^6.3.0",

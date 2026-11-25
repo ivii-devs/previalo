@@ -31,8 +31,8 @@ export default defineConfig({
         scope: '/',
         display: 'standalone',
         orientation: 'portrait-primary',
-        background_color: '#000000',
-        theme_color: '#000000',
+        background_color: '#121113',
+        theme_color: '#121113',
         lang: 'es',
         icons: [
           {
@@ -97,7 +97,7 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,json,woff2,woff}'],
         importScripts: ['/push-sw.js'],
         runtimeCaching: [
           {

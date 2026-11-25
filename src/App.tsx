@@ -85,13 +85,13 @@ export const App: React.FC = () => {
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
       const themeColors: Record<Theme, string> = {
-        'cyber-neon': '#0b0f19',
-        'electric-purple': '#0d0b1a',
-        'acid-lime': '#08100c',
-        'sunset-hot': '#160b0e',
-        'day-mode': '#f8fafc',
+        'coral-night': '#121113',
+        'indigo-obsidian': '#101118',
+        'emerald-forest': '#0f1412',
+        'amber-dusk': '#14110f',
+        'warm-day': '#f7f4ef',
       };
-      metaThemeColor.setAttribute('content', themeColors[theme] || '#000000');
+      metaThemeColor.setAttribute('content', themeColors[theme] || '#121113');
     }
   }, [theme]);
 
@@ -188,7 +188,7 @@ export const App: React.FC = () => {
 
   return (
     <div
-      className="fixed inset-0 flex flex-col w-full max-w-md mx-auto select-none overflow-hidden bg-[var(--bg-base)] text-[var(--text-primary)]"
+      className="fixed inset-0 flex flex-col w-full max-w-md mx-auto select-none overflow-hidden bg-background text-text font-body"
       style={{
         bottom: 0,
         overscrollBehaviorY: 'none',
@@ -248,8 +248,8 @@ export const App: React.FC = () => {
         onDismiss={() => setIsUpdateAvailable(false)}
       />
 
-      {/* PWA Guided Install Prompt */}
-      <PWAInstallPrompt />
+      {/* PWA Guided Install Prompt (Home screen only, never obstructs active game controls) */}
+      {currentScreen === 'home' && <PWAInstallPrompt />}
 
       {/* Global Settings Modal */}
       <SettingsModal

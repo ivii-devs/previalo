@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Wifi, WifiOff, Download, Settings, Play } from 'lucide-react';
+import { WifiOff, Download, Settings, Play } from 'lucide-react';
 import { PWAHelper } from '../../infrastructure/registerSW';
 import { useGameSessionStore } from '../../application/useGameSessionStore';
 import { soundService } from '../../infrastructure/soundService';
@@ -69,64 +69,72 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   const showResumeBanner = hasActive && currentScreen !== 'game-cards' && currentScreen !== 'game-board';
 
   return (
-    <header className="w-full border-b theme-border bg-[var(--bg-surface)] shrink-0 z-30 select-none pt-safe">
-      <div className="flex items-center justify-between px-4 py-2 max-w-md mx-auto min-h-[48px]">
+    <header className="w-full border-b border-border bg-background/95 shrink-0 z-30 select-none pt-safe">
+      <div className="flex items-center justify-between gap-1.5 px-3 min-[360px]:px-4 py-2 max-w-md mx-auto min-h-[56px]">
         {/* Brand Logo & Name */}
         <button
+          type="button"
           onClick={handleLogoClick}
-          className="flex items-center space-x-2 focus:outline-none group text-left cursor-pointer min-h-[44px] py-1"
+          className="flex items-center gap-2 min-[360px]:gap-2.5 rounded-xl pr-1 min-[360px]:pr-2 min-h-[44px] shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] transition-transform cursor-pointer text-left"
           data-testid="header-logo-btn"
         >
           <img
             src="/favicon.svg"
             alt="Previalo"
-            className="w-8 h-8 rounded-lg shadow-md group-hover:scale-105 transition-transform object-contain"
+            className="w-7 h-7 rounded-lg object-contain shrink-0"
           />
-          <span className="font-black text-xl tracking-wider theme-text-primary">
+          <span className="font-heading font-extrabold text-base min-[360px]:text-lg tracking-tight text-text whitespace-nowrap">
             PREVIALO
           </span>
         </button>
 
         {/* Status Indicators & Actions */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-1.5 min-[360px]:gap-2 shrink-0">
           {/* PWA Install Button */}
           {canInstall && (
             <button
+              type="button"
               onClick={handleInstall}
-              className="flex items-center space-x-1 px-2.5 py-1 min-h-[36px] rounded-full text-xs font-bold bg-[var(--accent-primary)] text-white shadow-[var(--glow-shadow)] hover:brightness-110 active:scale-95 transition-all cursor-pointer"
-              title="Instalar App Previalo"
+              className="flex items-center justify-center gap-1.5 px-2.5 min-[360px]:px-3 min-w-[44px] min-h-[44px] rounded-xl text-xs font-bold bg-action text-action-ink interactive-action active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-colors cursor-pointer"
+              title="Instalar Previalo"
+              aria-label="Instalar Previalo"
               data-testid="install-pwa-btn"
             >
-              <Download className="w-3.5 h-3.5" />
-              <span className="hidden xs:inline">Instalar</span>
+              <Download className="w-4 h-4 shrink-0" />
+              <span className="hidden sm:inline">Instalar</span>
             </button>
           )}
 
           {/* Offline / Online Badge */}
           <div
-            className="flex items-center space-x-1 px-2 py-1 rounded-full text-[11px] font-semibold border theme-border bg-[var(--bg-elevated)]"
+            className={`flex items-center gap-1.5 px-2 min-[360px]:px-2.5 py-1.5 rounded-full text-[11px] min-[360px]:text-xs font-medium border whitespace-nowrap ${
+              isOffline
+                ? 'bg-warning-quiet border-warning-line text-warning'
+                : 'bg-surface border-border text-text-muted'
+            }`}
             data-testid="network-status-badge"
           >
             {isOffline ? (
               <>
-                <WifiOff className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-                <span className="text-amber-400 font-bold">Offline</span>
+                <WifiOff className="w-3.5 h-3.5 shrink-0" />
+                <span className="font-semibold">Offline</span>
               </>
             ) : (
               <>
-                <Wifi className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-emerald-400">Online</span>
+                <span className="w-2 h-2 rounded-full bg-success shrink-0" aria-hidden="true" />
+                <span>Online</span>
               </>
             )}
           </div>
 
-          {/* Settings Gear Button (44x44px touch target) */}
+          {/* Settings Button (44x44px touch target) */}
           <button
+            type="button"
             onClick={() => {
               soundService.playTap();
               onOpenSettings?.();
             }}
-            className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded-xl border theme-border bg-[var(--bg-elevated)] text-[var(--text-muted)] hover:text-white hover:border-[var(--accent-primary)] transition-all cursor-pointer"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl border border-border bg-surface text-text-secondary interactive-surface active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-colors cursor-pointer"
             aria-label="Configuración"
             data-testid="settings-btn"
           >
@@ -137,20 +145,21 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
 
       {/* Conditional Active Session Resume Banner */}
       {showResumeBanner && (
-        <div
+        <button
+          type="button"
           onClick={handleResume}
-          className="bg-gradient-to-r from-[var(--accent-primary)]/20 via-[var(--accent-secondary)]/20 to-[var(--accent-primary)]/20 border-t border-b border-[var(--accent-primary)]/30 px-4 py-1.5 flex items-center justify-between cursor-pointer hover:opacity-95 transition-opacity"
+          className="w-full bg-surface border-t border-border border-l-4 border-l-action px-4 py-2 min-h-[44px] flex items-center justify-between cursor-pointer interactive-surface active:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus transition-colors text-left"
           data-testid="resume-session-banner"
         >
-          <div className="flex items-center space-x-2 text-xs font-bold theme-text-primary">
-            <span className="text-[var(--accent-primary)] animate-pulse">⚡</span>
+          <div className="flex items-center gap-2 text-xs font-semibold text-text">
+            <span className="w-2 h-2 rounded-full bg-action shrink-0" aria-hidden="true" />
             <span>Partida activa en curso</span>
           </div>
-          <button className="flex items-center space-x-1 text-xs font-black theme-accent-primary uppercase tracking-wider">
+          <span className="flex items-center gap-1 text-xs font-bold text-action shrink-0">
             <span>Reanudar</span>
-            <Play className="w-3 h-3 fill-current" />
-          </button>
-        </div>
+            <Play className="w-3.5 h-3.5 fill-current" />
+          </span>
+        </button>
       )}
     </header>
   );

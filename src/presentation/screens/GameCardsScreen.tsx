@@ -34,16 +34,20 @@ export const GameCardsScreen: React.FC<GameCardsScreenProps> = ({
   const interpolatedText = storeText || useGameSessionStore.getState().interpolatedText;
 
   const storeAssigned = useGameSessionStore((state) => state.assignedPlayers);
-  const assignedPlayers = storeAssigned.length > 0 ? storeAssigned : useGameSessionStore.getState().assignedPlayers;
+  const assignedPlayers =
+    storeAssigned.length > 0 ? storeAssigned : useGameSessionStore.getState().assignedPlayers;
 
   const storeDrinks = useGameSessionStore((state) => state.calculatedDrinks);
-  const calculatedDrinks = storeDrinks > 0 ? storeDrinks : useGameSessionStore.getState().calculatedDrinks;
+  const calculatedDrinks =
+    storeDrinks > 0 ? storeDrinks : useGameSessionStore.getState().calculatedDrinks;
 
   const storeViruses = useGameSessionStore((state) => state.activeViruses);
-  const activeViruses = storeViruses.length > 0 ? storeViruses : useGameSessionStore.getState().activeViruses;
+  const activeViruses =
+    storeViruses.length > 0 ? storeViruses : useGameSessionStore.getState().activeViruses;
 
   const storeExpired = useGameSessionStore((state) => state.expiredVirusesQueue);
-  const expiredVirusesQueue = storeExpired.length > 0 ? storeExpired : useGameSessionStore.getState().expiredVirusesQueue;
+  const expiredVirusesQueue =
+    storeExpired.length > 0 ? storeExpired : useGameSessionStore.getState().expiredVirusesQueue;
 
   const storeGameOver = useGameSessionStore((state) => state.isGameOver);
   const isGameOver = storeGameOver || useGameSessionStore.getState().isGameOver;
@@ -112,17 +116,19 @@ export const GameCardsScreen: React.FC<GameCardsScreenProps> = ({
   }, [currentIndex]);
 
   const activeTurnPlayer = assignedPlayers[0] || players[0];
-  const progressPercent = deck.length > 0 ? Math.min(100, Math.round(((currentIndex + 1) / deck.length) * 100)) : 0;
+  const progressPercent =
+    deck.length > 0 ? Math.min(100, Math.round(((currentIndex + 1) / deck.length) * 100)) : 0;
 
   if (!currentCard && !isGameOver) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-6 text-center space-y-4">
-        <p className="theme-text-muted text-sm">No hay carta activa en la sesión.</p>
+      <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-6 text-center space-y-4">
+        <p className="text-text-secondary text-sm">No hay ninguna carta activa en esta sesión.</p>
         <button
+          type="button"
           onClick={onExitHome}
-          className="px-4 py-2 rounded-xl bg-[var(--accent-primary)] text-white text-xs font-bold"
+          className="px-5 min-h-[44px] rounded-xl bg-action text-action-ink text-xs font-bold interactive-action active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-all cursor-pointer"
         >
-          Volver al Inicio
+          Volver al inicio
         </button>
       </div>
     );
@@ -130,92 +136,100 @@ export const GameCardsScreen: React.FC<GameCardsScreenProps> = ({
 
   return (
     <div
-      ref={scrollRef}
-      className="flex-1 min-h-0 h-full flex flex-col w-full max-w-md mx-auto px-3 pt-3 pb-[calc(2rem+env(safe-area-inset-bottom,20px))] space-y-4 overflow-y-auto select-none scroll-container"
+      className="flex-1 min-h-0 h-full flex flex-col w-full max-w-md mx-auto select-none overflow-hidden"
       data-testid="game-cards-screen"
     >
-      {/* Top Header Bar */}
-      <div className="space-y-1.5 shrink-0">
-        <div className="flex items-center justify-between">
+      {/* Compact Top Bar */}
+      <div className="shrink-0 px-4 pt-3 pb-2 space-y-2.5">
+        <div className="flex items-center justify-between gap-2">
           {/* Home Exit Button */}
           <button
+            type="button"
             onClick={() => {
               soundService.playTap();
               onExitHome();
             }}
-            className="p-2 rounded-xl border theme-border bg-[var(--bg-elevated)] text-[var(--text-muted)] hover:text-white transition-colors cursor-pointer"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl border border-border bg-surface text-text-secondary interactive-surface active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-colors cursor-pointer shrink-0"
             aria-label="Salir al inicio"
             data-testid="exit-cards-btn"
           >
             <Home className="w-4 h-4" />
           </button>
 
-          {/* Current Turn Player Indicator */}
+          {/* Current Turn Player Capsule */}
           {activeTurnPlayer && (
-            <div className="flex items-center space-x-1.5 px-3 py-1 rounded-full border theme-border bg-[var(--bg-elevated)]">
-              <span className="text-sm">{activeTurnPlayer.avatar || '👤'}</span>
-              <span className="text-xs font-black theme-text-primary">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-surface min-w-0">
+              <span className="text-sm shrink-0" aria-hidden="true">
+                {activeTurnPlayer.avatar || '👤'}
+              </span>
+              <span className="text-xs font-semibold text-text truncate">
                 Turno: {activeTurnPlayer.name}
               </span>
             </div>
           )}
 
-          {/* Card Counter Badge */}
-          <div className="px-2.5 py-1 rounded-full text-xs font-bold theme-text-muted bg-[var(--bg-elevated)] border theme-border">
+          {/* Tabular Card Counter Badge */}
+          <div className="px-3 py-1.5 rounded-full text-xs font-mono font-semibold text-text-muted bg-surface border border-border tabular-nums shrink-0">
             {currentIndex + 1} / {deck.length}
           </div>
         </div>
 
-        {/* Progress Bar */}
-        <div className="w-full h-1 rounded-full bg-[var(--bg-elevated)] overflow-hidden">
+        {/* Flat 3px Progress Bar */}
+        <div className="w-full h-[3px] rounded-full bg-surface-muted overflow-hidden">
           <div
             style={{ width: `${progressPercent}%` }}
-            className="h-full bg-gradient-to-r from-[var(--accent-primary)] to-[var(--accent-secondary)] transition-all duration-300"
+            className="h-full bg-action transition-all duration-300"
           />
         </div>
       </div>
 
-      {/* Center Main Card Zone */}
-      <div className="py-2 shrink-0 flex items-center justify-center">
-        {currentCard && (
-          <CardDeck remainingCount={deck.length - currentIndex}>
-            <SwipeableCard
-              card={currentCard}
-              interpolatedText={interpolatedText}
-              calculatedDrinks={calculatedDrinks}
-              assignedPlayers={assignedPlayers}
-              onSwipeNext={handleNext}
-            />
-          </CardDeck>
-        )}
-      </div>
+      {/* Center Scrollable Area: Card Deck + Active Virus HUD */}
+      <div
+        ref={scrollRef}
+        className="flex-1 min-h-0 overflow-y-auto scroll-container px-4 py-3 space-y-4"
+      >
+        <div className="flex items-center justify-center py-1">
+          {currentCard && (
+            <CardDeck remainingCount={deck.length - currentIndex}>
+              <SwipeableCard
+                card={currentCard}
+                interpolatedText={interpolatedText}
+                calculatedDrinks={calculatedDrinks}
+                assignedPlayers={assignedPlayers}
+                onSwipeNext={handleNext}
+              />
+            </CardDeck>
+          )}
+        </div>
 
-      {/* Bottom Controls Zone */}
-      <div className="space-y-2 shrink-0 pt-1">
         {/* Active Virus HUD */}
         <VirusHUD activeViruses={activeViruses} />
+      </div>
 
-        {/* Action Controls: Undo and Next */}
-        <div className="flex items-center space-x-2">
+      {/* Fixed Thumb-Zone Action Footer */}
+      <div className="shrink-0 border-t border-border bg-background/95 px-4 pt-3 pb-[calc(1rem+env(safe-area-inset-bottom,0px))]">
+        <div className="flex items-center gap-2.5">
           {/* Undo Button */}
           <button
+            type="button"
             onClick={handleUndo}
             disabled={currentIndex <= 0}
-            className="flex-1 py-3 px-3 rounded-2xl border theme-border bg-[var(--bg-elevated)] text-xs font-black uppercase tracking-wider theme-text-primary hover:border-[var(--accent-primary)] disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center justify-center space-x-1.5"
+            className="flex-1 min-h-[48px] py-3 px-3 rounded-2xl border border-border bg-surface text-xs font-bold text-text interactive-surface active:scale-[0.98] disabled:opacity-35 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-all cursor-pointer flex items-center justify-center gap-1.5"
             data-testid="undo-card-btn"
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="w-4 h-4 shrink-0" />
             <span>Deshacer</span>
           </button>
 
           {/* Advance Card Button */}
           <button
+            type="button"
             onClick={handleNext}
-            className="flex-[2] py-3 px-4 rounded-2xl bg-[var(--accent-primary)] text-white text-xs font-black uppercase tracking-wider shadow-[var(--glow-shadow)] hover:brightness-110 active:scale-98 transition-all cursor-pointer flex items-center justify-center space-x-1.5"
+            className="flex-[2] min-h-[48px] py-3 px-4 rounded-2xl bg-action text-action-ink font-heading font-extrabold text-sm tracking-tight interactive-action active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all cursor-pointer flex items-center justify-center gap-2"
             data-testid="next-card-btn"
           >
-            <span>Siguiente Carta</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>Siguiente carta</span>
+            <ArrowRight className="w-4 h-4 shrink-0" />
           </button>
         </div>
       </div>

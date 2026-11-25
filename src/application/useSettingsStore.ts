@@ -1,15 +1,50 @@
 /**
  * Previalo Application Layer: useSettingsStore
- * Zustand store managing user preferences: neon themes, sound FX, and haptic feedback.
+ * Zustand store managing user preferences: matte themes, sound FX, and haptic feedback.
  * Persisted in localStorage under 'previalo_settings'.
- * Automatically synchronizes with soundService and document data-theme attribute.
+ * Automatically migrates legacy theme IDs and synchronizes with soundService and document data-theme.
  */
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { soundService } from '../infrastructure/soundService';
 
-export type Theme = 'cyber-neon' | 'electric-purple' | 'acid-lime' | 'sunset-hot' | 'day-mode';
+export type Theme =
+  | 'coral-night'
+  | 'indigo-obsidian'
+  | 'emerald-forest'
+  | 'amber-dusk'
+  | 'warm-day';
+
+export const VALID_THEMES: readonly Theme[] = [
+  'coral-night',
+  'indigo-obsidian',
+  'emerald-forest',
+  'amber-dusk',
+  'warm-day',
+] as const;
+
+export const DEFAULT_THEME: Theme = 'coral-night';
+
+export const LEGACY_THEME_MAP: Record<string, Theme> = {
+  'cyber-neon': 'coral-night',
+  'electric-purple': 'indigo-obsidian',
+  'acid-lime': 'emerald-forest',
+  'sunset-hot': 'amber-dusk',
+  'day-mode': 'warm-day',
+};
+
+export function normalizeTheme(raw: unknown): Theme {
+  if (typeof raw === 'string') {
+    if ((VALID_THEMES as readonly string[]).includes(raw)) {
+      return raw as Theme;
+    }
+    if (raw in LEGACY_THEME_MAP) {
+      return LEGACY_THEME_MAP[raw];
+    }
+  }
+  return DEFAULT_THEME;
+}
 
 export interface SettingsState {
   theme: Theme;
@@ -78,16 +113,19 @@ const applyThemeToDOM = (theme: Theme) => {
   }
 };
 
+let pendingLegacyThemeMigration = false;
+
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set, get) => ({
-      theme: 'cyber-neon',
+      theme: DEFAULT_THEME,
       soundEnabled: true,
       hapticsEnabled: true,
 
       setTheme: (theme: Theme) => {
-        applyThemeToDOM(theme);
-        set({ theme });
+        const normalized = normalizeTheme(theme);
+        applyThemeToDOM(normalized);
+        set({ theme: normalized });
       },
 
       toggleSound: () => {
@@ -115,11 +153,30 @@ export const useSettingsStore = create<SettingsState>()(
     {
       name: 'previalo_settings',
       storage: createJSONStorage(() => dynamicStorage),
+      merge: (persistedState, currentState) => {
+        const persisted = (persistedState as Partial<SettingsState> | undefined) ?? {};
+        const rawTheme = persisted.theme;
+        const normalized = normalizeTheme(rawTheme ?? currentState.theme);
+        pendingLegacyThemeMigration =
+          rawTheme !== undefined && (rawTheme as string) !== normalized;
+        return {
+          ...currentState,
+          ...persisted,
+          theme: normalized,
+        };
+      },
       onRehydrateStorage: () => (state) => {
         if (state) {
+          const normalized = normalizeTheme(state.theme);
+          const shouldPersistMigration =
+            pendingLegacyThemeMigration || normalized !== state.theme;
+          pendingLegacyThemeMigration = false;
           soundService.setSoundEnabled(state.soundEnabled);
           soundService.setHapticsEnabled(state.hapticsEnabled);
-          applyThemeToDOM(state.theme);
+          applyThemeToDOM(normalized);
+          if (shouldPersistMigration) {
+            state.setTheme(normalized);
+          }
         }
       },
     }

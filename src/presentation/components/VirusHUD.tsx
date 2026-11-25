@@ -52,7 +52,7 @@ export const ActiveVirusDetailModal: React.FC<ActiveVirusDetailModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-4 select-none"
+      className="fixed inset-0 z-50 bg-black/75 flex items-center justify-center px-4 pt-[calc(1rem+env(safe-area-inset-top,0px))] pb-[calc(1rem+env(safe-area-inset-bottom,0px))] select-none"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           handleDismiss();
@@ -63,40 +63,44 @@ export const ActiveVirusDetailModal: React.FC<ActiveVirusDetailModalProps> = ({
       aria-modal="true"
       aria-labelledby="virus-modal-title"
     >
-      <div className="bg-[var(--bg-surface)] border border-purple-500/50 rounded-3xl p-6 max-w-sm w-full max-h-[85vh] flex flex-col shadow-[0_0_30px_rgba(168,85,247,0.3)] space-y-4 text-left relative animate-in fade-in zoom-in duration-150 overflow-hidden">
-        <button
-          type="button"
-          onClick={handleDismiss}
-          className="absolute top-4 right-4 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-white/10 theme-text-muted hover:text-white transition-colors cursor-pointer active:scale-95"
-          aria-label="Cerrar detalle de virus"
-          data-testid="close-virus-detail"
-        >
-          <X className="w-5 h-5" />
-        </button>
+      <div className="bg-surface border border-virus-line rounded-[20px] p-5 max-w-sm w-full max-h-[calc(100dvh-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px)-2rem)] flex flex-col shadow-modal space-y-4 text-left relative overflow-hidden">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5 text-virus">
+            <div className="w-9 h-9 rounded-xl bg-virus-quiet border border-virus-line flex items-center justify-center shrink-0">
+              <ShieldAlert className="w-4 h-4" />
+            </div>
+            <h3 id="virus-modal-title" className="font-heading text-base font-bold text-text">
+              Virus activo
+            </h3>
+          </div>
 
-        <div className="flex items-center space-x-2 text-purple-400">
-          <span className="text-2xl">🦠</span>
-          <h3 id="virus-modal-title" className="text-base font-black uppercase tracking-wider">
-            Virus Activo
-          </h3>
+          <button
+            type="button"
+            onClick={handleDismiss}
+            className="min-w-[44px] min-h-[44px] -mr-1 flex items-center justify-center rounded-xl border border-border bg-surface-muted text-text-secondary interactive-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95] transition-colors cursor-pointer"
+            aria-label="Cerrar detalle de virus"
+            data-testid="close-virus-detail"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
 
-        <div className="text-xs theme-text-muted">
+        <div className="text-xs text-text-muted">
           <span>Afecta a: </span>
-          <span className="font-bold text-white text-sm" data-testid="virus-modal-target">
+          <span className="font-bold text-text text-sm" data-testid="virus-modal-target">
             {affectedLabel}
           </span>
         </div>
 
         <div
-          className="text-sm font-semibold theme-text-primary leading-relaxed bg-[var(--bg-elevated)] p-4 rounded-2xl border theme-border whitespace-pre-wrap max-h-60 overflow-y-auto scroll-container"
+          className="text-sm font-medium text-text leading-relaxed bg-surface-muted p-4 rounded-2xl border border-border whitespace-pre-wrap max-h-60 overflow-y-auto scroll-container selectable"
           data-testid="virus-modal-text"
         >
           {virus.ruleText}
         </div>
 
-        <div className="flex items-center space-x-2 text-xs text-purple-300 font-medium bg-purple-950/40 border border-purple-500/30 px-3 py-2 rounded-xl shrink-0">
-          <Clock className="w-4 h-4 text-purple-400 shrink-0" />
+        <div className="flex items-start gap-2 text-xs text-virus font-medium bg-virus-quiet border border-virus-line px-3 py-2.5 rounded-xl shrink-0">
+          <Clock className="w-4 h-4 shrink-0 mt-0.5" />
           <span data-testid="virus-modal-duration">
             {virus.hasResolverCard
               ? virus.roundsRemaining > 0
@@ -113,10 +117,10 @@ export const ActiveVirusDetailModal: React.FC<ActiveVirusDetailModalProps> = ({
         <button
           type="button"
           onClick={handleDismiss}
-          className="w-full py-3 rounded-2xl font-black text-sm bg-purple-600 hover:bg-purple-500 text-white transition-colors shadow-lg shadow-purple-600/30 cursor-pointer active:scale-98 min-h-[44px] shrink-0"
+          className="w-full min-h-[44px] py-3 rounded-2xl font-heading font-bold text-sm bg-virus text-virus-ink hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] transition-all cursor-pointer shrink-0"
           data-testid="dismiss-virus-detail"
         >
-          ¡Entendido!
+          Entendido
         </button>
       </div>
     </div>
@@ -133,12 +137,12 @@ export const VirusHUD: React.FC<VirusHUDProps> = ({ activeViruses }) => {
   return (
     <>
       <div
-        className="w-full max-w-sm mx-auto px-1 py-1.5 space-y-1.5 select-none"
+        className="w-full max-w-sm mx-auto space-y-2 select-none"
         data-testid="virus-hud"
       >
-        <div className="flex items-center space-x-1.5 text-xs font-black uppercase tracking-wider text-purple-400">
-          <ShieldAlert className="w-3.5 h-3.5 animate-pulse" />
-          <span>Virus Activos ({activeViruses.length})</span>
+        <div className="flex items-center gap-1.5 text-xs font-bold text-virus">
+          <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
+          <span>Virus activos ({activeViruses.length})</span>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -155,26 +159,35 @@ export const VirusHUD: React.FC<VirusHUDProps> = ({ activeViruses }) => {
                   soundService.playTap();
                   setSelectedVirus(virus);
                 }}
-                className={`flex items-center space-x-2 px-3 py-1.5 rounded-2xl border text-xs font-bold transition-all shadow-md cursor-pointer active:scale-95 text-left min-h-[44px] ${
+                className={`flex items-center gap-2.5 px-3 py-2 rounded-2xl border text-xs transition-all cursor-pointer active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus text-left min-h-[48px] w-full ${
                   isUrgent
-                    ? 'bg-purple-950/60 border-purple-500 text-purple-200 animate-pulse shadow-[0_0_12px_rgba(168,85,247,0.4)]'
-                    : 'bg-[var(--bg-elevated)] border-purple-500/40 text-purple-300 hover:border-purple-500/70'
+                    ? 'bg-virus-quiet border-virus text-text'
+                    : 'bg-surface border-virus-line text-text interactive-card'
                 }`}
                 data-testid={`virus-pill-${virus.id}`}
+                data-urgent={isUrgent ? 'true' : 'false'}
                 aria-label={`Ver regla completa de virus para ${affectedLabel}`}
               >
-                <span className="text-base shrink-0">🦠</span>
+                <div className="w-8 h-8 rounded-xl bg-virus-quiet border border-virus-line text-virus flex items-center justify-center shrink-0 relative">
+                  <ShieldAlert className="w-4 h-4" />
+                  {isUrgent && (
+                    <span
+                      className="w-2 h-2 rounded-full bg-virus absolute -top-0.5 -right-0.5"
+                      aria-hidden="true"
+                    />
+                  )}
+                </div>
 
-                <div className="flex flex-col text-left min-w-0">
-                  <div className="flex items-center space-x-1">
-                    <span className="text-[11px] font-black text-white truncate max-w-[200px] sm:max-w-[240px]">
+                <div className="flex flex-col text-left min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-bold text-text truncate">
                       {affectedLabel}
                     </span>
-                    <span className="text-[10px] theme-text-muted shrink-0">
+                    <span className="text-[11px] font-mono text-virus shrink-0">
                       {durationLabel}
                     </span>
                   </div>
-                  <span className="text-[10px] theme-text-muted line-clamp-1 max-w-[260px] sm:max-w-[300px]">
+                  <span className="text-[11px] text-text-secondary line-clamp-1">
                     {virus.ruleText}
                   </span>
                 </div>
